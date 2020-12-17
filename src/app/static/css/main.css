@@ -1,0 +1,85 @@
+.pane{
+    -fx-background-radius: 10px;
+}
+
+.table-view{
+    -fx-border-radius: 5px;
+    -fx-border-color: #2c5f8d;
+}
+
+.button{
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+}
+
+.pane{
+    -fx-border-radius: 5px;
+    -fx-border-color: #2c5f8d;
+}
+
+.button:hover{
+    -fx-transition-duration: 1s;
+    -fx-background-color : #B4D8EE;
+}
+
+.button:pressed{
+    -fx-transition-duration: 1s;
+    -fx-background-color : #E6F2F9;
+
+}
+
+.search{
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-color: #ffffff;
+    -fx-border-color: black;
+}
+
+.label{
+    -fx-font-size: 16;
+    -fx-text-fill: black;
+    -fx-font-style: italic;
+}
+
+.small_button{
+    -fx-font-weight: bold;
+    -fx-font-size: 16;
+    -fx-text-fill: black;
+    -fx-background-color : #e6f2ff;
+    -fx-background-radius: 18px;
+    -fx-border-color: #0073e6;
+    -fx-border-radius: 18px;
+}
+
+.small_button:hover{
+}
+
+.small_button:pressed{
+}
+
+.login{
+    -fx-font-weight: bold;
+    -fx-font-size: 24px;
+    -fx-font-family: Helvetica, Arial, sans-serif;
+    -fx-background-radius: 20px;
+}
+
+#login_button.button{
+    -fx-font-size: 24px;
+}
+
+#login_button.button:hover{
+    -fx-font-size: 24px;
+}
+
+#login_button.button:pressed{
+    -fx-font-size: 24px;
+}
+
+.label{
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-font-family: Helvetica, Arial, sans-serif;
+}
