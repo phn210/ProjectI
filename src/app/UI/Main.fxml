@@ -24,10 +24,10 @@
                <center>
                   <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="1470.0" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
+                        <Button mnemonicParsing="false" stylesheets="@../static/css/main.css" text="Sản phẩm" wrapText="true" />
+                        <Button mnemonicParsing="false" stylesheets="@../static/css/main.css" text="Khách hàng" wrapText="true" />
                         <Button mnemonicParsing="false" stylesheets="@../static/css/main.css" text="Nhân viên" wrapText="true" />
                         <Button mnemonicParsing="false" stylesheets="@../static/css/main.css" text="Ca làm việc" wrapText="true" />
-                        <Button mnemonicParsing="false" stylesheets="@../static/css/main.css" text="Khách hàng" wrapText="true" />
-                        <Button mnemonicParsing="false" stylesheets="@../static/css/main.css" text="Sản phẩm" wrapText="true" />
                         <Button mnemonicParsing="false" stylesheets="@../static/css/main.css" text="Lịch sử đơn hàng" />
                         <Button mnemonicParsing="false" stylesheets="@../static/css/main.css" text="Doanh thu" />
                      </children>
