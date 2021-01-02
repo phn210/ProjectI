@@ -5,6 +5,8 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -28,7 +30,11 @@
                <left>
                   <HBox alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="1140.0" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="94.0" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Nhập hàng">
+                        <MenuButton contentDisplay="TOP" mnemonicParsing="false" prefWidth="130.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Nhập hàng">
+                          <items>
+                            <MenuItem mnemonicParsing="false" onAction="#importManually" text="Thủ công" />
+                            <MenuItem mnemonicParsing="false" onAction="#importFile" text="File" />
+                          </items>
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -36,11 +42,8 @@
                                  </image>
                               </ImageView>
                            </graphic>
-                           <HBox.margin>
-                              <Insets bottom="5.0" top="5.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="94.0" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Chi tiết">
+                        </MenuButton>
+                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#checkDetail" prefHeight="94.0" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Chi tiết">
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -52,7 +55,7 @@
                               <Insets bottom="5.0" top="5.0" />
                            </HBox.margin>
                         </Button>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Xuất file">
+                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#export" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Xuất file">
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -76,7 +79,7 @@
                <right>
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="400.0" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="94.0" prefWidth="100.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Help">
+                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#help" prefHeight="94.0" prefWidth="100.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Help">
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -100,36 +103,36 @@
                <children>
                   <TabPane prefHeight="645.0" prefWidth="1140.0" style="-fx-background-color: transparent;" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                      <Tab text="Product">
+                      <Tab onSelectionChanged="#selectedProduct" text="Product">
                         <content>
                           <AnchorPane>
                                  <children>
-                                    <TableView prefHeight="615.2" prefWidth="1145.6" stylesheets="@../../static/css/main.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="table_Product" prefHeight="615.2" prefWidth="1145.6" stylesheets="@../../static/css/main.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <columns>
-                                          <TableColumn prefWidth="68.33333587646484" text="ID" />
-                                          <TableColumn prefWidth="180.3333282470703" text="Name" />
-                                          <TableColumn prefWidth="91.66667175292969" text="Type" />
-                                          <TableColumn prefWidth="166.99998474121094" text="Brand" />
-                                          <TableColumn prefWidth="74.0" text="Amount" />
-                                          <TableColumn prefWidth="261.0" text="Description" />
-                                          <TableColumn prefWidth="203.33331298828125" text="Retail Price" />
-                                          <TableColumn minWidth="0.0" prefWidth="95.6666259765625" text="Discount" />
+                                          <TableColumn fx:id="col_ID" prefWidth="68.33333587646484" text="ID" />
+                                          <TableColumn fx:id="col_Name" prefWidth="180.3333282470703" text="Tên sản phẩm" />
+                                          <TableColumn fx:id="col_Type" prefWidth="91.66667175292969" text="Loại" />
+                                          <TableColumn fx:id="col_Brand" prefWidth="166.99998474121094" text="Hãng" />
+                                          <TableColumn fx:id="col_Amount" prefWidth="74.0" text="SL" />
+                                          <TableColumn fx:id="col_Description" prefWidth="261.0" text="Mô tả" />
+                                          <TableColumn fx:id="col_Price" prefWidth="203.33331298828125" text="Giá bán lẻ" />
+                                          <TableColumn fx:id="col_Discount" minWidth="0.0" prefWidth="95.6666259765625" text="KM" />
                                        </columns>
                                     </TableView>
                                  </children>
                               </AnchorPane>
                         </content>
                       </Tab>
-                      <Tab text="Import">
+                      <Tab onSelectionChanged="#selectedImport" text="Import">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView prefHeight="615.2" prefWidth="1140.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="table_Import" prefHeight="615.2" prefWidth="1140.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <columns>
-                                        <TableColumn prefWidth="217.866623878479" text="Import ID" />
-                                        <TableColumn prefWidth="327.7333068847656" text="Supplier" />
-                                          <TableColumn prefWidth="300.2666931152344" text="Date" />
-                                          <TableColumn prefWidth="292.800048828125" text="Total money" />
+                                        <TableColumn fx:id="col_ImportID" prefWidth="217.866623878479" text="ID đơn nhập" />
+                                        <TableColumn fx:id="col_Supplier" prefWidth="327.7333068847656" text="Nhà cung cấp" />
+                                          <TableColumn fx:id="col_Date" prefWidth="300.2666931152344" text="Ngày nhập" />
+                                          <TableColumn fx:id="col_TotalMoney" prefWidth="292.800048828125" text="Thành tiền" />
                                       </columns>
                                     </TableView>
                                  </children>
@@ -156,7 +159,7 @@
                      <children>
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="30.0" GridPane.rowIndex="2">
                            <children>
-                              <Button mnemonicParsing="false" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Tìm kiếm" />
+                              <Button mnemonicParsing="false" onAction="#search" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Tìm kiếm" />
                            </children>
                            <padding>
                               <Insets right="20.0" />
@@ -182,28 +185,28 @@
                                  <padding>
                                     <Insets left="25.0" />
                                  </padding></Label>
-                              <Label prefHeight="26.0" prefWidth="207.0" text="Name:" GridPane.rowIndex="1">
+                              <Label prefHeight="26.0" prefWidth="207.0" text="Tên SP:" GridPane.rowIndex="1">
                                  <padding>
                                     <Insets left="25.0" />
                                  </padding></Label>
-                              <Label prefHeight="26.0" prefWidth="207.0" text="Type:" GridPane.rowIndex="2">
+                              <Label prefHeight="26.0" prefWidth="207.0" text="Loại" GridPane.rowIndex="2">
                                  <padding>
                                     <Insets left="25.0" />
                                  </padding></Label>
-                              <Label prefHeight="26.0" prefWidth="207.0" text="Brand:" GridPane.rowIndex="3">
+                              <Label prefHeight="26.0" prefWidth="207.0" text="Tên hãng:" GridPane.rowIndex="3">
                                  <padding>
                                     <Insets left="25.0" />
                                  </padding></Label>
-                              <Label prefHeight="26.0" prefWidth="207.0" text="Discount:" GridPane.rowIndex="4">
+                              <Label prefHeight="26.0" prefWidth="207.0" text="KM:" GridPane.rowIndex="4">
                                  <padding>
                                     <Insets left="25.0" />
                                  </padding></Label>
                               <Label alignment="CENTER" prefHeight="26.0" prefWidth="207.0" GridPane.rowIndex="6" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <ComboBox editable="true" prefHeight="26.0" prefWidth="250.0" GridPane.columnIndex="1" />
-                              <ComboBox editable="true" prefHeight="26.0" prefWidth="254.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <CheckBox mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextField fx:id="textField_Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="textField_Brand" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="comboBox_ID" editable="true" prefHeight="26.0" prefWidth="250.0" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="comboBox_Type" editable="true" prefHeight="26.0" prefWidth="254.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <CheckBox fx:id="checkBox_Discount" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                      </children>
