@@ -1,5 +1,7 @@
 package app.controller.Products;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,14 +11,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.entity.Import;
-import model.entity.ImportDetail;
 import model.entity.Product;
 import repository.ImportRepo;
 import repository.ProductRepo;
 
 import java.net.URL;
 import java.sql.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProductController implements Initializable {
@@ -78,10 +81,14 @@ public class ProductController implements Initializable {
     @FXML
     private CheckBox checkBox_Discount;
 
+    //mode = 0: product
+    //mode = 1: import
+    private int mode;
+
     private ObservableList<Integer> idObservableList;
     private ObservableList<String> typeObservableList;
     private ObservableList<Product> productObservableList;
-    private ObservableList<ImportDetail> importDetailObservableList;
+    private ObservableList<Import> importObservableList;
 
     private ProductRepo productRepo;
     private ImportRepo importRepo;
@@ -89,11 +96,39 @@ public class ProductController implements Initializable {
     public ProductController(){
         this.productRepo = new ProductRepo();
         this.importRepo = new ImportRepo();
+        this.mode = 0;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        col_ID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        col_Name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        col_Type.setCellValueFactory(t -> new ReadOnlyObjectWrapper<>(productRepo.getType(t.getValue()).getName()));
+        col_Brand.setCellValueFactory(t -> new ReadOnlyObjectWrapper<>(productRepo.getBrand(t.getValue()).getName()));
+        col_Amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        col_Description.setCellValueFactory(new PropertyValueFactory<>("description"));
+        col_Price.setCellValueFactory(new PropertyValueFactory<>("retailPrice"));
+        col_Discount.setCellValueFactory(new PropertyValueFactory<>("discount"));
+
+        col_ImportID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        col_Supplier.setCellValueFactory(new PropertyValueFactory<>("supplierID"));
+        col_Date.setCellValueFactory(new PropertyValueFactory<>("importDate"));
+        col_TotalMoney.setCellValueFactory(new PropertyValueFactory<>("totalMoney"));
+
+        this.updateTableProduct();
+    }
+
+    public void updateTableProduct(){
+        List<Product> products = productRepo.getAllProduct();
+        productObservableList = FXCollections.observableList(products);
+        table_Product.setItems(productObservableList);
+    }
+
+    public void updateTableImport(){
+        List<Import> imports = importRepo.getAllImport();
+        importObservableList = FXCollections.observableList(imports);
+        table_Import.setItems(importObservableList);
     }
 
     @FXML
@@ -123,17 +158,17 @@ public class ProductController implements Initializable {
 
     @FXML
     void selectedImport(ActionEvent event) {
-
+        this.mode = 1;
     }
 
     @FXML
     void selectedProduct(ActionEvent event) {
-
+        this.mode = 0;
     }
 
     @FXML
     void search(ActionEvent event){
-
+        
     }
 
 
