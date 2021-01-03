@@ -23,6 +23,12 @@ import java.util.ResourceBundle;
 public class ProductController implements Initializable {
 
     @FXML
+    private Tab tab_Products;
+
+    @FXML
+    private Tab tab_Imports;
+
+    @FXML
     private TableView<Product> table_Product;
 
     @FXML
@@ -213,15 +219,15 @@ public class ProductController implements Initializable {
     }
 
     @FXML
-    void selectedImport(ActionEvent event) {
+    void selectedImport() {
         this.mode = 1;
         updateTabImport();
     }
 
     @FXML
-    void selectedProduct(ActionEvent event) {
+    void selectedProduct() {
         this.mode = 0;
-        updateTabImport();
+        updateTabProduct();
     }
 
     @FXML

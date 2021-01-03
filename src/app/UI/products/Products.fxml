@@ -104,7 +104,7 @@
                <children>
                   <TabPane prefHeight="645.0" prefWidth="1140.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                      <Tab onSelectionChanged="#selectedProduct" text="Product">
+                      <Tab fx:id="tab_Products" onSelectionChanged="#selectedProduct" text="Product">
                         <content>
                           <AnchorPane>
                                  <children>
@@ -124,7 +124,7 @@
                               </AnchorPane>
                         </content>
                       </Tab>
-                      <Tab onSelectionChanged="#selectedImport" text="Import">
+                      <Tab fx:id="tab_Imports" onSelectionChanged="#selectedImport" text="Import">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -166,7 +166,7 @@
                               <Insets right="20.0" />
                            </padding>
                         </HBox>
-                        <GridPane fx:id="searchPane_Products" alignment="CENTER" stylesheets="@../../static/css/main.css" visible="false" GridPane.rowIndex="1">
+                        <GridPane fx:id="searchPane_Products" alignment="CENTER" stylesheets="@../../static/css/main.css" GridPane.rowIndex="1">
                            <columnConstraints>
                               <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.39990234375" minWidth="10.0" prefWidth="243.39990234375" />

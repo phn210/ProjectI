@@ -87,8 +87,8 @@ public class ProductRepo {
     public Type getType(Product product){
         Type type = new Type();
 
-        String query = "select * from Product " +
-                    "where type_id = ?";
+        String query = "select * from Type " +
+                    "where id = ?";
 
         try (Connection con = DBConnector.getConnection()){
             PreparedStatement pstmt = con.prepareStatement(query);
@@ -111,8 +111,8 @@ public class ProductRepo {
     public Brand getBrand(Product product){
         Brand brand = new Brand();
 
-        String query = "select * from Product " +
-                    "where brand_id = ?";
+        String query = "select * from Brand " +
+                    "where id = ?";
 
         try (Connection con = DBConnector.getConnection()){
             PreparedStatement pstmt = con.prepareStatement(query);

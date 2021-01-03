@@ -11,18 +11,18 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.MainController">
     <children>
-      <BorderPane prefHeight="800.0" prefWidth="1540.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane fx:id="mainPane" prefHeight="800.0" prefWidth="1540.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <BorderPane fx:id="mainPane" prefHeight="40.0" prefWidth="1540.0" style="-fx-background-color: #33adff;" BorderPane.alignment="CENTER">
+            <BorderPane prefHeight="40.0" prefWidth="1540.0" style="-fx-background-color: #33adff;" BorderPane.alignment="CENTER">
                <center>
                   <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="1470.0" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button mnemonicParsing="false" stylesheets="@../static/css/main.css" text="Sản phẩm" wrapText="true" />
-                        <Button mnemonicParsing="false" stylesheets="@../static/css/main.css" text="Khách hàng" wrapText="true" />
-                        <Button mnemonicParsing="false" stylesheets="@../static/css/main.css" text="Nhân viên" wrapText="true" />
-                        <Button mnemonicParsing="false" stylesheets="@../static/css/main.css" text="Ca làm việc" wrapText="true" />
-                        <Button mnemonicParsing="false" stylesheets="@../static/css/main.css" text="Lịch sử đơn hàng" />
-                        <Button mnemonicParsing="false" stylesheets="@../static/css/main.css" text="Doanh thu" />
+                        <Button mnemonicParsing="false" onAction="#toProductTab" stylesheets="@../static/css/main.css" text="Sản phẩm" wrapText="true" />
+                        <Button mnemonicParsing="false" onAction="#toCustomerTab" stylesheets="@../static/css/main.css" text="Khách hàng" wrapText="true" />
+                        <Button mnemonicParsing="false" onAction="#toEmployeeTab" stylesheets="@../static/css/main.css" text="Nhân viên" wrapText="true" />
+                        <Button mnemonicParsing="false" onAction="#toDutyTab" stylesheets="@../static/css/main.css" text="Ca làm việc" wrapText="true" />
+                        <Button mnemonicParsing="false" onAction="#toHistoryTab" stylesheets="@../static/css/main.css" text="Lịch sử đơn hàng" />
+                        <Button mnemonicParsing="false" onAction="#toRevenueTab" stylesheets="@../static/css/main.css" text="Doanh thu" />
                      </children>
                   </HBox>
                </center>

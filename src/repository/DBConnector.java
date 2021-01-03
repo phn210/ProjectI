@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DBConnector {
     static Connection connection;
-    private static String connectionURL = "jdbc:sqlserver://THINKPAD;database=Library;";
+    private static String connectionURL = "jdbc:sqlserver://THINKPAD;database=ProjectI;";
     private static String user = "sa";
     private static String password = "";
 
