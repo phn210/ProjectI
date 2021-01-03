@@ -80,11 +80,11 @@
                <bottom>
                   <TableView prefHeight="483.0" prefWidth="900.0" BorderPane.alignment="CENTER">
                     <columns>
-                      <TableColumn prefWidth="88.00000303983688" text="Product ID" />
-                      <TableColumn prefWidth="364.80003356933594" text="Product" />
-                        <TableColumn prefWidth="170.39996337890625" text="Date" />
-                        <TableColumn prefWidth="75.199951171875" text="Amount" />
-                        <TableColumn prefWidth="206.39990234375" text="Import Price" />
+                      <TableColumn fx:id="col_ID" prefWidth="88.00000303983688" text="Product ID" />
+                      <TableColumn fx:id="col_Name" prefWidth="364.80003356933594" text="Product" />
+                        <TableColumn fx:id="col_importDate" prefWidth="170.39996337890625" text="Date" />
+                        <TableColumn fx:id="col_Amount" prefWidth="75.199951171875" text="Amount" />
+                        <TableColumn fx:id="col_ImportPrice" prefWidth="206.39990234375" text="Import Price" />
                     </columns>
                   </TableView>
                </bottom>
@@ -95,7 +95,8 @@
                <right>
                   <HBox alignment="CENTER_RIGHT" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button mnemonicParsing="false" prefWidth="70.0" text="Submit" />
+                        <Button mnemonicParsing="false" onAction="#addProduct" prefWidth="70.0" text="Thêm SP" />
+                        <Button fx:id="button_Submit" mnemonicParsing="false" onAction="#submit" prefWidth="70.0" text="Submit" />
                      </children>
                      <padding>
                         <Insets right="20.0" />
@@ -105,8 +106,7 @@
                <left>
                   <HBox alignment="CENTER_LEFT" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button mnemonicParsing="false" prefWidth="70.0" text="Export" />
-                        <Button mnemonicParsing="false" prefWidth="70.0" text="Close" />
+                        <Button mnemonicParsing="false" onAction="#export" prefWidth="70.0" text="Export" />
                      </children>
                      <padding>
                         <Insets left="20.0" />

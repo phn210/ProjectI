@@ -131,4 +131,46 @@ public class ProductRepo {
 
         return brand;
     }
+
+    public List<Product> search(int id, String name, String type, String brand, boolean discount){
+        List<Product> list = new ArrayList<>();
+
+        String query = "select * from Product, " +
+                    "(select id, name from Type) as type, " +
+                    "(select id, name from Brand) as brand " +
+                    "where Product.type_id = type.id " +
+                    "and Product.brand_id = brand.id";
+
+        if(!(id == 0))
+            query = query + " and Product.id = " + id;
+        if(!name.equals(""))
+            query = query + " and Product.name like " + "N'%" + name + "%'";
+        if(!type.equals(""))
+            query = query + " and type.name like " + "N'%" + type + "%'";
+        if(!brand.equals(""))
+            query = query + " and brand.name like " + "N'%" + brand + "%'";
+        if(discount)
+            query = query + " and (discount = 0 or discount is null)";
+
+        try (Connection con = DBConnector.getConnection()){
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while(rs.next()){
+                Product product = new Product();
+                product.setId(rs.getInt("Product.id"));
+                product.setName(rs.getNString("Product.name"));
+                product.setDescription(rs.getNString("description"));
+                product.setRetailPrice(rs.getDouble("retail_price"));
+                product.setDiscount(rs.getInt("discount"));
+                product.setBrandID(rs.getInt("brand_id"));
+                product.setTypeID(rs.getInt("type_id"));
+                product.setAmount(rs.getInt("amount"));
+                list.add(product);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return list;
+    }
 }

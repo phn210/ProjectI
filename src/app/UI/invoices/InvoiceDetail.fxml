@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
+
 <AnchorPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.Products.ProductDetailController">
    <children>
       <BorderPane prefHeight="700.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -46,7 +47,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="209.0" spacing="10.0" GridPane.columnIndex="3">
                                  <children>
                                     <Label text="Brand" wrapText="true" />
-                                    <TextField fx:id="textFieldBrand" />
+                                    <TextField />
                                  </children>
                                  <padding>
                                     <Insets left="10.0" />
@@ -55,7 +56,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="224.0" spacing="10.0" GridPane.columnIndex="1">
                                  <children>
                                     <Label text="Name" wrapText="true" />
-                                    <TextField fx:id="textField_Name" prefHeight="26.0" prefWidth="218.0" />
+                                    <TextField prefHeight="26.0" prefWidth="218.0" />
                                  </children>
                                  <padding>
                                     <Insets left="10.0" />
@@ -64,7 +65,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="152.0" spacing="10.0">
                                  <children>
                                     <Label text="ID" wrapText="true" />
-                                    <TextField fx:id="textField_ID" prefHeight="26.0" prefWidth="75.0" />
+                                    <TextField prefHeight="26.0" prefWidth="75.0" />
                                  </children>
                                  <padding>
                                     <Insets left="15.0" />
@@ -73,7 +74,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="2">
                                  <children>
                                     <Label text="Type" wrapText="true" />
-                                    <TextField fx:id="textField_Type" />
+                                    <TextField />
                                  </children>
                                  <padding>
                                     <Insets left="10.0" />
@@ -102,7 +103,7 @@
                                     <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                                        <children>
                                           <Label text="Retail Price" wrapText="true" />
-                                          <TextField fx:id="textFieldPrice" />
+                                          <TextField />
                                        </children>
                                        <padding>
                                           <Insets right="15.0" />
@@ -111,7 +112,7 @@
                                     <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="1">
                                        <children>
                                           <Label text="Discount" wrapText="true" />
-                                          <TextField fx:id="textField_Discount" />
+                                          <TextField />
                                        </children>
                                        <padding>
                                           <Insets right="15.0" />
@@ -122,7 +123,7 @@
                               <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                                  <children>
                                     <Label prefHeight="34.0" prefWidth="96.0" text="Description" wrapText="true" />
-                                    <TextArea fx:id="textArea_Description" prefHeight="80.0" prefWidth="550.0" />
+                                    <TextArea prefHeight="80.0" prefWidth="550.0" />
                                  </children>
                                  <padding>
                                     <Insets bottom="10.0" left="15.0" top="10.0" />
@@ -134,13 +135,13 @@
                   </GridPane>
                </top>
                <bottom>
-                  <TableView fx:id="table_ImportRecord" prefHeight="392.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+                  <TableView prefHeight="392.0" prefWidth="900.0" BorderPane.alignment="CENTER">
                     <columns>
-                      <TableColumn fx:id="col_ID" prefWidth="116.80001986026764" text="Import ID" />
-                      <TableColumn fx:id="col_Supplier" prefWidth="311.99999237060547" text="Supplier" />
-                        <TableColumn fx:id="col_Date" prefWidth="189.60000610351562" text="Date" />
-                        <TableColumn fx:id="col_Amount" prefWidth="75.199951171875" text="Amount" />
-                        <TableColumn fx:id="col_ImportPrice" prefWidth="206.39990234375" text="Import Price" />
+                      <TableColumn prefWidth="116.80001986026764" text="Import ID" />
+                      <TableColumn prefWidth="311.99999237060547" text="Supplier" />
+                        <TableColumn prefWidth="189.60000610351562" text="Date" />
+                        <TableColumn prefWidth="75.199951171875" text="Amount" />
+                        <TableColumn prefWidth="206.39990234375" text="Import Price" />
                     </columns>
                   </TableView>
                </bottom>
@@ -151,8 +152,8 @@
                <right>
                   <HBox alignment="CENTER_RIGHT" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="button_Delete" mnemonicParsing="false" onAction="#delete" prefHeight="26.0" prefWidth="70.0" text="Xóa" />
-                        <Button fx:id="buttonSubmit" mnemonicParsing="false" onAction="#submit" prefWidth="70.0" text="Submit" />
+                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Delete" />
+                        <Button mnemonicParsing="false" prefWidth="70.0" text="Submit" />
                      </children>
                      <padding>
                         <Insets right="20.0" />
@@ -162,7 +163,8 @@
                <left>
                   <HBox alignment="CENTER_LEFT" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="button_Export" mnemonicParsing="false" onAction="#export" prefWidth="70.0" text="Xuất file" />
+                        <Button mnemonicParsing="false" prefWidth="70.0" text="Export" />
+                        <Button mnemonicParsing="false" prefWidth="70.0" text="Close" />
                      </children>
                      <padding>
                         <Insets left="20.0" />

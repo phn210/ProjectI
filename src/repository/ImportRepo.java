@@ -57,4 +57,54 @@ public class ImportRepo {
 
         return importDetail;
     }
+
+    public List<String> getAllSupplierName(){
+        List<String> list = new ArrayList<>();
+
+        String query = "select name from Supplier";
+
+        try (Connection con = DBConnector.getConnection()){
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while(rs.next()){
+                list.add(rs.getNString("name"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public List<Import> search(int id, String supplier, Date importDate){
+        List<Import> list = new ArrayList<>();
+
+        String query = "select * from Import, (select id, name from Supplier) as supplier " +
+                    "where Import.supplier_id  = supplier.id";
+
+        if(!(id == 0))
+            query = query + " and Import.id = " + id;
+        if(!supplier.equals(""))
+            query = query + " and supplier.name like " + "N'%" + supplier + "%'";
+        if(!importDate.equals(null))
+            query = query + " and type.name = " + "'%" + importDate + "%'";
+
+        try (Connection con = DBConnector.getConnection()){
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                Import imprt = new Import();
+                imprt.setId(rs.getInt("Import.id"));
+                imprt.setSupplierID(rs.getInt("supplier_id"));
+                imprt.setImportDate(rs.getDate("import_date"));
+                imprt.setTotalMoney(rs.getDouble("total_money"));
+                list.add(imprt);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return list;
+    }
 }

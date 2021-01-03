@@ -6,12 +6,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import model.entity.Import;
 import model.entity.Product;
 import repository.ImportRepo;
@@ -19,6 +16,7 @@ import repository.ProductRepo;
 
 import java.net.URL;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -67,13 +65,16 @@ public class ProductController implements Initializable {
     private TableColumn<Import, Double> col_TotalMoney;
 
     @FXML
+    private GridPane searchPane_Products;
+
+    @FXML
     private TextField textField_Name;
 
     @FXML
     private TextField textField_Brand;
 
     @FXML
-    private ComboBox<Integer> comboBox_ID;
+    private ComboBox<Integer> comboBox_ProductID;
 
     @FXML
     private ComboBox<String> comboBox_Type;
@@ -81,12 +82,25 @@ public class ProductController implements Initializable {
     @FXML
     private CheckBox checkBox_Discount;
 
+    @FXML
+    private GridPane searchPane_Imports;
+
+    @FXML
+    private ComboBox<Integer> comboBox_ImportID;
+
+    @FXML
+    private ComboBox<String> comboBox_Supplier;
+
+    @FXML
+    private DatePicker datePicker_ImportDate;
+
     //mode = 0: product
     //mode = 1: import
     private int mode;
 
     private ObservableList<Integer> idObservableList;
     private ObservableList<String> typeObservableList;
+    private ObservableList<String> supplierObservableList;
     private ObservableList<Product> productObservableList;
     private ObservableList<Import> importObservableList;
 
@@ -116,29 +130,63 @@ public class ProductController implements Initializable {
         col_Date.setCellValueFactory(new PropertyValueFactory<>("importDate"));
         col_TotalMoney.setCellValueFactory(new PropertyValueFactory<>("totalMoney"));
 
-        this.updateTableProduct();
+        this.updateTabProduct();
     }
 
-    public void updateTableProduct(){
+    public void updateTabProduct(){
+        searchPane_Products.setVisible(true);
+        searchPane_Imports.setVisible(false);
+
         List<Product> products = productRepo.getAllProduct();
         productObservableList = FXCollections.observableList(products);
         table_Product.setItems(productObservableList);
+
+        List<Integer> idList = new ArrayList<>();
+        for (Product product : products){
+            idList.add(product.getId());
+        }
+        idObservableList = FXCollections.observableList(idList);
+        comboBox_ProductID.setItems(idObservableList);
+
+        typeObservableList = FXCollections.observableList(productRepo.getAllTypeName());
+        comboBox_Type.setItems(typeObservableList);
     }
 
-    public void updateTableImport(){
+    public void updateTabImport(){
+        searchPane_Products.setVisible(false);
+        searchPane_Imports.setVisible(true);
+
         List<Import> imports = importRepo.getAllImport();
         importObservableList = FXCollections.observableList(imports);
         table_Import.setItems(importObservableList);
+
+        List<Integer> idList = new ArrayList<>();
+        for (Import imprt : imports){
+            idList.add(imprt.getId());
+        }
+        idObservableList = FXCollections.observableList(idList);
+        comboBox_ImportID.setItems(idObservableList);
+
+        supplierObservableList = FXCollections.observableList(importRepo.getAllSupplierName());
+        comboBox_Supplier.setItems(supplierObservableList);
     }
 
     @FXML
     void checkDetail(ActionEvent event) {
+        if (mode == 0){
 
+        } else if (mode == 1){
+
+        }
     }
 
     @FXML
     void export(ActionEvent event) {
+        if (mode == 0){
 
+        } else if (mode == 1){
+
+        }
     }
 
     @FXML
@@ -148,27 +196,59 @@ public class ProductController implements Initializable {
 
     @FXML
     void importFile(ActionEvent event) {
+        if (mode == 0){
 
+        } else if (mode == 1){
+
+        }
     }
 
     @FXML
     void importManually(ActionEvent event) {
+        if (mode == 0){
 
+        } else if (mode == 1){
+
+        }
     }
 
     @FXML
     void selectedImport(ActionEvent event) {
         this.mode = 1;
+        updateTabImport();
     }
 
     @FXML
     void selectedProduct(ActionEvent event) {
         this.mode = 0;
+        updateTabImport();
     }
 
     @FXML
     void search(ActionEvent event){
-        
+        if(mode == 0){
+            int id = comboBox_ProductID.getValue();
+            String name = textField_Name.getText();
+            String type = comboBox_Type.getValue();
+            String brand = textField_Brand.getText();
+            boolean discount = checkBox_Discount.isSelected();
+
+            List<Product> list = productRepo.search(id, name, type, brand, discount);
+            productObservableList = FXCollections.observableList(list);
+            table_Product.setItems(productObservableList);
+
+        } else if(mode == 1){
+            int id = comboBox_ImportID.getValue();
+            String supplier = comboBox_Supplier.getValue();
+            Date importDate = null;
+            try {
+                importDate = Date.valueOf(datePicker_ImportDate.getValue());
+            } catch (NullPointerException e){}
+
+            List<Import> list = importRepo.search(id, supplier, importDate);
+            importObservableList = FXCollections.observableList(list);
+            table_Import.setItems(importObservableList);
+        }
     }
 
 
