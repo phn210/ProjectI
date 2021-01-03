@@ -153,7 +153,7 @@
                   <HBox alignment="CENTER_RIGHT" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
                         <Button fx:id="button_Delete" mnemonicParsing="false" onAction="#delete" prefHeight="26.0" prefWidth="70.0" text="Xóa" />
-                        <Button fx:id="buttonSubmit" mnemonicParsing="false" onAction="#submit" prefWidth="70.0" text="Submit" />
+                        <Button fx:id="button_Submit" mnemonicParsing="false" onAction="#submit" prefWidth="70.0" text="Submit" />
                      </children>
                      <padding>
                         <Insets right="20.0" />

@@ -39,25 +39,6 @@ public class ProductRepo {
         return list;
     }
 
-    public List<String> getAllTypeName(){
-        List<String> list = new ArrayList<>();
-
-        String query = "select name from Type";
-
-        try (Connection con = DBConnector.getConnection()){
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            while(rs.next()){
-                list.add(rs.getNString("name"));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return list;
-    }
-
     public List<ImportDetail> getImportDetails(Product product){
         List<ImportDetail> list = new ArrayList<>();
 
@@ -82,54 +63,6 @@ public class ProductRepo {
         }
 
         return list;
-    }
-
-    public Type getType(Product product){
-        Type type = new Type();
-
-        String query = "select * from Type " +
-                    "where id = ?";
-
-        try (Connection con = DBConnector.getConnection()){
-            PreparedStatement pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, product.getTypeID());
-            ResultSet rs = pstmt.executeQuery();
-
-            if(rs.isBeforeFirst()){
-                rs.next();
-                type.setId(rs.getInt("id"));
-                type.setName(rs.getNString("name"));
-                type.setDescription(rs.getNString("description"));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return type;
-    }
-
-    public Brand getBrand(Product product){
-        Brand brand = new Brand();
-
-        String query = "select * from Brand " +
-                    "where id = ?";
-
-        try (Connection con = DBConnector.getConnection()){
-            PreparedStatement pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, product.getBrandID());
-            ResultSet rs = pstmt.executeQuery();
-
-            if(rs.isBeforeFirst()){
-                rs.next();
-                brand.setId(rs.getInt("id"));
-                brand.setName(rs.getNString("name"));
-                brand.setCountry(rs.getNString("country"));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return brand;
     }
 
     public List<Product> search(int id, String name, String type, String brand, boolean discount){

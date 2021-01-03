@@ -11,8 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import model.entity.Import;
 import model.entity.Product;
-import repository.ImportRepo;
-import repository.ProductRepo;
+import repository.*;
 
 import java.net.URL;
 import java.sql.Date;
@@ -112,10 +111,16 @@ public class ProductController implements Initializable {
 
     private ProductRepo productRepo;
     private ImportRepo importRepo;
+    private TypeRepo typeRepo;
+    private BrandRepo brandRepo;
+    private SupplierRepo supplierRepo;
 
     public ProductController(){
         this.productRepo = new ProductRepo();
         this.importRepo = new ImportRepo();
+        this.brandRepo = new BrandRepo();
+        this.typeRepo = new TypeRepo();
+        this.supplierRepo = new SupplierRepo();
         this.mode = 0;
     }
 
@@ -124,8 +129,8 @@ public class ProductController implements Initializable {
 
         col_ID.setCellValueFactory(new PropertyValueFactory<>("id"));
         col_Name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        col_Type.setCellValueFactory(t -> new ReadOnlyObjectWrapper<>(productRepo.getType(t.getValue()).getName()));
-        col_Brand.setCellValueFactory(t -> new ReadOnlyObjectWrapper<>(productRepo.getBrand(t.getValue()).getName()));
+        col_Type.setCellValueFactory(t -> new ReadOnlyObjectWrapper<>(typeRepo.getType(t.getValue()).getName()));
+        col_Brand.setCellValueFactory(t -> new ReadOnlyObjectWrapper<>(brandRepo.getBrand(t.getValue()).getName()));
         col_Amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         col_Description.setCellValueFactory(new PropertyValueFactory<>("description"));
         col_Price.setCellValueFactory(new PropertyValueFactory<>("retailPrice"));
@@ -154,7 +159,7 @@ public class ProductController implements Initializable {
         idObservableList = FXCollections.observableList(idList);
         comboBox_ProductID.setItems(idObservableList);
 
-        typeObservableList = FXCollections.observableList(productRepo.getAllTypeName());
+        typeObservableList = FXCollections.observableList(typeRepo.getAllTypeName());
         comboBox_Type.setItems(typeObservableList);
     }
 
@@ -173,7 +178,7 @@ public class ProductController implements Initializable {
         idObservableList = FXCollections.observableList(idList);
         comboBox_ImportID.setItems(idObservableList);
 
-        supplierObservableList = FXCollections.observableList(importRepo.getAllSupplierName());
+        supplierObservableList = FXCollections.observableList(supplierRepo.getAllSupplierName());
         comboBox_Supplier.setItems(supplierObservableList);
     }
 

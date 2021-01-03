@@ -2,6 +2,7 @@ package repository;
 
 import model.entity.Import;
 import model.entity.ImportDetail;
+import model.entity.Supplier;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -34,8 +35,8 @@ public class ImportRepo {
         return list;
     }
 
-    public ImportDetail getImportDetail(Import imprt){
-        ImportDetail importDetail = new ImportDetail();
+    public List<ImportDetail> getImportDetail(Import imprt){
+        List<ImportDetail> list = new ArrayList<>();
 
         String query = "select * from Import_Detail " +
                     "where import_id = ?";
@@ -44,31 +45,13 @@ public class ImportRepo {
             pstmt.setInt(1, imprt.getId());
             ResultSet rs = pstmt.executeQuery();
 
-            if (rs.isBeforeFirst()) {
-                rs.next();
+            while (rs.next()) {
+                ImportDetail importDetail = new ImportDetail();
                 importDetail.setImportID(rs.getInt("import_id"));
                 importDetail.setProductID(rs.getInt("product_id"));
                 importDetail.setAmount(rs.getInt("amount"));
                 importDetail.setImportPrice(rs.getDouble("import_price"));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return importDetail;
-    }
-
-    public List<String> getAllSupplierName(){
-        List<String> list = new ArrayList<>();
-
-        String query = "select name from Supplier";
-
-        try (Connection con = DBConnector.getConnection()){
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            while(rs.next()){
-                list.add(rs.getNString("name"));
+                list.add(importDetail);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
