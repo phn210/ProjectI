@@ -12,6 +12,29 @@ public class TypeRepo {
 
     }
 
+    public List<Type> getAllType(){
+        List<Type> list = new ArrayList<>();
+
+        String query = "select * from Type";
+
+        try (Connection con = DBConnector.getConnection()){
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while(rs.next()){
+                Type type = new Type();
+                type.setId(rs.getInt("id"));
+                type.setName(rs.getNString("name"));
+                type.setDescription(rs.getNString("description"));
+                list.add(type);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return list;
+    }
+
     public List<String> getAllTypeName(){
         List<String> list = new ArrayList<>();
 

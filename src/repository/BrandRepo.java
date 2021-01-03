@@ -3,14 +3,55 @@ package repository;
 import model.entity.Brand;
 import model.entity.Product;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BrandRepo {
     public BrandRepo(){
 
+    }
+
+    public List<Brand> getAllBrand(){
+        List<Brand> list = new ArrayList<>();
+
+        String query = "select * from Brand";
+
+        try (Connection con = DBConnector.getConnection()){
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while(rs.next()){
+                Brand brand = new Brand();
+                brand.setId(rs.getInt("id"));
+                brand.setName(rs.getNString("name"));
+                brand.setCountry(rs.getNString("country"));
+                list.add(brand);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public List<String> getAllBrandName(){
+        List<String> list = new ArrayList<>();
+
+        String query = "select name from Brand";
+
+        try (Connection con = DBConnector.getConnection()){
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while(rs.next()){
+                list.add(rs.getNString("name"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return list;
     }
 
     public Brand getBrand(Product product){

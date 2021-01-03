@@ -60,6 +60,30 @@ public class ImportRepo {
         return list;
     }
 
+    public Import getImport(ImportDetail importDetail){
+        Import imprt = new Import();
+
+        String query = "select * from Import " +
+                    "where id = ?";
+        try (Connection con = DBConnector.getConnection()){
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, importDetail.getImportID());
+            ResultSet rs = pstmt.executeQuery();
+
+            if(rs.isBeforeFirst()){
+                rs.next();
+                imprt.setId(rs.getInt("id"));
+                imprt.setSupplierID(rs.getInt("supplier"));
+                imprt.setImportDate(rs.getDate("import_date"));
+                imprt.setTotalMoney(rs.getDouble("total_money"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return imprt;
+    }
+
     public List<Import> search(int id, String supplier, Date importDate){
         List<Import> list = new ArrayList<>();
 

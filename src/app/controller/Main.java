@@ -49,14 +49,6 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void newScence(String fileName, String title) throws FileNotFoundException {
-        Parent root = getView(fileName);
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setTitle(title);
-        stage.show();
-    }
-
     public static void exportNoti(boolean res){
         if (res){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
