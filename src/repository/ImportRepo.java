@@ -87,15 +87,16 @@ public class ImportRepo {
     public List<Import> search(int id, String supplier, Date importDate){
         List<Import> list = new ArrayList<>();
 
-        String query = "select * from Import, (select id, name from Supplier) as supplier " +
-                    "where Import.supplier_id  = supplier.id";
+        String query = "select * from Import, (select id as s_id, " +
+                    "name as s_name from Supplier) as supplier " +
+                    "where Import.supplier_id  = supplier.s_id";
 
         if(!(id == 0))
             query = query + " and Import.id = " + id;
-        if(!supplier.equals(""))
-            query = query + " and supplier.name like " + "N'%" + supplier + "%'";
-        if(!importDate.equals(null))
-            query = query + " and type.name = " + "'%" + importDate + "%'";
+        if(!(supplier == null))
+            query = query + " and supplier.s_name like " + "N'%" + supplier + "%'";
+        if(!(importDate == null))
+            query = query + " and import_date = " + "'%" + importDate + "%'";
 
         try (Connection con = DBConnector.getConnection()){
             Statement stmt = con.createStatement();
@@ -103,7 +104,7 @@ public class ImportRepo {
 
             while (rs.next()) {
                 Import imprt = new Import();
-                imprt.setId(rs.getInt("Import.id"));
+                imprt.setId(rs.getInt("id"));
                 imprt.setSupplierID(rs.getInt("supplier_id"));
                 imprt.setImportDate(rs.getDate("import_date"));
                 imprt.setTotalMoney(rs.getDouble("total_money"));

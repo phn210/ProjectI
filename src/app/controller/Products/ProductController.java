@@ -238,9 +238,15 @@ public class ProductController implements Initializable {
     @FXML
     void search(ActionEvent event){
         if(mode == 0){
-            int id = comboBox_ProductID.getValue();
+            int id = 0;
+            try {
+                id = comboBox_ProductID.getValue().intValue();
+            } catch (NullPointerException e){}
             String name = textField_Name.getText();
-            String type = comboBox_Type.getValue();
+            String type = new String();
+            try {
+                type = comboBox_Type.getValue();
+            } catch (NullPointerException e) {}
             String brand = textField_Brand.getText();
             boolean discount = checkBox_Discount.isSelected();
 
@@ -249,8 +255,14 @@ public class ProductController implements Initializable {
             table_Product.setItems(productObservableList);
 
         } else if(mode == 1){
-            int id = comboBox_ImportID.getValue();
-            String supplier = comboBox_Supplier.getValue();
+            int id = 0;
+            try {
+                id = comboBox_ImportID.getValue().intValue();
+            } catch (NullPointerException e) {}
+            String supplier = new String();
+            try {
+                supplier = comboBox_Supplier.getValue();
+            } catch (NullPointerException e){}
             Date importDate = null;
             try {
                 importDate = Date.valueOf(datePicker_ImportDate.getValue());

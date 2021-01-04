@@ -166,21 +166,21 @@ public class ProductRepo {
         List<Product> list = new ArrayList<>();
 
         String query = "select * from Product, " +
-                    "(select id, name from Type) as type, " +
-                    "(select id, name from Brand) as brand " +
-                    "where Product.type_id = type.id " +
-                    "and Product.brand_id = brand.id";
+                    "(select id as t_id, name as t_name from Type) as type, " +
+                    "(select id as b_id, name as b_name from Brand) as brand " +
+                    "where Product.type_id = type.t_id " +
+                    "and Product.brand_id = brand.b_id";
 
         if(!(id == 0))
             query = query + " and Product.id = " + id;
         if(!name.equals(""))
             query = query + " and Product.name like " + "N'%" + name + "%'";
-        if(!type.equals(""))
-            query = query + " and type.name like " + "N'%" + type + "%'";
+        if(!(type == null))
+            query = query + " and type.t_name like " + "N'%" + type + "%'";
         if(!brand.equals(""))
-            query = query + " and brand.name like " + "N'%" + brand + "%'";
+            query = query + " and brand.b_name like " + "N'%" + brand + "%'";
         if(discount)
-            query = query + " and (discount = 0 or discount is null)";
+            query = query + " and (discount > 0 or discount is not null)";
 
         try (Connection con = DBConnector.getConnection()){
             Statement stmt = con.createStatement();
@@ -188,8 +188,8 @@ public class ProductRepo {
 
             while(rs.next()){
                 Product product = new Product();
-                product.setId(rs.getInt("Product.id"));
-                product.setName(rs.getNString("Product.name"));
+                product.setId(rs.getInt("id"));
+                product.setName(rs.getNString("name"));
                 product.setDescription(rs.getNString("description"));
                 product.setRetailPrice(rs.getDouble("retail_price"));
                 product.setDiscount(rs.getInt("discount"));
