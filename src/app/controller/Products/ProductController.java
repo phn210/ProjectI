@@ -1,18 +1,25 @@
 package app.controller.Products;
 
+import app.controller.Main;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import model.entity.Import;
+import model.entity.ImportDetail;
 import model.entity.Product;
 import repository.*;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -183,11 +190,34 @@ public class ProductController implements Initializable {
     }
 
     @FXML
-    void checkDetail(ActionEvent event) {
+    void checkDetail(ActionEvent event) throws IOException {
         if (mode == 0){
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/products/ProductDetail.fxml"));
+            Parent root = loader.load();
+            ProductDetailController productDetailController = loader.getController();
+            try {
+                productDetailController.initialize(table_Product.getSelectionModel().getSelectedItem());
+            } catch(NullPointerException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("Vui lòng chọn sản phẩm!");
+                alert.setHeaderText("Warning!");
+                alert.show();
+            }
 
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Thông tin sản phẩm");
+            stage.show();
         } else if (mode == 1){
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/products/ImportDetail.fxml"));
+            Parent root = loader.load();
+            ImportDetailController importDetailController = loader.getController();
 
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Thông tin đơn nhập");
+            stage.show();
         }
     }
 
@@ -206,7 +236,7 @@ public class ProductController implements Initializable {
     }
 
     @FXML
-    void importFile(ActionEvent event) {
+    void importFile(ActionEvent event){
         if (mode == 0){
 
         } else if (mode == 1){
@@ -215,11 +245,27 @@ public class ProductController implements Initializable {
     }
 
     @FXML
-    void importManually(ActionEvent event) {
+    void importManually(ActionEvent event) throws IOException {
         if (mode == 0){
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/products/ProductDetail.fxml"));
+            Parent root = loader.load();
+            ProductDetailController productDetailController = loader.getController();
+            productDetailController.initialize();
 
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Thông tin sản phẩm");
+            stage.show();
         } else if (mode == 1){
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/products/ImportDetail.fxml"));
+            Parent root = loader.load();
+            ImportDetailController importDetailController = loader.getController();
 
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Thông tin đơn nhập");
+            stage.show();
         }
     }
 

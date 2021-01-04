@@ -11,11 +11,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.entity.*;
 import repository.*;
 
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
@@ -106,8 +106,8 @@ public class ProductDetailController {
         textField_Amount.setText("0");
         textField_Amount.setEditable(false);
         textArea_Description.setEditable(true);
-        comboBox_Type.arm();
-        comboBox_Brand.arm();
+        comboBox_Type.setDisable(false);
+        comboBox_Brand.setDisable(false);
         button_Export.setVisible(false);
         button_Delete.setVisible(false);
         button_Submit.setText("Thêm");
@@ -143,8 +143,9 @@ public class ProductDetailController {
         textField_Name.setEditable(false);
         textField_Amount.setEditable(false);
         textArea_Description.setEditable(true);
-        comboBox_Type.disarm();
-        comboBox_Brand.disarm();
+        comboBox_Type.setDisable(true);
+        comboBox_Brand.setDisable(false);
+        comboBox_Type.setDisable(false);
         button_Export.setVisible(true);
         button_Delete.setVisible(true);
         button_Submit.setText("Cập nhật");
@@ -200,7 +201,7 @@ public class ProductDetailController {
     }
 
     @FXML
-    void detailBrand(MouseEvent event) throws IOException {
+    void handleBrand(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/UI/products/BrandDetail.fxml"));
             Parent root = loader.load();
@@ -222,7 +223,7 @@ public class ProductDetailController {
     }
 
     @FXML
-    void detailType(MouseEvent event) throws IOException {
+    void handleType(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/UI/products/TypeDetail.fxml"));
             Parent root = loader.load();
