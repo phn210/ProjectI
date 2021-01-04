@@ -20,7 +20,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/app/UI/Main.fxml"));
 
-        this.primaryStage.setTitle("Cong ty NNN - Nhom N07");
+        this.primaryStage.setTitle("Công ty NNN - Nhóm N07");
         this.primaryStage.setScene(new Scene(root));
         this.primaryStage.resizableProperty().setValue(false);
         this.primaryStage.show();
@@ -44,20 +44,20 @@ public class Main extends Application {
 
     public static void changeScene(Stage primaryStage, String fileName) throws Exception{
         Parent root = getView(fileName);
-        primaryStage.setTitle("Phần mềm quản lý thư viện - 20183602 - Phạm Hồ Nguyên");
+        primaryStage.setTitle("Công ty NNN - Nhóm N07");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 
-    public static void exportNoti(boolean res){
+    public static void resultNoti(boolean res){
         if (res){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Xuất file thành công!");
+            alert.setContentText("Thao tác thành công!");
             alert.setHeaderText("Completed!");
             alert.show();
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Có lỗi xảy ra, không thể xuất file!");
+            alert.setContentText("Có lỗi xảy ra, thay đổi không thể thực hiện!");
             alert.setHeaderText("Error!");
             alert.show();
         }

@@ -20,7 +20,7 @@
          <bottom>
             <HBox alignment="CENTER_RIGHT" spacing="15.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="buttonSubmit" mnemonicParsing="false" onAction="#submit" text="Button" />
+                  <Button fx:id="button_Submit" mnemonicParsing="false" onAction="#submit" text="Button" />
                </children>
                <padding>
                   <Insets bottom="10.0" right="50.0" top="10.0" />
