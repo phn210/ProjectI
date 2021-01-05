@@ -36,7 +36,7 @@
                         </Label>
                         <ImageView fitHeight="30.0" fitWidth="181.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../static/img/block.png" />
+                              <Image url="@../static/img/icon-lock.png" />
                            </image>
                            <HBox.margin>
                               <Insets />
@@ -50,7 +50,7 @@
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../static/img/home-icon-silhouette.png" />
+                              <Image url="@../static/img/icon-home.png" />
                            </image>
                         </ImageView>
                      </graphic>
