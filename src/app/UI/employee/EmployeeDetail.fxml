@@ -3,185 +3,158 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.product.ProductDetailController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.product.ProductController">
    <children>
-      <BorderPane prefHeight="700.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane prefHeight="760.0" prefWidth="1540.0" style="-fx-background-color: #b3e0ff;">
          <top>
-            <Label alignment="CENTER" prefHeight="87.0" prefWidth="470.0" text="Chi tiết sản phẩm" textAlignment="CENTER" BorderPane.alignment="CENTER" />
-         </top>
-         <center>
-            <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <top>
-                  <GridPane prefHeight="153.0" prefWidth="900.0" BorderPane.alignment="CENTER">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="71.5999969482422" minHeight="10.0" prefHeight="53.59999313354493" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="101.59999771118166" minHeight="10.0" prefHeight="100.0000068664551" vgrow="SOMETIMES" />
-                    </rowConstraints>
+            <BorderPane prefHeight="100.0" style="-fx-background-color: #e6f2ff;" styleClass="pane" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
+               <left>
+                  <HBox alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="1140.0" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <GridPane prefHeight="47.0" prefWidth="900.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="261.79998779296875" minWidth="10.0" prefWidth="79.79998168945312" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="404.2000045776367" minWidth="10.0" prefWidth="252.39999999999998" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="404.2000045776367" minWidth="10.0" prefWidth="122.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="362.0" minWidth="10.0" prefWidth="234.20002441406257" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="275.4000244140625" minWidth="10.0" prefWidth="217.60002441406243" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#checkDetail" prefHeight="94.0" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Sửa">
+                           <HBox.margin>
+                              <Insets bottom="5.0" top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button contentDisplay="TOP" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#checkDetail" prefHeight="94.0" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Xóa" />
+                        <Button contentDisplay="TOP" layoutX="148.0" layoutY="20.0" mnemonicParsing="false" onAction="#checkDetail" prefHeight="94.0" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Xuất file" />
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" top="5.0" />
+                     </padding>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+               </left>
+               <right>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="400.0" spacing="20.0" BorderPane.alignment="CENTER">
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                  </HBox>
+               </right>
+            </BorderPane>
+         </top>
+         <left>
+            <Pane prefWidth="1140.0" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
+               <children>
+                  <TableView fx:id="table_Employee" prefHeight="645.0" prefWidth="1146.0" stylesheets="@../../static/css/main.css">
+                     <columns>
+                        <TableColumn fx:id="col_ID" prefWidth="68.33333587646484" text="ID" />
+                        <TableColumn fx:id="col_Name" prefWidth="168.0" text="Họ và tên" />
+                        <TableColumn fx:id="col_Dob" prefWidth="118.39994812011719" text="Ngày sinh" />
+                        <TableColumn fx:id="col_Phone" prefWidth="145.60003662109375" text="Số điện thoại" />
+                        <TableColumn fx:id="col_Address" prefWidth="159.2000732421875" text="Địa chỉ" />
+                        <TableColumn fx:id="col_CitizenID" prefWidth="110.4000244140625" text="CMND" />
+                        <TableColumn fx:id="col_InsuranceID" prefWidth="158.4000244140625" text="Mã bảo hiểm" />
+                        <TableColumn fx:id="col_StartDate" minWidth="0.0" prefWidth="108.80010986328125" text="Ngày bắt đầu" />
+                        <TableColumn fx:id="col_Salary" prefWidth="106.0" text="Mức lương" />
+                     </columns>
+                  </TableView>
+               </children>
+            </Pane>
+         </left>
+         <right>
+            <Pane prefWidth="400.0" styleClass="pane" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
+               <children>
+                  <GridPane alignment="CENTER" prefHeight="660.0" prefWidth="400.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="111.8000244140625" minHeight="10.0" prefHeight="34.999975585937506" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="533.600048828125" minHeight="10.0" prefHeight="514.40009765625" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="210.79990234375003" minHeight="10.0" prefHeight="73.79990234374998" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <GridPane fx:id="searchPane_Products" alignment="CENTER" stylesheets="@../../static/css/main.css" GridPane.rowIndex="1">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.39990234375" minWidth="10.0" prefWidth="243.39990234375" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="123.39990234375" minWidth="10.0" prefWidth="22.60009765625" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
                            <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="224.0" spacing="10.0" GridPane.columnIndex="1">
-                                 <children>
-                                    <Label text="Name" wrapText="true" />
-                                    <TextField fx:id="textField_Name" prefHeight="26.0" prefWidth="194.0" />
-                                 </children>
+                              <Label text="Mức lương" GridPane.rowIndex="7">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="106.0" spacing="10.0">
-                                 <children>
-                                    <Label text="ID" wrapText="true" />
-                                    <TextField fx:id="textField_ID" prefHeight="26.0" prefWidth="39.0" />
-                                 </children>
+                              </Label>
+                              <Label prefHeight="26.0" prefWidth="207.0" text="ID:">
                                  <padding>
-                                    <Insets left="15.0" />
+                                    <Insets left="25.0" />
                                  </padding>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="3">
-                                 <children>
-                                    <Label text="Type" wrapText="true" />
-                                    <ComboBox fx:id="comboBox_Type" onAction="#selectType" onMouseClicked="#handleType" prefHeight="26.0" prefWidth="148.0" />
-                                 </children>
+                              </Label>
+                              <Label prefHeight="26.0" prefWidth="207.0" text="Họ và tên:" GridPane.rowIndex="1">
+                                 <padding>
+                                    <Insets left="25.0" />
+                                 </padding>
+                              </Label>
+                              <Label prefHeight="26.0" prefWidth="207.0" text="Ngày sinh:" GridPane.rowIndex="2">
+                                 <padding>
+                                    <Insets left="25.0" />
+                                 </padding>
+                              </Label>
+                              <Label prefHeight="26.0" prefWidth="207.0" text="SĐT:" GridPane.rowIndex="3">
+                                 <padding>
+                                    <Insets left="25.0" />
+                                 </padding>
+                              </Label>
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                              <Label prefHeight="26.0" prefWidth="207.0" text="CMND:" GridPane.rowIndex="4">
+                                 <padding>
+                                    <Insets left="25.0" />
+                                 </padding>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="26.0" prefWidth="207.0" GridPane.rowIndex="6" />
+                              <Label text="Mã bảo hiểm" GridPane.rowIndex="5">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="209.0" spacing="10.0" GridPane.columnIndex="4">
-                                 <children>
-                                    <Label text="Brand" wrapText="true" />
-                                    <ComboBox fx:id="comboBox_Brand" onAction="#selectBrand" onMouseClicked="#handleBrand" prefHeight="26.0" prefWidth="148.0" />
-                                 </children>
+                              </Label>
+                              <Label text="Ngày bắt đầu" GridPane.rowIndex="6">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="120.0" spacing="10.0" GridPane.columnIndex="2">
-                                 <children>
-                                    <Label text="Amount" wrapText="true" />
-                                    <TextField fx:id="textField_Amount" prefHeight="26.0" prefWidth="49.0" />
-                                 </children>
-                                 <padding>
-                                    <Insets left="15.0" />
-                                 </padding>
-                              </HBox>
-                           </children>
-                        </GridPane>
-                        <GridPane GridPane.rowIndex="1">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="668.799951171875" minWidth="10.0" prefWidth="641.6000366210938" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="443.60003662109375" minWidth="10.0" prefWidth="259.1999633789062" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <GridPane prefHeight="86.0" prefWidth="264.0" GridPane.columnIndex="1">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-                                       <children>
-                                          <Label text="Retail Price" wrapText="true" />
-                                          <TextField fx:id="textField_Price" />
-                                       </children>
-                                       <padding>
-                                          <Insets right="15.0" />
-                                       </padding>
-                                    </HBox>
-                                    <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="1">
-                                       <children>
-                                          <Label text="Discount" wrapText="true" />
-                                          <TextField fx:id="textField_Discount" />
-                                       </children>
-                                       <padding>
-                                          <Insets right="15.0" />
-                                       </padding>
-                                    </HBox>
-                                 </children>
-                              </GridPane>
-                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-                                 <children>
-                                    <Label prefHeight="34.0" prefWidth="96.0" text="Description" wrapText="true" />
-                                    <TextArea fx:id="textArea_Description" prefHeight="80.0" prefWidth="550.0" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="10.0" left="15.0" top="10.0" />
-                                 </padding>
-                              </HBox>
+                              </Label>
+                              <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <TextField fx:id="textField_Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="textField_Phone" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="comboBox_ID" editable="true" prefHeight="26.0" prefWidth="250.0" GridPane.columnIndex="1" />
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <TextField fx:id="textField_Age" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <DatePicker prefHeight="26.0" prefWidth="242.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <TextField fx:id="textField_CitizenID" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                      </children>
                   </GridPane>
-               </top>
-               <bottom>
-                  <TableView fx:id="table_ImportRecord" prefHeight="392.0" prefWidth="900.0" BorderPane.alignment="CENTER">
-                    <columns>
-                      <TableColumn fx:id="col_ID" prefWidth="116.80001986026764" text="Import ID" />
-                      <TableColumn fx:id="col_Supplier" prefWidth="311.99999237060547" text="Supplier" />
-                        <TableColumn fx:id="col_Date" prefWidth="189.60000610351562" text="Date" />
-                        <TableColumn fx:id="col_Amount" prefWidth="75.199951171875" text="Amount" />
-                        <TableColumn fx:id="col_ImportPrice" prefWidth="206.39990234375" text="Import Price" />
-                    </columns>
-                  </TableView>
-               </bottom>
-            </BorderPane>
-         </center>
-         <bottom>
-            <BorderPane prefHeight="58.0" prefWidth="900.0" BorderPane.alignment="CENTER">
-               <right>
-                  <HBox alignment="CENTER_RIGHT" spacing="20.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Button fx:id="button_Delete" mnemonicParsing="false" onAction="#delete" prefHeight="26.0" prefWidth="70.0" text="Xóa" />
-                        <Button fx:id="button_Submit" mnemonicParsing="false" onAction="#submit" prefWidth="70.0" text="Submit" />
-                     </children>
-                     <padding>
-                        <Insets right="20.0" />
-                     </padding>
-                  </HBox>
-               </right>
-               <left>
-                  <HBox alignment="CENTER_LEFT" spacing="20.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Button fx:id="button_Export" mnemonicParsing="false" onAction="#export" prefWidth="70.0" text="Xuất file" />
-                     </children>
-                     <padding>
-                        <Insets left="20.0" />
-                     </padding>
-                  </HBox>
-               </left>
-            </BorderPane>
-         </bottom>
+               </children>
+            </Pane>
+         </right>
       </BorderPane>
    </children>
 </AnchorPane>
