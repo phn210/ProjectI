@@ -24,8 +24,8 @@ public class BrandRepo extends BaseRepo<Brand>{
     @Override
     protected ArrayList<Brand> findAll() throws SQLException {
         String query = "select * from Brand";
-        PreparedStatement pstmt = prepare(query);
-        ResultSet rs = pstmt.executeQuery();
+        PreparedStatement preparedStatement = prepare(query);
+        ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
 

@@ -24,8 +24,8 @@ public class TypeRepo extends BaseRepo<Type>{
     @Override
     protected ArrayList<Type> findAll() throws SQLException {
         String query = "select * from Type";
-        PreparedStatement pstmt = prepare(query);
-        ResultSet rs = pstmt.executeQuery();
+        PreparedStatement preparedStatement = prepare(query);
+        ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
 
