@@ -1,4 +1,4 @@
-package app.controller.Products;
+package app.controller.product;
 
 import app.controller.Main;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -15,7 +15,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.entity.Import;
-import model.entity.ImportDetail;
 import model.entity.Product;
 import repository.*;
 
@@ -192,7 +191,7 @@ public class ProductController implements Initializable {
     @FXML
     void checkDetail(ActionEvent event) throws IOException {
         if (mode == 0){
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/products/ProductDetail.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/product/ProductDetail.fxml"));
             Parent root = loader.load();
             ProductDetailController productDetailController = loader.getController();
             try {
@@ -210,7 +209,7 @@ public class ProductController implements Initializable {
             stage.setTitle("Thông tin sản phẩm");
             stage.show();
         } else if (mode == 1){
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/products/ImportDetail.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/product/ImportDetail.fxml"));
             Parent root = loader.load();
             ImportDetailController importDetailController = loader.getController();
 
@@ -247,7 +246,7 @@ public class ProductController implements Initializable {
     @FXML
     void importManually(ActionEvent event) throws IOException {
         if (mode == 0){
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/products/ProductDetail.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/product/ProductDetail.fxml"));
             Parent root = loader.load();
             ProductDetailController productDetailController = loader.getController();
             productDetailController.initialize();
@@ -258,7 +257,7 @@ public class ProductController implements Initializable {
             stage.setTitle("Thông tin sản phẩm");
             stage.show();
         } else if (mode == 1){
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/products/ImportDetail.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/product/ImportDetail.fxml"));
             Parent root = loader.load();
             ImportDetailController importDetailController = loader.getController();
 

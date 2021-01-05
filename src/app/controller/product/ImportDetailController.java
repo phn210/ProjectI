@@ -1,4 +1,4 @@
-package app.controller.Products;
+package app.controller.product;
 
 public class ImportDetailController {
 }

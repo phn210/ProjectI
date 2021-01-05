@@ -55,11 +55,11 @@ public class CommonController {
     }
 
     public  void toHome(){
-        switchScene(makeScene("../UIhome/HomeUI.fxml"));
+        switchScene(makeScene("../UI/home/HomeUI.fxml"));
     }
 
     public void toProductTab(){
-
+        switchScene(makeScene("../UI/products/Products.fxml"));
     }
 
     public void toCustomerTab(){
