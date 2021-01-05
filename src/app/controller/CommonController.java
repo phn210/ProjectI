@@ -35,7 +35,7 @@ public class CommonController {
             alert.setHeaderText("Completed!");
             alert.show();
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Có lỗi xảy ra, thay đổi không thể thực hiện!");
             alert.setHeaderText("Error!");
             alert.show();
@@ -49,7 +49,7 @@ public class CommonController {
             alert.setHeaderText("Completed!");
             alert.show();
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(content);
             alert.setHeaderText("Error!");
             alert.show();
