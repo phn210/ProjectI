@@ -26,8 +26,8 @@ public class SupplierRepo extends BaseRepo<Supplier>{
     @Override
     protected ArrayList<Supplier> findAll() throws SQLException {
         String query = "select * from Supplier";
-        PreparedStatement pstmt = prepare(query);
-        ResultSet rs = pstmt.executeQuery();
+        PreparedStatement preparedStatement = prepare(query);
+        ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
 

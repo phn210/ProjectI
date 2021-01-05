@@ -29,7 +29,7 @@ public class EmployeeRepo extends BaseRepo<Employee>{
     protected ArrayList<Employee> findAll() throws SQLException {
         String sql = "SELECT * FROM Employee";
         PreparedStatement preparedStatement = prepare(sql);
-        ResultSet rs =preparedStatement.executeQuery();
+        ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
 }

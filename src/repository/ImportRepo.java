@@ -26,8 +26,8 @@ public class ImportRepo extends BaseRepo<Import>{
     @Override
     protected ArrayList<Import> findAll() throws SQLException {
         String query = "select * from import";
-        PreparedStatement pstmt = prepare(query);
-        ResultSet rs = pstmt.executeQuery();
+        PreparedStatement preparedStatement = prepare(query);
+        ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
 

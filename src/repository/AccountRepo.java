@@ -1,0 +1,28 @@
+package repository;
+
+import model.entity.Account;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public class AccountRepo extends BaseRepo<Account> {
+
+    @Override
+    protected Account getObject(ResultSet rs) throws SQLException {
+        Account account = new Account();
+        account.setEmployeeID(rs.getInt("employee_id"));
+        account.setUsername(rs.getString("username"));
+        account.setPassword(rs.getString("password"));
+        return account;
+    }
+
+    @Override
+    protected ArrayList<Account> findAll() throws SQLException {
+        String query = "select * from Account";
+        PreparedStatement preparedStatement = prepare(query);
+        ResultSet rs = preparedStatement.executeQuery();
+        return getList(rs);
+    }
+}

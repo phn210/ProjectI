@@ -28,8 +28,8 @@ public class ProductRepo extends BaseRepo<Product>{
     @Override
     protected ArrayList<Product> findAll() throws SQLException {
         String query = "select * from Product";
-        PreparedStatement pstmt = prepare(query);
-        ResultSet rs = pstmt.executeQuery();
+        PreparedStatement preparedStatement = prepare(query);
+        ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
 
