@@ -5,8 +5,11 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -25,6 +28,19 @@
                <left>
                   <HBox alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="1140.0" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
+                        <MenuButton contentDisplay="TOP" mnemonicParsing="false" prefHeight="94.0" prefWidth="113.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Hóa đơn">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#importManually" text="Thủ công" />
+                              <MenuItem mnemonicParsing="false" onAction="#importFile" text="File" />
+                           </items>
+                           <graphic>
+                              <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../static/img/add.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuButton>
                         <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#checkDetail" prefHeight="94.0" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Chi tiết">
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
@@ -48,6 +64,15 @@
                            <HBox.margin>
                               <Insets bottom="5.0" top="5.0" />
                            </HBox.margin>
+                        </Button>
+                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#quotation" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Báo giá">
+                           <graphic>
+                              <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../static/img/export.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Button>
                      </children>
                      <padding>
@@ -86,7 +111,7 @@
                   <TableView fx:id="table_Invoice" prefHeight="644.0" prefWidth="1146.0" stylesheets="@../../static/css/main.css">
                      <columns>
                         <TableColumn fx:id="col_ID" prefWidth="68.33333587646484" text="ID" />
-                        <TableColumn fx:id="col_Date" prefWidth="140.79998779296875" text="Ngày xuất" />
+                        <TableColumn fx:id="col_SoldDate" prefWidth="140.79998779296875" text="Ngày xuất" />
                         <TableColumn fx:id="col_Customer" prefWidth="170.40003967285156" text="Tên khách hàng" />
                         <TableColumn fx:id="col_Employee" prefWidth="184.79998779296875" text="Tên nhân viên" />
                         <TableColumn fx:id="col_PayMethod" prefWidth="183.20001220703125" text="Phương thức TT" />
@@ -143,11 +168,11 @@
                                  <padding>
                                     <Insets left="25.0" />
                                  </padding></Label>
-                              <Label prefHeight="26.0" prefWidth="207.0" text="Customer ID:" GridPane.rowIndex="2">
+                              <Label prefHeight="26.0" prefWidth="207.0" text="Customer Name:" GridPane.rowIndex="2">
                                  <padding>
                                     <Insets left="25.0" />
                                  </padding></Label>
-                              <Label prefHeight="26.0" prefWidth="207.0" text="Employee ID:" GridPane.rowIndex="3">
+                              <Label prefHeight="26.0" prefWidth="207.0" text="Employee Name:" GridPane.rowIndex="3">
                                  <padding>
                                     <Insets left="25.0" />
                                  </padding></Label>
@@ -157,10 +182,10 @@
                                  </padding></Label>
                               <Label alignment="CENTER" prefHeight="26.0" prefWidth="207.0" GridPane.rowIndex="6" />
                               <ComboBox fx:id="comboBox_ID" editable="true" prefHeight="26.0" prefWidth="250.0" GridPane.columnIndex="1" />
-                              <ComboBox fx:id="comboBox_Customer" editable="true" prefHeight="26.0" prefWidth="254.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <DatePicker fx:id="date_Sold" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <ComboBox fx:id="comboBox_Employee" editable="true" prefHeight="26.0" prefWidth="254.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <DatePicker fx:id="datePicker_SoldDate" prefHeight="26.0" prefWidth="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <ComboBox fx:id="comboBox_PayMethod" editable="true" prefHeight="26.0" prefWidth="254.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextField fx:id="textField_Customer" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="textField_Employee" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
                      </children>
