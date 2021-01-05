@@ -62,5 +62,13 @@ public class TypeRepo extends BaseRepo<Type> {
         return preparedStatement.executeUpdate() > 0;
     }
 
+    @Override
+    public int insert(Type type) throws SQLException{
+        return 0;
+    };
 
+    @Override
+    public int update(Type type) throws SQLException{
+        return 0;
+    };
 }

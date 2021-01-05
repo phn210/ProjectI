@@ -22,10 +22,20 @@ public class SalaryRepo extends BaseRepo<Salary>{
     }
 
     @Override
-    protected ArrayList<Salary> findAll() throws SQLException {
+    public ArrayList<Salary> findAll() throws SQLException {
         String query = "select * from Salary";
         PreparedStatement preparedStatement = prepare(query);
         ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
+
+    @Override
+    public int insert(Salary salary) throws SQLException{
+        return 0;
+    };
+
+    @Override
+    public int update(Salary salary) throws SQLException{
+        return 0;
+    };
 }

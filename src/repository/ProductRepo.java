@@ -44,6 +44,16 @@ public class ProductRepo extends BaseRepo<Product>{
         return getObject(rs);
     }
 
+    @Override
+    public int insert(Product product) throws SQLException{
+        return 0;
+    };
+
+    @Override
+    public int update(Product product) throws SQLException{
+        return 0;
+    };
+
     //--------------------------------------------------------------------------------
     
     public List<Product> getAllProduct() throws SQLException {

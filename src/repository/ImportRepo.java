@@ -41,6 +41,16 @@ public class ImportRepo extends BaseRepo<Import>{
         return getObject(rs);
     }
 
+    @Override
+    public int insert(Import anImport) throws SQLException{
+        return 0;
+    };
+
+    @Override
+    public int update(Import anImport) throws SQLException{
+        return 0;
+    };
+
     public List<Import> getAllImport() throws SQLException {
         String query = "select * from import";
         Statement stmt = prepare(query);

@@ -25,4 +25,14 @@ public class CustomerRepo extends BaseRepo<Customer>{
         ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
+
+    @Override
+    public int insert(Customer customer) throws SQLException{
+        return 0;
+    };
+
+    @Override
+    public int update(Customer customer) throws SQLException{
+        return 0;
+    };
 }

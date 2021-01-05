@@ -30,5 +30,7 @@ public abstract class BaseRepo<T> {
         return data;
     }
 
-    protected abstract ArrayList<T> findAll() throws SQLException;
+    public abstract ArrayList<T> findAll() throws SQLException;
+    public abstract  int insert(T t) throws SQLException;
+    public abstract  int update(T t) throws SQLException;
 }

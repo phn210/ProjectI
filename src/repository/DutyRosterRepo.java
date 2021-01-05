@@ -19,10 +19,20 @@ public class DutyRosterRepo extends BaseRepo<DutyRoster>{
     }
 
     @Override
-    protected ArrayList<DutyRoster> findAll() throws SQLException {
+    public ArrayList<DutyRoster> findAll() throws SQLException {
         String query = "select * from Duty_Roster";
         PreparedStatement preparedStatement = prepare(query);
         ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
+
+    @Override
+    public int insert(DutyRoster dutyRoster) throws SQLException{
+        return 0;
+    };
+
+    @Override
+    public int update(DutyRoster dutyRoster) throws SQLException{
+        return 0;
+    };
 }

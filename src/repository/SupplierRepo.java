@@ -43,6 +43,16 @@ public class SupplierRepo extends BaseRepo<Supplier>{
         return getObject(rs);
     }
 
+    @Override
+    public int insert(Supplier supplier) throws SQLException{
+        return 0;
+    };
+
+    @Override
+    public int update(Supplier supplier) throws SQLException{
+        return 0;
+    };
+
 
 
 

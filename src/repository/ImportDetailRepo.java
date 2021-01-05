@@ -1,5 +1,6 @@
 package repository;
 
+import javafx.stage.Stage;
 import model.entity.Import;
 import model.entity.ImportDetail;
 import model.entity.Product;
@@ -27,6 +28,16 @@ public class ImportDetailRepo extends BaseRepo<ImportDetail>{
         ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
+
+    @Override
+    public int insert(ImportDetail importDetail) throws SQLException{
+        return 0;
+    };
+
+    @Override
+    public int update(ImportDetail importDetail) throws SQLException{
+        return 0;
+    };
 
 
     public ArrayList<ImportDetail> getImportDetails(Product product) throws SQLException {

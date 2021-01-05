@@ -22,7 +22,7 @@ public class BrandRepo extends BaseRepo<Brand>{
     }
 
     @Override
-    protected ArrayList<Brand> findAll() throws SQLException {
+    public ArrayList<Brand> findAll() throws SQLException {
         String query = "select * from Brand";
         PreparedStatement preparedStatement = prepare(query);
         ResultSet rs = preparedStatement.executeQuery();
@@ -39,6 +39,16 @@ public class BrandRepo extends BaseRepo<Brand>{
         rs.first();
         return getObject(rs);
     }
+
+    @Override
+    public int insert(Brand brand) throws SQLException{
+        return 0;
+    };
+
+    @Override
+    public int update(Brand brand) throws SQLException{
+        return 0;
+    };
     
 
     public boolean insertBrand(Brand brand) throws SQLException {
@@ -62,6 +72,8 @@ public class BrandRepo extends BaseRepo<Brand>{
         pstmt.setInt(3, brand.getId());
         return pstmt.executeUpdate() > 0;
     }
+
+
 
 
 }

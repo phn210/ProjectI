@@ -219,7 +219,7 @@ public class ProductDetailController {
     @FXML
     void handleBrand(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/UI/products/BrandDetail.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/products/BrandDetail.fxml"));
             Parent root = loader.load();
             BrandDetailController brandDetailController = loader.getController();
 
@@ -241,7 +241,7 @@ public class ProductDetailController {
     @FXML
     void handleType(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/UI/products/TypeDetail.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/products/TypeDetail.fxml"));
             Parent root = loader.load();
             TypeDetailController typeDetailController = loader.getController();
 
@@ -268,13 +268,21 @@ public class ProductDetailController {
     @FXML
     void selectBrand(ActionEvent event) {
         int brandIndex = comboBox_Brand.getSelectionModel().getSelectedIndex();
-        this.brand = productsService.brandRepo.getAllBrandNam
+        try {
+            this.brand = productsService.brandRepo.findAll().get(brandIndex);
+        } catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        }
     }
 
     @FXML
     void selectType(ActionEvent event) {
         int typeIndex = comboBox_Type.getSelectionModel().getSelectedIndex();
-        this.type = typeRepo.getAllType().get(typeIndex);
+        try{
+            this.type = productsService.typeRepo.findAll().get(typeIndex);
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
     }
 
     @FXML
@@ -293,27 +301,27 @@ public class ProductDetailController {
             alert.show();
         } else {
             boolean res = false;
-            if (mode == 0){
-                product.setName(name);
-                product.setDescription(description);
-                if (retailPrice.equals("")) product.setRetailPrice(0.0);
-                else product.setRetailPrice(Double.parseDouble(retailPrice));
-                if (discount.equals("")) product.setDiscount(0);
-                else product.setDiscount(Integer.parseInt(discount));
-                product.setTypeID(this.type.getId());
-                product.setBrandID(this.brand.getId());
-
-                res = productRepo.addProduct(product);
-                if (res) button_Submit.setVisible(false);
-            } else if (mode == 1) {
-                product.setDescription(description);
-                if (retailPrice.equals("")) product.setRetailPrice(0.0);
-                else product.setRetailPrice(Double.parseDouble(retailPrice));
-                if (discount.equals("")) product.setDiscount(0);
-                else product.setDiscount(Integer.parseInt(discount));
-
-                res = productRepo.updateProduct(product);
-            }
+//            if (mode == 0){
+//                product.setName(name);
+//                product.setDescription(description);
+//                if (retailPrice.equals("")) product.setRetailPrice(0.0);
+//                else product.setRetailPrice(Double.parseDouble(retailPrice));
+//                if (discount.equals("")) product.setDiscount(0);
+//                else product.setDiscount(Integer.parseInt(discount));
+//                product.setTypeID(this.type.getId());
+//                product.setBrandID(this.brand.getId());
+//
+//                res = productRepo.addProduct(product);
+//                if (res) button_Submit.setVisible(false);
+//            } else if (mode == 1) {
+//                product.setDescription(description);
+//                if (retailPrice.equals("")) product.setRetailPrice(0.0);
+//                else product.setRetailPrice(Double.parseDouble(retailPrice));
+//                if (discount.equals("")) product.setDiscount(0);
+//                else product.setDiscount(Integer.parseInt(discount));
+//
+//                res = productRepo.updateProduct(product);
+//            }
             commonController.resultNoti(res);
         }
     }

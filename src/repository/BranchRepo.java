@@ -20,7 +20,7 @@ public class BranchRepo extends BaseRepo<Branch>{
     }
 
     @Override
-    protected ArrayList<Branch> findAll() throws SQLException {
+    public ArrayList<Branch> findAll() throws SQLException {
         String query = "select * from Branch";
         PreparedStatement preparedStatement = prepare(query);
         ResultSet rs = preparedStatement.executeQuery();
@@ -34,4 +34,14 @@ public class BranchRepo extends BaseRepo<Branch>{
         resultSet.first();
         return getObject(resultSet);
     }
+
+    @Override
+    public int insert(Branch branch) throws SQLException{
+        return 0;
+    };
+
+    @Override
+    public int update(Branch branch) throws SQLException{
+        return 0;
+    };
 }

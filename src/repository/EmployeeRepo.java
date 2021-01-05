@@ -40,4 +40,14 @@ public class EmployeeRepo extends BaseRepo<Employee>{
         resultSet.first();
         return getObject(resultSet);
     }
+
+    @Override
+    public int insert(Employee employee) throws SQLException{
+        return 0;
+    };
+
+    @Override
+    public int update(Employee employee) throws SQLException{
+        return 0;
+    };
 }
