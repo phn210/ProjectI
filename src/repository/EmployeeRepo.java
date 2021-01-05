@@ -26,7 +26,7 @@ public class EmployeeRepo extends BaseRepo<Employee>{
     }
 
     @Override
-    protected ArrayList<Employee> findAll() throws SQLException {
+    public ArrayList<Employee> findAll() throws SQLException {
         String sql = "SELECT * FROM Employee";
         PreparedStatement preparedStatement = prepare(sql);
         ResultSet rs = preparedStatement.executeQuery();

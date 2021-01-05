@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.product.ProductController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.employee.EmployeeController">
    <children>
       <BorderPane prefHeight="760.0" prefWidth="1540.0" style="-fx-background-color: #b3e0ff;">
          <top>
@@ -40,18 +40,6 @@
                               </ImageView>
                            </graphic>
                         </MenuButton>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#checkDetail" prefHeight="94.0" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Chi tiết">
-                           <graphic>
-                              <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../static/img/detail.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <HBox.margin>
-                              <Insets bottom="5.0" top="5.0" />
-                           </HBox.margin>
-                        </Button>
                         <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#export" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Xuất file">
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
@@ -96,20 +84,21 @@
             </BorderPane>
          </top>
          <left>
-            <Pane prefWidth="1140.0" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
+            <Pane fx:id="table" prefWidth="1140.0" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
                <children>
                   <TableView fx:id="table_Employee" prefHeight="645.0" prefWidth="1146.0" stylesheets="@../../static/css/main.css">
                      <columns>
-                        <TableColumn fx:id="col_ID" prefWidth="68.33333587646484" text="ID" />
-                        <TableColumn fx:id="col_Name" prefWidth="175.20001983642578" text="Họ và tên" />
-                        <TableColumn fx:id="col_Dob" prefWidth="116.79998779296875" text="Ngày sinh" />
-                        <TableColumn fx:id="col_Phone" prefWidth="139.19998168945312" text="Số điện thoại" />
-                        <TableColumn fx:id="col_Address" prefWidth="189.60000610351562" text="Địa chỉ" />
-                        <TableColumn fx:id="col_CitizenID" prefWidth="111.20001220703125" text="CMND" />
-                        <TableColumn fx:id="col_InsuranceID" prefWidth="123.99993896484375" text="Mã bảo hiểm" />
-                        <TableColumn fx:id="col_StartDate" minWidth="0.0" prefWidth="108.80010986328125" text="Ngày bắt đầu" />
-                        <TableColumn fx:id="col_Salary" prefWidth="109.5999755859375" text="Mức lương" />
+                        <TableColumn fx:id="idColumn" maxWidth="1000.0" prefWidth="68.33333587646484" text="ID" />
+                        <TableColumn fx:id="nameColumn" prefWidth="175.20001983642578" text="Họ và tên" />
+                        <TableColumn fx:id="dobColumn" prefWidth="116.79998779296875" text="Ngày sinh" />
+                        <TableColumn fx:id="phoneColumn" prefWidth="139.19998168945312" text="Số điện thoại" />
+                        <TableColumn fx:id="citizenIdColumn" prefWidth="111.20001220703125" text="CMND" />
+                        <TableColumn fx:id="roleColumn" prefWidth="109.5999755859375" text="Công việc" />
+                        <TableColumn fx:id="branchNameColumn" prefWidth="109.5999755859375" text="Chi nhánh" />
                      </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
                   </TableView>
                </children>
             </Pane>

@@ -55,6 +55,10 @@ public class HomeController implements Initializable {
         }
     }
 
+    public void toHome(){
+
+    }
+
     public void toProductTab(){
         try {
             mainPane.setBottom(commonController.getPane("/product/Products.fxml"));

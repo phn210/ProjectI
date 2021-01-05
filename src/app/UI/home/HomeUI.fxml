@@ -46,7 +46,7 @@
                         </HBox>
                     </right>
                     <left>
-                        <Button mnemonicParsing="false" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
+                        <Button mnemonicParsing="false" onAction="#toHome" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
                             <graphic>
                                 <ImageView fitHeight="30.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
