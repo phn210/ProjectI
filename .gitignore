@@ -1,4 +1,7 @@
 # IDE files
 .idea/
 out/
-src/repository/DBConnector.java
+
+#except
+!.idea/libraries
+
