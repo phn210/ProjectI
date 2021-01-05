@@ -3,6 +3,7 @@ package app.controller.customer;
 import app.controller.CommonController;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +17,7 @@ import model.form.EmployeeDetailForm;
 import service.customer.CustomerService;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CustomerController implements Initializable {
@@ -77,7 +79,12 @@ public class CustomerController implements Initializable {
     }
 
     private void loadData(){
-
+        try {
+            customerObservableList = FXCollections.observableArrayList(customerService.getAllCustomer());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        table.setItems(customerObservableList);
     }
 
 }

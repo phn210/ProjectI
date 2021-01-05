@@ -19,7 +19,7 @@ public class CustomerRepo extends BaseRepo<Customer>{
     }
 
     @Override
-    protected ArrayList<Customer> findAll() throws SQLException {
+    public ArrayList<Customer> findAll() throws SQLException {
         String query = "select * from Customer";
         PreparedStatement preparedStatement = prepare(query);
         ResultSet rs = preparedStatement.executeQuery();
