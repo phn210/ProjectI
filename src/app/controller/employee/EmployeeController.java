@@ -38,13 +38,13 @@ public class EmployeeController implements Initializable {
     TableView<EmployeeDetailForm> table;
 
     @FXML
-    TableColumn<EmployeeDetailForm, String> idColumn;
+    TableColumn<EmployeeDetailForm, Integer> idColumn;
 
     @FXML
     TableColumn<EmployeeDetailForm, String> nameColumn;
 
     @FXML
-    TableColumn<EmployeeDetailForm, String> dobColumn;
+    TableColumn<EmployeeDetailForm, Date> dobColumn;
 
     @FXML
     TableColumn<EmployeeDetailForm, String> phoneColumn;
