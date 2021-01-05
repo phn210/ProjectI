@@ -60,17 +60,15 @@ public class CommonController {
         }
     }
 
-    public  void toHome(Account account){
-        HomeController.account = account;
+    public  void toHome(){
         switchScene(makeScene("../UI/home/HomeUI.fxml"));
     }
 
     public Pane getPane(String fileName) throws IOException {
-        Pane pane = new Pane();
+        Pane pane;
         URL fileURL = getClass().getResource("../UI/" + fileName);
         FXMLLoader loader = new FXMLLoader();
         pane = loader.load(fileURL);
         return pane;
     }
-
 }

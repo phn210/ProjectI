@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import model.entity.Account;
 import model.form.EmployeeDetailForm;
 import service.home.HomeService;
@@ -17,6 +18,8 @@ import java.util.ResourceBundle;
 public class HomeController implements Initializable {
 
     public static Account account;
+
+    public static Pane userDetailPane;
 
     private HomeService homeService;
 
@@ -48,6 +51,7 @@ public class HomeController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         commonController = new CommonController();
         homeService = new HomeService();
+        mainPane.setBottom(userDetailPane);
         try {
             employeeDetailForm = homeService.getEmployeeDetail(account);
         } catch (SQLException throwables) {
@@ -56,7 +60,7 @@ public class HomeController implements Initializable {
     }
 
     public void toHome(){
-
+        mainPane.setBottom(userDetailPane);
     }
 
     public void toProductTab(){

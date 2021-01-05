@@ -2,6 +2,7 @@ package app.controller.login;
 
 import app.controller.CommonController;
 import app.controller.home.HomeController;
+import app.controller.home.UserDetail.UserDetailController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.entity.Account;
 import repository.AccountRepo;
@@ -51,21 +53,19 @@ public class LoginController implements Initializable {
         try {
             Account account = accountRepo.login(username, password);
             if(account != null){
-                Stage stage = (Stage)(((Node) event.getSource()).getScene().getWindow());
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("..\\..\\UI\\home\\HomeUI.fxml"));
-                try {
-                    Parent root = loader.load();
-                    HomeController homeController = loader.getController();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                HomeController.account = account;
+                UserDetailController.account = account;
+                Pane userDetailPane = commonController.getPane("home/UserDetail/UserDetail.fxml");
+                HomeController.userDetailPane = userDetailPane;
+                commonController.toHome();
             }else{
                 commonController.resultNoti(false,"Tài khoản hoặc mật khẩu không chính xác");
             }
         } catch (SQLException throwables){
             throwables.printStackTrace();
             commonController.resultNoti(false,"Tài khoản hoặc mật khẩu không chính xác");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

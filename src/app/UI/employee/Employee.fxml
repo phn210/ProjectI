@@ -106,7 +106,7 @@
                         <TableColumn fx:id="phoneColumn" prefWidth="139.19998168945312" text="Số điện thoại" />
                         <TableColumn fx:id="addressColumn" prefWidth="189.60000610351562" text="Địa chỉ" />
                         <TableColumn fx:id="citizenIdColumn" prefWidth="111.20001220703125" text="CMND" />
-                        <TableColumn fx:id="roleColumn" prefWidth="109.5999755859375" text="Công việc" />
+                        <TableColumn fx:id="roleColumn" prefWidth="109.5999755859375" text="Vai trò" />
                         <TableColumn fx:id="branchNameColumn" prefWidth="109.5999755859375" text="Chi nhánh" />
                      </columns>
                      <columnResizePolicy>
