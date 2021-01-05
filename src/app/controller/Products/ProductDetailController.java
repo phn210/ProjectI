@@ -1,6 +1,6 @@
 package app.controller.Products;
 
-import app.controller.Main;
+import app.controller.CommonController;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -197,7 +197,7 @@ public class ProductDetailController {
                 button_Submit.setVisible(false);
             }
         }
-        Main.resultNoti(res);
+        CommonController.resultNoti(res);
     }
 
     @FXML
@@ -298,7 +298,7 @@ public class ProductDetailController {
 
                 res = productRepo.updateProduct(product);
             }
-            Main.resultNoti(res);
+            CommonController.resultNoti(res);
         }
     }
 

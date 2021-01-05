@@ -1,6 +1,6 @@
 package app.controller.Products;
 
-import app.controller.Main;
+import app.controller.CommonController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -82,7 +82,7 @@ public class BrandDetailController {
                 this.brand.setCountry(country);
                 res = brandRepo.updateBrand(brand);
             }
-            Main.resultNoti(res);
+            CommonController.resultNoti(res);
 
         }
     }

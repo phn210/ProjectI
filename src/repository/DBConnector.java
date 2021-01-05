@@ -8,10 +8,12 @@ public class DBConnector {
     private static String user = "sa";
     private static String password = "sa";
 
-    public static Connection getConnection(){
+    public Connection getConnection(){
         try {
             connection = DriverManager.getConnection(connectionURL, user, password);
-            System.out.println("Connect successful");
+            if(connection!=null){
+                System.out.println("Connect successful");
+            }
         }
         catch(SQLException e){
             System.out.println("Some errors occurred!");
