@@ -6,23 +6,15 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import javafx.util.Callback;
-import model.entity.Employee;
 import model.form.EmployeeDetailForm;
 import service.employee.EmployeeService;
-import service.home.HomeService;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -108,7 +100,7 @@ public class EmployeeController implements Initializable {
 
     private void loadData(){
         try {
-            employeeDetailFormObservableList = FXCollections.observableArrayList(employeeService.getAllEmployees());
+            employeeDetailFormObservableList = FXCollections.observableArrayList(employeeService.getAllEmployee());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

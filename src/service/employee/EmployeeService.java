@@ -22,7 +22,7 @@ public class EmployeeService {
         accountRepo = new AccountRepo();
     }
 
-    public ArrayList<EmployeeDetailForm> getAllEmployees() throws SQLException {
+    public ArrayList<EmployeeDetailForm> getAllEmployee() throws SQLException {
         ArrayList<Employee> employeeArrayList = employeeRepo.findAll();
         ArrayList<EmployeeDetailForm> employeeDetailFormArrayList = new ArrayList<>();
         for (int i = 0; i < employeeArrayList.size(); i++) {
