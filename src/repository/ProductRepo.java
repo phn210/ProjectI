@@ -28,118 +28,54 @@ public class ProductRepo extends BaseRepo<Product>{
     @Override
     protected ArrayList<Product> findAll() throws SQLException {
         String query = "select * from Product";
-        PreparedStatement preparedStatement = prepare(query);
-        ResultSet rs = preparedStatement.executeQuery();
+        PreparedStatement pstmt = prepare(query);
+        ResultSet rs = pstmt.executeQuery();
         return getList(rs);
     }
 
     //--------------------------------------------------------------------------------
     
-    public List<Product> getAllProduct(){
+    public List<Product> getAllProduct() throws SQLException {
         List<Product> list = new ArrayList<>();
-
         String query = "select * from Product";
-
-        try(Connection con = DBConnector.getConnection()){
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            while(rs.next()){
-                Product product = new Product();
-                product.setId(rs.getInt("id"));
-                product.setName(rs.getNString("name"));
-                product.setDescription(rs.getNString("description"));
-                product.setRetailPrice(rs.getDouble("retail_price"));
-                product.setDiscount(rs.getInt("discount"));
-                product.setBrandID(rs.getInt("brand_id"));
-                product.setTypeID(rs.getInt("type_id"));
-                product.setAmount(rs.getInt("amount"));
-                list.add(product);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return list;
+        PreparedStatement stmt = prepare(query);
+        ResultSet rs = stmt.executeQuery();
+        return getList(rs);
     }
 
-    public List<ImportDetail> getImportDetails(Product product){
-        List<ImportDetail> list = new ArrayList<>();
-
+    public List<ImportDetail> getImportDetails(Product product) throws SQLException {
         String query = "select * from Import_Detail " +
                         "where product_id = ?";
-
-        try (Connection con = DBConnector.getConnection()){
-            PreparedStatement pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, product.getId());
-            ResultSet rs = pstmt.executeQuery();
-
-            while(rs.next()){
-                ImportDetail importDetail = new ImportDetail();
-                importDetail.setImportID(rs.getInt("import_id"));
-                importDetail.setProductID(rs.getInt("product_id"));
-                importDetail.setAmount(rs.getInt("amount"));
-                importDetail.setImportPrice(rs.getDouble("import_price"));
-                list.add(importDetail);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return list;
+        PreparedStatement stmt = prepare(query);
+        ResultSet rs = stmt.executeQuery();
+        return getList(rs);
     }
-    public Product getProduct(int id){
+    
+    public Product getProduct(int id) throws SQLException {
         Product product = new Product();
-
         String query = "select * from Product " +
                     "where id = " + id;
-        try (Connection con = DBConnector.getConnection()){
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            if(rs.isBeforeFirst()){
-                rs.next();
-                product.setId(rs.getInt("id"));
-                product.setName(rs.getNString("name"));
-                product.setDescription(rs.getNString("description"));
-                product.setRetailPrice(rs.getDouble("retail_price"));
-                product.setDiscount(rs.getInt("discount"));
-                product.setBrandID(rs.getInt("brand_id"));
-                product.setTypeID(rs.getInt("type_id"));
-                product.setAmount(rs.getInt("amount"));
-                return product;
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return product;
+        PreparedStatement stmt = prepare(query);
+        ResultSet rs = stmt.executeQuery();
+        rs.first();
+        return getObject(rs);
     }
 
-    public boolean addProduct(Product product){
+    public boolean addProduct(Product product) throws SQLException {
         String insert = "insert into Product(name, description, retail_price, " +
                         "discount, brand_id, type_id, amount) " +
                         "values (?, ?, ?, ?, ?, ?, 0)";
-        try (Connection con = DBConnector.getConnection()){
-            PreparedStatement pstmt = con.prepareStatement(insert);
-            pstmt.setNString(1, product.getName());
-            pstmt.setNString(2, product.getDescription());
-            pstmt.setDouble(3, product.getRetailPrice());
-            pstmt.setInt(4, product.getDiscount());
-            pstmt.setInt(5, product.getBrandID());
-            pstmt.setInt(6, product.getTypeID());
-
-            int n = pstmt.executeUpdate();
-            if(n>0) return true;
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return false;
+        PreparedStatement pstmt = prepare(insert);
+        pstmt.setNString(1, product.getName());
+        pstmt.setNString(2, product.getDescription());
+        pstmt.setDouble(3, product.getRetailPrice());
+        pstmt.setInt(4, product.getDiscount());
+        pstmt.setInt(5, product.getBrandID());
+        pstmt.setInt(6, product.getTypeID());
+        return pstmt.executeUpdate() > 0;
     }
 
-    public boolean updateProduct(Product product){
+    public boolean updateProduct(Product product) throws SQLException {
         String update = "update Product " +
                     "set name = ?," +
                     "description = ?, " +
@@ -148,8 +84,7 @@ public class ProductRepo extends BaseRepo<Product>{
                     "brand_id = ?, " +
                     "type_id = ? " +
                     "where id = ?";
-        try (Connection con = DBConnector.getConnection()){
-            PreparedStatement pstmt = con.prepareStatement(update);
+            PreparedStatement pstmt = prepare(update);
             pstmt.setNString(1, product.getName());
             pstmt.setNString(2, product.getDescription());
             pstmt.setDouble(3, product.getRetailPrice());
@@ -158,35 +93,19 @@ public class ProductRepo extends BaseRepo<Product>{
             pstmt.setInt(6, product.getTypeID());
             pstmt.setInt(7, product.getId());
 
-            pstmt.executeUpdate();
-            return true;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return false;
+           return pstmt.executeUpdate() > 0;
     }
 
-    public boolean deleteProduct(Product product){
+    public boolean deleteProduct(Product product) throws SQLException {
         if (product.getAmount() > 0) return false;
-
         String delete = "delete from Product " +
                     "where id = ?";
-        try (Connection con = DBConnector.getConnection()){
-            PreparedStatement pstmt = con.prepareStatement(delete);
-            pstmt.setInt(1, product.getId());
-
-            int n = pstmt.executeUpdate();
-            if (n>0) return true;
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return false;
+        PreparedStatement pstmt = prepare(delete);
+        pstmt.setInt(1, product.getId());
+        return pstmt.executeUpdate()>0;
     }
 
-    public List<Product> search(int id, String name, String type, String brand, boolean discount){
+    public List<Product> search(int id, String name, String type, String brand, boolean discount) throws SQLException {
         List<Product> list = new ArrayList<>();
 
         String query = "select * from Product, " +
@@ -206,26 +125,9 @@ public class ProductRepo extends BaseRepo<Product>{
         if(discount)
             query = query + " and (discount > 0 or discount is not null)";
 
-        try (Connection con = DBConnector.getConnection()){
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            while(rs.next()){
-                Product product = new Product();
-                product.setId(rs.getInt("id"));
-                product.setName(rs.getNString("name"));
-                product.setDescription(rs.getNString("description"));
-                product.setRetailPrice(rs.getDouble("retail_price"));
-                product.setDiscount(rs.getInt("discount"));
-                product.setBrandID(rs.getInt("brand_id"));
-                product.setTypeID(rs.getInt("type_id"));
-                product.setAmount(rs.getInt("amount"));
-                list.add(product);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return list;
+        PreparedStatement stmt = prepare(query);
+        ResultSet rs = stmt.executeQuery();
+        return getList(rs);
     }
 
 
