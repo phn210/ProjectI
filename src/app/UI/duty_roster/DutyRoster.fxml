@@ -8,8 +8,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -31,7 +29,7 @@
                <left>
                   <HBox alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="1140.0" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <MenuButton contentDisplay="TOP" mnemonicParsing="false" prefWidth="130.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Nhập hàng">
+                        <MenuButton contentDisplay="TOP" mnemonicParsing="false" prefHeight="94.0" prefWidth="98.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Thêm">
                           <items>
                             <MenuItem mnemonicParsing="false" onAction="#importManually" text="Thủ công" />
                             <MenuItem mnemonicParsing="false" onAction="#importFile" text="File" />
@@ -102,46 +100,15 @@
          <left>
             <Pane prefWidth="1140.0" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
                <children>
-                  <TabPane prefHeight="645.0" prefWidth="1140.0" tabClosingPolicy="UNAVAILABLE">
-                    <tabs>
-                      <Tab fx:id="tab_Products" onSelectionChanged="#selectedProduct" text="Product">
-                        <content>
-                          <AnchorPane>
-                                 <children>
-                                    <TableView fx:id="table_Product" prefHeight="615.2" prefWidth="1145.6" stylesheets="@../../static/css/main.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <columns>
-                                          <TableColumn fx:id="col_ID" prefWidth="68.33333587646484" text="ID" />
-                                          <TableColumn fx:id="col_Name" prefWidth="180.3333282470703" text="Tên sản phẩm" />
-                                          <TableColumn fx:id="col_Type" prefWidth="91.66667175292969" text="Loại" />
-                                          <TableColumn fx:id="col_Brand" prefWidth="166.99998474121094" text="Hãng" />
-                                          <TableColumn fx:id="col_Amount" prefWidth="74.0" text="SL" />
-                                          <TableColumn fx:id="col_Description" prefWidth="261.0" text="Mô tả" />
-                                          <TableColumn fx:id="col_Price" prefWidth="203.33331298828125" text="Giá bán lẻ" />
-                                          <TableColumn fx:id="col_Discount" minWidth="0.0" prefWidth="95.6666259765625" text="KM" />
-                                       </columns>
-                                    </TableView>
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </Tab>
-                      <Tab fx:id="tab_Imports" onSelectionChanged="#selectedImport" text="Import">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <TableView fx:id="table_Import" prefHeight="615.2" prefWidth="1140.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                      <columns>
-                                        <TableColumn fx:id="col_ImportID" prefWidth="217.866623878479" text="ID đơn nhập" />
-                                        <TableColumn fx:id="col_Supplier" prefWidth="327.7333068847656" text="Nhà cung cấp" />
-                                          <TableColumn fx:id="col_Date" prefWidth="300.2666931152344" text="Ngày nhập" />
-                                          <TableColumn fx:id="col_TotalMoney" prefWidth="292.800048828125" text="Thành tiền" />
-                                      </columns>
-                                    </TableView>
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </Tab>
-                    </tabs>
-                  </TabPane>
+                  <TableView fx:id="table_DutyRoster" prefHeight="645.0" prefWidth="1146.0" stylesheets="@../../static/css/main.css">
+                     <columns>
+                        <TableColumn fx:id="col_ID" prefWidth="68.33333587646484" text="ID" />
+                        <TableColumn fx:id="col_Name" prefWidth="270.93331146240234" text="Họ và tên" />
+                        <TableColumn fx:id="col_Dow" prefWidth="254.66665649414062" text="Ngày làm việc" />
+                        <TableColumn fx:id="col_TotalHour" prefWidth="109.86672973632812" text="Số giờ làm" />
+                        <TableColumn fx:id="col_Note" prefWidth="437.33331298828125" text="Ghi chú" />
+                     </columns>
+                  </TableView>
                </children>
             </Pane>
          </left>
@@ -168,8 +135,8 @@
                         </HBox>
                         <GridPane fx:id="searchPane_Products" alignment="CENTER" stylesheets="@../../static/css/main.css" GridPane.rowIndex="1">
                            <columnConstraints>
-                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.39990234375" minWidth="10.0" prefWidth="243.39990234375" />
+                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="149.06665802001953" minWidth="10.0" prefWidth="138.40003204345703" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.39990234375" minWidth="10.0" prefWidth="221.59996795654294" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="123.39990234375" minWidth="10.0" prefWidth="22.60009765625" />
                            </columnConstraints>
                            <rowConstraints>
@@ -186,63 +153,28 @@
                                  <padding>
                                     <Insets left="25.0" />
                                  </padding></Label>
-                              <Label prefHeight="26.0" prefWidth="207.0" text="Tên SP:" GridPane.rowIndex="1">
+                              <Label prefHeight="26.0" prefWidth="207.0" text="Họ và tên:" GridPane.rowIndex="1">
                                  <padding>
                                     <Insets left="25.0" />
                                  </padding></Label>
-                              <Label prefHeight="26.0" prefWidth="207.0" text="Loại" GridPane.rowIndex="2">
+                              <Label prefHeight="26.0" prefWidth="207.0" text="Ngày làm việc:" GridPane.rowIndex="2">
                                  <padding>
                                     <Insets left="25.0" />
                                  </padding></Label>
-                              <Label prefHeight="26.0" prefWidth="207.0" text="Tên hãng:" GridPane.rowIndex="3">
+                              <Label prefHeight="26.0" prefWidth="207.0" text="SĐT:" GridPane.rowIndex="3">
                                  <padding>
                                     <Insets left="25.0" />
                                  </padding></Label>
-                              <Label prefHeight="26.0" prefWidth="207.0" text="KM:" GridPane.rowIndex="4">
+                              <Label prefHeight="26.0" prefWidth="207.0" text="Nghỉ:" GridPane.rowIndex="4">
                                  <padding>
                                     <Insets left="25.0" />
                                  </padding></Label>
                               <Label alignment="CENTER" prefHeight="26.0" prefWidth="207.0" GridPane.rowIndex="6" />
                               <TextField fx:id="textField_Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField fx:id="textField_Brand" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <ComboBox fx:id="comboBox_ProductID" editable="true" prefHeight="26.0" prefWidth="250.0" GridPane.columnIndex="1" />
-                              <ComboBox fx:id="comboBox_Type" editable="true" prefHeight="26.0" prefWidth="254.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <CheckBox fx:id="checkBox_Discount" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                           </children>
-                        </GridPane>
-                        <GridPane fx:id="searchPane_Imports" GridPane.rowIndex="1">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.19995880126953" minWidth="10.0" prefWidth="156.000048828125" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="215.39990234375" minWidth="10.0" prefWidth="184.79995117187497" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="126.60009765625" minWidth="10.0" prefWidth="50.60009765625" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label text="ID:" wrapText="true">
-                                 <padding>
-                                    <Insets left="25.0" />
-                                 </padding>
-                              </Label>
-                              <Label text="Nhà cung cấp:" wrapText="true" GridPane.rowIndex="1">
-                                 <padding>
-                                    <Insets left="25.0" />
-                                 </padding>
-                              </Label>
-                              <Label text="Ngày nhập:" wrapText="true" GridPane.rowIndex="2">
-                                 <padding>
-                                    <Insets left="25.0" />
-                                 </padding>
-                              </Label>
-                              <ComboBox fx:id="comboBox_Supplier" editable="true" prefHeight="26.0" prefWidth="190.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <DatePicker fx:id="datePicker_ImportDate" prefHeight="26.0" prefWidth="190.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <ComboBox fx:id="comboBox_ImportID" editable="true" prefHeight="26.0" prefWidth="192.0" GridPane.columnIndex="1" />
+                              <TextField fx:id="textField_Phone" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="comboBox_ID" editable="true" prefHeight="26.0" prefWidth="250.0" GridPane.columnIndex="1" />
+                              <DatePicker fx:id="datePicker_DateOfWork" prefHeight="26.0" prefWidth="228.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <CheckBox fx:id="checkBox_Absence" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                      </children>
