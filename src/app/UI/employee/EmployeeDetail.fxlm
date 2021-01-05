@@ -2,241 +2,159 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <Label text="Chi tiết nhân viên" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets top="10.0" />
-         </BorderPane.margin></Label>
-   </top>
-   <center>
-      <VBox BorderPane.alignment="CENTER">
-         <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.product.ProductController">
+   <children>
+      <BorderPane prefHeight="760.0" prefWidth="1540.0" style="-fx-background-color: #b3e0ff;">
+         <top>
+            <BorderPane prefHeight="100.0" style="-fx-background-color: #e6f2ff;" styleClass="pane" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
+               <left>
+                  <HBox alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="1140.0" spacing="20.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#checkDetail" prefHeight="94.0" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Sửa">
+                           <HBox.margin>
+                              <Insets bottom="5.0" top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button contentDisplay="TOP" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#checkDetail" prefHeight="94.0" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Xóa" />
+                        <Button contentDisplay="TOP" layoutX="148.0" layoutY="20.0" mnemonicParsing="false" onAction="#checkDetail" prefHeight="94.0" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Xuất file" />
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" top="5.0" />
+                     </padding>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+               </left>
+               <right>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="400.0" spacing="20.0" BorderPane.alignment="CENTER">
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                  </HBox>
+               </right>
+            </BorderPane>
+         </top>
+         <left>
+            <Pane prefWidth="1140.0" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label text="ID">
-                           <HBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" />
-                           </HBox.margin></Label>
-                        <TextField>
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin></TextField>
-                     </children>
-                     <padding>
-                        <Insets top="10.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets right="50.0" />
-                     </HBox.margin>
-                  </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label text="Họ tên" />
-                        <TextField>
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin></TextField>
-                     </children>
-                     <padding>
-                        <Insets top="10.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets right="40.0" />
-                     </HBox.margin>
-                  </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label prefHeight="18.0" prefWidth="95.0" text="Ngày sinh" />
-                        <TextField>
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin></TextField>
-                     </children>
-                     <padding>
-                        <Insets top="10.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets right="50.0" />
-                     </HBox.margin>
-                  </HBox>
+                  <TableView fx:id="table_Employee" prefHeight="645.0" prefWidth="1146.0" stylesheets="@../../static/css/main.css">
+                     <columns>
+                        <TableColumn fx:id="col_ID" prefWidth="68.33333587646484" text="ID" />
+                        <TableColumn fx:id="col_Name" prefWidth="168.0" text="Họ và tên" />
+                        <TableColumn fx:id="col_Dob" prefWidth="118.39994812011719" text="Ngày sinh" />
+                        <TableColumn fx:id="col_Phone" prefWidth="145.60003662109375" text="Số điện thoại" />
+                        <TableColumn fx:id="col_Address" prefWidth="159.2000732421875" text="Địa chỉ" />
+                        <TableColumn fx:id="col_CitizenID" prefWidth="110.4000244140625" text="CMND" />
+                        <TableColumn fx:id="col_InsuranceID" prefWidth="158.4000244140625" text="Mã bảo hiểm" />
+                        <TableColumn fx:id="col_StartDate" minWidth="0.0" prefWidth="108.80010986328125" text="Ngày bắt đầu" />
+                        <TableColumn fx:id="col_Salary" prefWidth="106.0" text="Mức lương" />
+                     </columns>
+                  </TableView>
                </children>
-               <VBox.margin>
-                  <Insets left="10.0" top="10.0" />
-               </VBox.margin>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            </Pane>
+         </left>
+         <right>
+            <Pane prefWidth="400.0" styleClass="pane" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
                <children>
-                  <HBox prefHeight="36.0" prefWidth="268.0">
+                  <GridPane alignment="CENTER" prefHeight="660.0" prefWidth="400.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="111.8000244140625" minHeight="10.0" prefHeight="34.999975585937506" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="533.600048828125" minHeight="10.0" prefHeight="514.40009765625" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="210.79990234375003" minHeight="10.0" prefHeight="73.79990234374998" vgrow="SOMETIMES" />
+                     </rowConstraints>
                      <children>
-                        <Label prefHeight="18.0" prefWidth="82.0" text="Số điện thoại">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </Label>
-                        <TextField>
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </TextField>
+                        <GridPane fx:id="searchPane_Products" alignment="CENTER" stylesheets="@../../static/css/main.css" GridPane.rowIndex="1">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.39990234375" minWidth="10.0" prefWidth="243.39990234375" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="123.39990234375" minWidth="10.0" prefWidth="22.60009765625" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Mức lương" GridPane.rowIndex="7">
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Label>
+                              <Label prefHeight="26.0" prefWidth="207.0" text="ID:">
+                                 <padding>
+                                    <Insets left="25.0" />
+                                 </padding>
+                              </Label>
+                              <Label prefHeight="26.0" prefWidth="207.0" text="Họ và tên:" GridPane.rowIndex="1">
+                                 <padding>
+                                    <Insets left="25.0" />
+                                 </padding>
+                              </Label>
+                              <Label prefHeight="26.0" prefWidth="207.0" text="Ngày sinh:" GridPane.rowIndex="2">
+                                 <padding>
+                                    <Insets left="25.0" />
+                                 </padding>
+                              </Label>
+                              <Label prefHeight="26.0" prefWidth="207.0" text="SĐT:" GridPane.rowIndex="3">
+                                 <padding>
+                                    <Insets left="25.0" />
+                                 </padding>
+                              </Label>
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                              <Label prefHeight="26.0" prefWidth="207.0" text="CMND:" GridPane.rowIndex="4">
+                                 <padding>
+                                    <Insets left="25.0" />
+                                 </padding>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="26.0" prefWidth="207.0" GridPane.rowIndex="6" />
+                              <Label text="Mã bảo hiểm" GridPane.rowIndex="5">
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Label>
+                              <Label text="Ngày bắt đầu" GridPane.rowIndex="6">
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Label>
+                              <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <TextField fx:id="textField_Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="textField_Phone" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="comboBox_ID" editable="true" prefHeight="26.0" prefWidth="250.0" GridPane.columnIndex="1" />
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <TextField fx:id="textField_Age" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <DatePicker prefHeight="26.0" prefWidth="242.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <TextField fx:id="textField_CitizenID" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                           </children>
+                        </GridPane>
                      </children>
-                     <padding>
-                        <Insets top="10.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets right="40.0" />
-                     </HBox.margin>
-                  </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label prefHeight="18.0" prefWidth="58.0" text="Địa chỉ" />
-                        <TextField>
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </TextField>
-                     </children>
-                     <padding>
-                        <Insets top="10.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets right="40.0" />
-                     </HBox.margin>
-                  </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label text="CMND" />
-                        <TextField>
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </TextField>
-                     </children>
-                     <padding>
-                        <Insets top="10.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets right="40.0" />
-                     </HBox.margin>
-                  </HBox>
+                  </GridPane>
                </children>
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label prefHeight="18.0" prefWidth="122.0" text="Mã bảo hiểm">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </Label>
-                        <TextField prefHeight="26.0" prefWidth="141.0">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </TextField>
-                     </children>
-                     <padding>
-                        <Insets top="10.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets right="40.0" />
-                     </HBox.margin>
-                  </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label prefHeight="18.0" prefWidth="118.0" text="Ngày bắt đầu" />
-                        <TextField>
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </TextField>
-                     </children>
-                     <padding>
-                        <Insets top="10.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets right="40.0" />
-                     </HBox.margin>
-                  </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label prefHeight="18.0" prefWidth="91.0" text="Mức lương" />
-                        <TextField>
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </TextField>
-                     </children>
-                     <padding>
-                        <Insets top="10.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" />
-                     </HBox.margin>
-                  </HBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" />
-               </VBox.margin>
-            </HBox>
-            <TableView prefHeight="740.0" prefWidth="1540.0">
-              <columns>
-                <TableColumn prefWidth="45.60000765323639" text="ID" />
-                <TableColumn prefWidth="93.60002899169922" text="Họ và tên" />
-                  <TableColumn prefWidth="114.39996337890625" text="Ngày sinh" />
-                  <TableColumn prefWidth="106.4000244140625" text="Số điện thoại" />
-                  <TableColumn prefWidth="110.4000244140625" text="Địa chỉ" />
-                  <TableColumn prefWidth="82.40005493164062" text="CMND" />
-                  <TableColumn prefWidth="120.0" text="Mã bảo hiểm" />
-                  <TableColumn prefWidth="123.99993896484375" text="Ngày bắt đầu" />
-                  <TableColumn prefWidth="115.2000732421875" text="Mức lương" />
-              </columns>
-            </TableView>
-         </children>
-         <BorderPane.margin>
-            <Insets top="40.0" />
-         </BorderPane.margin>
-      </VBox>
-   </center>
-   <bottom>
-      <HBox prefHeight="68.0" prefWidth="900.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button mnemonicParsing="false" text="Xuất file">
-               <HBox.margin>
-                  <Insets left="10.0" right="700.0" top="20.0" />
-               </HBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" text="Xóa">
-               <HBox.margin>
-                  <Insets right="10.0" top="20.0" />
-               </HBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" text="Submit">
-               <HBox.margin>
-                  <Insets top="20.0" />
-               </HBox.margin>
-            </Button>
-         </children>
-      </HBox>
-   </bottom>
-</BorderPane>
+            </Pane>
+         </right>
+      </BorderPane>
+   </children>
+</AnchorPane>
