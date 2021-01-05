@@ -13,7 +13,7 @@ public class TypeRepo extends BaseRepo<Type> {
     }
 
     @Override
-    protected Type getObject(ResultSet rs) throws SQLException {
+    public Type getObject(ResultSet rs) throws SQLException {
         Type type = new Type();
         type.setId(rs.getInt("id"));
         type.setName(rs.getNString("name"));
@@ -22,19 +22,23 @@ public class TypeRepo extends BaseRepo<Type> {
     }
 
     @Override
-    protected ArrayList<Type> findAll() throws SQLException {
+    public ArrayList<Type> findAll() throws SQLException {
         String query = "select * from Type";
         PreparedStatement preparedStatement = prepare(query);
         ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
 
-    public List<Type> getAllType() throws SQLException {
-        List<Type> list = new ArrayList<>();
-        String query = "select * from Type";
-        PreparedStatement preparedStatement = prepare(query);
-        ResultSet rs = preparedStatement.executeQuery(query);
-        return getList(rs);
+    public Type findByID(int id) throws SQLException {
+        Type type = new Type();
+
+        String query = "select * from Type " +
+                    "where id = ?";
+        PreparedStatement pstmt = prepare(query);
+        pstmt.setInt(1, id);
+        ResultSet rs = pstmt.executeQuery();
+        rs.first();
+        return getObject(rs);
     }
 
     public List<String> getAllTypeName() throws SQLException {

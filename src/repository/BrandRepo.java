@@ -29,6 +29,17 @@ public class BrandRepo extends BaseRepo<Brand>{
         return getList(rs);
     }
 
+    public Brand findByID(int id) throws SQLException{
+        Brand brand = new Brand();
+        String query = "select * from Brand " +
+                    "where id = ?";
+        PreparedStatement pstmt = prepare(query);
+        pstmt.setInt(1, id);
+        ResultSet rs = pstmt.executeQuery();
+        rs.first();
+        return getObject(rs);
+    }
+
     public List<String> getAllBrandName() throws SQLException {
         String query = "select name from Brand";
         PreparedStatement preparedStatement = prepare(query);

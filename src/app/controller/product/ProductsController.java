@@ -18,11 +18,15 @@ import javafx.stage.Stage;
 import model.entity.Account;
 import model.entity.Import;
 import model.entity.Product;
+import model.form.ImportForm;
+import model.form.ProductForm;
 import repository.*;
+import service.ProductsService;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -36,46 +40,46 @@ public class ProductsController implements Initializable {
     private Tab tab_Imports;
 
     @FXML
-    private TableView<Product> table_Product;
+    private TableView<ProductForm> table_Product;
 
     @FXML
-    private TableColumn<Product, Integer> col_ID;
+    private TableColumn<ProductForm, Integer> col_ID;
 
     @FXML
-    private TableColumn<Product, String> col_Name;
+    private TableColumn<ProductForm, String> col_Name;
 
     @FXML
-    private TableColumn<Product, String> col_Type;
+    private TableColumn<ProductForm, String> col_Type;
 
     @FXML
-    private TableColumn<Product, String> col_Brand;
+    private TableColumn<ProductForm, String> col_Brand;
 
     @FXML
-    private TableColumn<Product, Integer> col_Amount;
+    private TableColumn<ProductForm, Integer> col_Amount;
 
     @FXML
-    private TableColumn<Product, String> col_Description;
+    private TableColumn<ProductForm, String> col_Description;
 
     @FXML
-    private TableColumn<Product, Double> col_Price;
+    private TableColumn<ProductForm, Double> col_Price;
 
     @FXML
-    private TableColumn<Product, Integer> col_Discount;
+    private TableColumn<ProductForm, Integer> col_Discount;
 
     @FXML
-    private TableView<Import> table_Import;
+    private TableView<ImportForm> table_Import;
 
     @FXML
-    private TableColumn<Import, Integer> col_ImportID;
+    private TableColumn<ImportForm, Integer> col_ImportID;
 
     @FXML
-    private TableColumn<Import, String> col_Supplier;
+    private TableColumn<ImportForm, String> col_Supplier;
 
     @FXML
-    private TableColumn<Import, Date> col_Date;
+    private TableColumn<ImportForm, Date> col_Date;
 
     @FXML
-    private TableColumn<Import, Double> col_TotalMoney;
+    private TableColumn<ImportForm, Double> col_TotalMoney;
 
     @FXML
     private GridPane searchPane_Products;
@@ -118,50 +122,55 @@ public class ProductsController implements Initializable {
     private ObservableList<Integer> idObservableList;
     private ObservableList<String> typeObservableList;
     private ObservableList<String> supplierObservableList;
-    private ObservableList<Product> productObservableList;
-    private ObservableList<Import> importObservableList;
+    private ObservableList<ProductForm> productObservableList;
+    private ObservableList<ImportForm> importObservableList;
 
     private Account account;
-    private ProductRepo productRepo;
-    private ImportRepo importRepo;
-    private TypeRepo typeRepo;
-    private BrandRepo brandRepo;
-    private SupplierRepo supplierRepo;
+    private ProductsService productsService
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.account = HomeController.account;
-        this.productRepo = new ProductRepo();
-        this.importRepo = new ImportRepo();
-        this.brandRepo = new BrandRepo();
-        this.typeRepo = new TypeRepo();
-        this.supplierRepo = new SupplierRepo();
+        this.productsService = new ProductsService();
         this.viewMode = 0;
         this.accountMode = account.getEmployeeID();
 
+        initTable();
+
+        this.updateTabProduct();
+    }
+
+    private void initTable(){
+        initColumn();
+    }
+
+    private void initColumn(){
         col_ID.setCellValueFactory(new PropertyValueFactory<>("id"));
         col_Name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        col_Type.setCellValueFactory(t -> new ReadOnlyObjectWrapper<>(typeRepo.getType(t.getValue()).getName()));
-        col_Brand.setCellValueFactory(t -> new ReadOnlyObjectWrapper<>(brandRepo.getBrand(t.getValue()).getName()));
+        col_Type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        col_Brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
         col_Amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         col_Description.setCellValueFactory(new PropertyValueFactory<>("description"));
         col_Price.setCellValueFactory(new PropertyValueFactory<>("retailPrice"));
         col_Discount.setCellValueFactory(new PropertyValueFactory<>("discount"));
 
         col_ImportID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        col_Supplier.setCellValueFactory(new PropertyValueFactory<>("supplierID"));
+        col_Supplier.setCellValueFactory(new PropertyValueFactory<>("supplier"));
         col_Date.setCellValueFactory(new PropertyValueFactory<>("importDate"));
         col_TotalMoney.setCellValueFactory(new PropertyValueFactory<>("totalMoney"));
-
-        this.updateTabProduct();
     }
 
     public void updateTabProduct(){
         searchPane_Products.setVisible(true);
         searchPane_Imports.setVisible(false);
+        List<ProductForm> list = new ArrayList<>();
+        try {
+            list = productsService.getAllProductForm();
+        } catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        }
+        productObservableList = FXCollections.observableList(list);
 
-        List<Product> products = productRepo.getAllProduct();
-        productObservableList = FXCollections.observableList(products);
         table_Product.setItems(productObservableList);
 
         List<Integer> idList = new ArrayList<>();

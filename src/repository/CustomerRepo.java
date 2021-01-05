@@ -1,24 +1,28 @@
 package repository;
 
+import model.entity.Customer;
+
 import java.sql.*;
+import java.util.ArrayList;
 
-public class DBConnector {
-    public static Connection connection;
-    private static String connectionURL = "jdbc:sqlserver://localhost;database=ProjectI;";
-    private static String user = "sa";
-    private static String password = "123456";
+public class CustomerRepo extends BaseRepo<Customer>{
+    @Override
+    protected Customer getObject(ResultSet rs) throws SQLException {
+        Customer customer = new Customer();
+        customer.setId(rs.getInt("id"));
+        customer.setName(rs.getNString("name"));
+        customer.setPhone(rs.getString("phone"));
+        customer.setAddress(rs.getNString("address"));
+        customer.setPoint(rs.getInt("point"));
+        customer.setEmail(rs.getString("email"));
+        return customer;
+    }
 
-    public Connection getConnection(){
-        try {
-            connection = DriverManager.getConnection(connectionURL, user, password);
-            if(connection!=null){
-                System.out.println("Connect successful");
-            }
-        }
-        catch(SQLException e){
-            System.out.println("Some errors occurred!");
-            e.printStackTrace();
-        }
-        return connection;
+    @Override
+    protected ArrayList<Customer> findAll() throws SQLException {
+        String query = "select * from Customer";
+        PreparedStatement preparedStatement = prepare(query);
+        ResultSet rs = preparedStatement.executeQuery();
+        return getList(rs);
     }
 }

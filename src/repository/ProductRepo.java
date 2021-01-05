@@ -12,7 +12,7 @@ public class ProductRepo extends BaseRepo<Product>{
     }
 
     @Override
-    protected Product getObject(ResultSet rs) throws SQLException {
+    public Product getObject(ResultSet rs) throws SQLException {
         Product product = new Product();
         product.setId(rs.getInt("id"));
         product.setName(rs.getNString("name"));
@@ -26,7 +26,7 @@ public class ProductRepo extends BaseRepo<Product>{
     }
 
     @Override
-    protected ArrayList<Product> findAll() throws SQLException {
+    public ArrayList<Product> findAll() throws SQLException {
         String query = "select * from Product";
         PreparedStatement pstmt = prepare(query);
         ResultSet rs = pstmt.executeQuery();
