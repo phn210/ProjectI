@@ -6,10 +6,34 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductRepo {
+public class ProductRepo extends BaseRepo<Product>{
     public ProductRepo(){
         
     }
+
+    @Override
+    protected Product getObject(ResultSet rs) throws SQLException {
+        Product product = new Product();
+        product.setId(rs.getInt("id"));
+        product.setName(rs.getNString("name"));
+        product.setDescription(rs.getNString("description"));
+        product.setRetailPrice(rs.getDouble("retail_price"));
+        product.setDiscount(rs.getInt("discount"));
+        product.setBrandID(rs.getInt("brand_id"));
+        product.setTypeID(rs.getInt("type_id"));
+        product.setAmount(rs.getInt("amount"));
+        return product;
+    }
+
+    @Override
+    protected ArrayList<Product> findAll() throws SQLException {
+        String query = "select * from Product";
+        PreparedStatement pstmt = prepare(query);
+        ResultSet rs = pstmt.executeQuery();
+        return getList(rs);
+    }
+
+    //--------------------------------------------------------------------------------
     
     public List<Product> getAllProduct(){
         List<Product> list = new ArrayList<>();
@@ -203,4 +227,6 @@ public class ProductRepo {
         }
         return list;
     }
+
+
 }

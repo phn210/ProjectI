@@ -7,9 +7,26 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TypeRepo {
+public class TypeRepo extends BaseRepo<Type>{
     public TypeRepo(){
 
+    }
+
+    @Override
+    protected Type getObject(ResultSet rs) throws SQLException {
+        Type type = new Type();
+        type.setId(rs.getInt("id"));
+        type.setName(rs.getNString("name"));
+        type.setDescription(rs.getNString("description"));
+        return type;
+    }
+
+    @Override
+    protected ArrayList<Type> findAll() throws SQLException {
+        String query = "select * from Type";
+        PreparedStatement pstmt = prepare(query);
+        ResultSet rs = pstmt.executeQuery();
+        return getList(rs);
     }
 
     public List<Type> getAllType(){
@@ -115,4 +132,6 @@ public class TypeRepo {
 
         return false;
     }
+
+
 }

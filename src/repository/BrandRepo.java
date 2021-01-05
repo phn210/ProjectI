@@ -7,9 +7,26 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BrandRepo {
+public class BrandRepo extends BaseRepo<Brand>{
     public BrandRepo(){
 
+    }
+
+    @Override
+    protected Brand getObject(ResultSet rs) throws SQLException {
+        Brand brand = new Brand();
+        brand.setId(rs.getInt("id"));
+        brand.setName(rs.getNString("name"));
+        brand.setCountry(rs.getNString("country"));
+        return brand;
+    }
+
+    @Override
+    protected ArrayList<Brand> findAll() throws SQLException {
+        String query = "select * from Brand";
+        PreparedStatement pstmt = prepare(query);
+        ResultSet rs = pstmt.executeQuery();
+        return getList(rs);
     }
 
     public List<Brand> getAllBrand(){
@@ -116,4 +133,6 @@ public class BrandRepo {
 
         return false;
     }
+
+
 }

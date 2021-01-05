@@ -8,9 +8,27 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierRepo {
+public class SupplierRepo extends BaseRepo<Supplier>{
     public SupplierRepo(){
 
+    }
+
+    @Override
+    protected Supplier getObject(ResultSet rs) throws SQLException {
+        Supplier supplier = new Supplier();
+        supplier.setId(rs.getInt("id"));
+        supplier.setName(rs.getNString("name"));
+        supplier.setAddress(rs.getNString("address"));
+        supplier.setPhone(rs.getString("phone"));
+        return supplier;
+    }
+
+    @Override
+    protected ArrayList<Supplier> findAll() throws SQLException {
+        String query = "select * from Supplier";
+        PreparedStatement pstmt = prepare(query);
+        ResultSet rs = pstmt.executeQuery();
+        return getList(rs);
     }
 
     public List<Supplier> getAllSupplier(){
@@ -104,4 +122,6 @@ public class SupplierRepo {
 
         return "";
     }
+
+
 }

@@ -8,9 +8,27 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImportRepo {
+public class ImportRepo extends BaseRepo<Import>{
     public ImportRepo(){
 
+    }
+
+    @Override
+    protected Import getObject(ResultSet rs) throws SQLException {
+        Import imprt = new Import();
+        imprt.setId(rs.getInt("id"));
+        imprt.setSupplierID(rs.getInt("supplier"));
+        imprt.setImportDate(rs.getDate("import_date"));
+        imprt.setTotalMoney(rs.getDouble("total_money"));
+        return imprt;
+    }
+
+    @Override
+    protected ArrayList<Import> findAll() throws SQLException {
+        String query = "select * from import";
+        PreparedStatement pstmt = prepare(query);
+        ResultSet rs = pstmt.executeQuery();
+        return getList(rs);
     }
 
     public List<Import> getAllImport(){
@@ -28,6 +46,7 @@ public class ImportRepo {
                 imprt.setSupplierID(rs.getInt("supplier"));
                 imprt.setImportDate(rs.getDate("import_date"));
                 imprt.setTotalMoney(rs.getDouble("total_money"));
+                list.add(imprt);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -115,4 +134,6 @@ public class ImportRepo {
         }
         return list;
     }
+
+
 }
