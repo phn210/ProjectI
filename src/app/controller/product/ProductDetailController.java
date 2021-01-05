@@ -1,4 +1,4 @@
-package app.controller.Products;
+package app.controller.product;
 
 import app.controller.CommonController;
 import javafx.beans.property.ReadOnlyObjectWrapper;
