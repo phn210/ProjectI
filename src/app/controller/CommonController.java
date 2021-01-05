@@ -5,8 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.entity.Account;
+
+import java.io.IOException;
+import java.net.URL;
 
 public class CommonController {
     public static Stage primaryStage;
@@ -61,27 +65,12 @@ public class CommonController {
         switchScene(makeScene("../UI/home/HomeUI.fxml"));
     }
 
-    public void toProductTab(){
-
+    public Pane getPane(String fileName) throws IOException {
+        Pane pane = new Pane();
+        URL fileURL = getClass().getResource("../UI/" + fileName);
+        FXMLLoader loader = new FXMLLoader();
+        pane = loader.load(fileURL);
+        return pane;
     }
 
-    public void toCustomerTab(){
-
-    }
-
-    public void toEmployeeTab(){
-
-    }
-
-    public void toDutyTab(){
-
-    }
-
-    public void toInvoiceTab(){
-
-    }
-
-    public void toRevenueTab(){
-
-    }
 }

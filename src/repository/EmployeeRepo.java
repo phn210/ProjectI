@@ -32,4 +32,12 @@ public class EmployeeRepo extends BaseRepo<Employee>{
         ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
+
+    public Employee findById(int id) throws SQLException {
+        String sql = "SELECT * FROM Employee WHERE id = ?";
+        PreparedStatement preparedStatement = prepare(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.first();
+        return getObject(resultSet);
+    }
 }
