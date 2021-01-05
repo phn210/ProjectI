@@ -25,4 +25,19 @@ public class AccountRepo extends BaseRepo<Account> {
         ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
+
+    public Account login(String username, String password) throws SQLException {
+        String sql = "SELECT * FROM Account WHERE username = ? AND password = ?";
+        PreparedStatement preparedStatement = prepare(sql);
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, password);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if(resultSet.next()){
+            resultSet.first();
+            return getObject(resultSet);
+        }else{
+            return null;
+        }
+
+    }
 }

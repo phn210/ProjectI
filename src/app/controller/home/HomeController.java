@@ -2,11 +2,14 @@ package app.controller.home;
 
 import app.controller.CommonController;
 import javafx.fxml.Initializable;
+import model.entity.Account;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
+
+    public static Account account;
 
     private CommonController commonController;
     @Override

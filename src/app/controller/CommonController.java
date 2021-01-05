@@ -1,10 +1,12 @@
 package app.controller;
 
+import app.controller.home.HomeController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import model.entity.Account;
 
 public class CommonController {
     public static Stage primaryStage;
@@ -26,7 +28,7 @@ public class CommonController {
         }
     }
 
-    public static void resultNoti(boolean res){
+    public void resultNoti(boolean res){
         if (res){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Thao tác thành công!");
@@ -40,7 +42,7 @@ public class CommonController {
         }
     }
 
-    public static void resultNoti(boolean res, String content){
+    public void resultNoti(boolean res, String content){
         if (res){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText(content);
@@ -54,8 +56,9 @@ public class CommonController {
         }
     }
 
-    public  void toHome(){
-        switchScene(makeScene("../UIhome/HomeUI.fxml"));
+    public  void toHome(Account account){
+        HomeController.account = account;
+        switchScene(makeScene("../UI/home/HomeUI.fxml"));
     }
 
     public void toProductTab(){
