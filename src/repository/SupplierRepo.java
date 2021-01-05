@@ -3,6 +3,7 @@ package repository;
 import model.entity.Import;
 import model.entity.ImportDetail;
 import model.entity.Supplier;
+import model.entity.Type;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -31,74 +32,40 @@ public class SupplierRepo extends BaseRepo<Supplier>{
         return getList(rs);
     }
 
-    public List<Supplier> getAllSupplier(){
-        List<Supplier> list = new ArrayList<>();
-
+    public List<Supplier> getAllSupplier() throws SQLException {
         String query = "select * from Supplier";
-
-
-        try (Connection con = DBConnector.getConnection()){
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            while(rs.next()){
-                Supplier supplier = new Supplier();
-                supplier.setId(rs.getInt("id"));
-                supplier.setName(rs.getNString("name"));
-                supplier.setAddress(rs.getNString("address"));
-                supplier.setPhone(rs.getString("phone"));
-                list.add(supplier);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return list;
+        Statement stmt = prepare(query);
+        ResultSet rs = stmt.executeQuery(query);
+        return getList(rs);
     }
 
-    public List<String> getAllSupplierName(){
-        List<String> list = new ArrayList<>();
-
+    public List<String> getAllSupplierName() throws SQLException {
         String query = "select name from Supplier";
-
-        try (Connection con = DBConnector.getConnection()){
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            while(rs.next()){
-                list.add(rs.getNString("name"));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        Statement stmt = prepare(query);
+        ResultSet rs = stmt.executeQuery(query);
+        ArrayList<Supplier> typeArrayList = getList(rs);
+        List<String> nameArrayList = new ArrayList<>();
+        for (int i = 0; i < typeArrayList.size(); i++) {
+            nameArrayList.add(typeArrayList.get(i).getName());
         }
-
-        return list;
+        return nameArrayList;
     }
 
-    public Supplier getSupplier(Import imprt){
+    public Supplier getSupplier(Import imprt) throws SQLException {
         Supplier supplier = new Supplier();
-
         String query = "select * from Supplier " +
                 "where id = ?";
-        try (Connection con = DBConnector.getConnection()){
-            PreparedStatement pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, imprt.getSupplierID());
-            ResultSet rs = pstmt.executeQuery();
-
-            if(rs.isBeforeFirst()){
-                rs.next();
-                supplier.setId(rs.getInt("id"));
-                supplier.setName(rs.getNString("name"));
-                supplier.setAddress(rs.getNString("address"));
-                supplier.setPhone(rs.getString("phone"));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
+        PreparedStatement pstmt = prepare(query);
+        pstmt.setInt(1, imprt.getSupplierID());
+        ResultSet rs = pstmt.executeQuery();
+        supplier.setId(rs.getInt("id"));
+        supplier.setName(rs.getNString("name"));
+        supplier.setAddress(rs.getNString("address"));
+        supplier.setPhone(rs.getString("phone"));
         return supplier;
     }
 
-    public String getSupplierName(ImportDetail importDetail){
+    public String getSupplierName(ImportDetail importDetail) throws SQLException {
         String query = "select * from (select id, name from Supplier) as supplier, " +
                     "(select id, supplier_id from Import) as import, " +
                     "(select import_id, product_id from ImportDetail) as importDetail " +
@@ -106,20 +73,10 @@ public class SupplierRepo extends BaseRepo<Supplier>{
                     "and import.id = importDetail.import_id " +
                     "and import_id = ? " +
                     "and product_id = ?";
-        try (Connection con = DBConnector.getConnection()){
-            PreparedStatement pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, importDetail.getImportID());
-            pstmt.setInt(2, importDetail.getProductID());
-            ResultSet rs = pstmt.executeQuery();
-
-            if(rs.isBeforeFirst()){
-                rs.next();
-                return rs.getNString("supplier.name");
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
+        PreparedStatement pstmt =prepare(query);
+        pstmt.setInt(1, importDetail.getImportID());
+        pstmt.setInt(2, importDetail.getProductID());
+        ResultSet rs = pstmt.executeQuery();
         return "";
     }
 

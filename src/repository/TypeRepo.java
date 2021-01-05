@@ -7,8 +7,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TypeRepo extends BaseRepo<Type>{
-    public TypeRepo(){
+public class TypeRepo extends BaseRepo<Type> {
+    public TypeRepo() {
 
     }
 
@@ -29,108 +29,57 @@ public class TypeRepo extends BaseRepo<Type>{
         return getList(rs);
     }
 
-    public List<Type> getAllType(){
+    public List<Type> getAllType() throws SQLException {
         List<Type> list = new ArrayList<>();
-
         String query = "select * from Type";
-
-        try (Connection con = DBConnector.getConnection()){
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            while(rs.next()){
-                Type type = new Type();
-                type.setId(rs.getInt("id"));
-                type.setName(rs.getNString("name"));
-                type.setDescription(rs.getNString("description"));
-                list.add(type);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return list;
+        PreparedStatement preparedStatement = prepare(query);
+        ResultSet rs = preparedStatement.executeQuery(query);
+        return getList(rs);
     }
 
-    public List<String> getAllTypeName(){
-        List<String> list = new ArrayList<>();
-
-        String query = "select name from Type";
-
-        try (Connection con = DBConnector.getConnection()){
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            while(rs.next()){
-                list.add(rs.getNString("name"));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+    public List<String> getAllTypeName() throws SQLException {
+        String query = "select * from Type";
+        PreparedStatement preparedStatement = prepare(query);
+        ResultSet rs = preparedStatement.executeQuery();
+        ArrayList<Type> typeArrayList = getList(rs);
+        List<String> nameArrayList = new ArrayList<>();
+        for (int i = 0; i < typeArrayList.size(); i++) {
+            nameArrayList.add(typeArrayList.get(i).getName());
         }
-
-        return list;
+        return nameArrayList;
     }
 
-    public Type getType(Product product){
+    public Type getType(Product product) throws SQLException {
         Type type = new Type();
 
         String query = "select * from Type " +
                 "where id = ?";
-
-        try (Connection con = DBConnector.getConnection()){
-            PreparedStatement pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, product.getTypeID());
-            ResultSet rs = pstmt.executeQuery();
-
-            if(rs.isBeforeFirst()){
-                rs.next();
-                type.setId(rs.getInt("id"));
-                type.setName(rs.getNString("name"));
-                type.setDescription(rs.getNString("description"));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return type;
+        PreparedStatement pstmt = prepare(query);
+        pstmt.setInt(1, product.getTypeID());
+        ResultSet rs = pstmt.executeQuery();
+        rs.first();
+        return getObject(rs);
     }
 
-    public boolean addType(Type type){
+    public boolean addType(Type type) throws SQLException {
         String insert = "insert into Type(name, description) " +
-                    "values (?, ?)";
-        try (Connection con = DBConnector.getConnection()){
-            PreparedStatement pstmt = con.prepareStatement(insert);
-            pstmt.setNString(1, type.getName());
-            pstmt.setNString(2, type.getDescription());
-
-            int n = pstmt.executeUpdate();
-            if(n>0) return true;
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return false;
+                "values (?, ?)";
+        PreparedStatement preparedStatement = prepare(insert);
+        preparedStatement.setNString(1, type.getName());
+        preparedStatement.setNString(2, type.getDescription());
+        return preparedStatement.executeUpdate() > 0;
     }
 
-    public boolean updateType(Type type){
+    public boolean updateType(Type type) throws SQLException {
         String update = "update Type" +
-                    "set name = ?," +
-                    "description = ? " +
-                    "where id = ?";
-        try (Connection con = DBConnector.getConnection()){
-            PreparedStatement pstmt = con.prepareStatement(update);
-            pstmt.setNString(1, type.getName());
-            pstmt.setNString(2, type.getDescription());
-            pstmt.setInt(3, type.getId());
-
-            pstmt.executeUpdate();
-            return true;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return false;
+                "set name = ?," +
+                "description = ? " +
+                "where id = ?";
+        PreparedStatement preparedStatement = prepare(update);
+        preparedStatement.setNString(1, type.getName());
+        preparedStatement.setNString(2, type.getDescription());
+        preparedStatement.setInt(3, type.getId());
+        return preparedStatement.executeUpdate() > 0;
     }
 
 
