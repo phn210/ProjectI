@@ -1,6 +1,7 @@
 package app.controller.product;
 
 import app.controller.Main;
+import app.controller.home.HomeController;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import model.entity.Account;
 import model.entity.Import;
 import model.entity.Product;
 import repository.*;
@@ -25,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ProductController implements Initializable {
+public class ProductsController implements Initializable {
 
     @FXML
     private Tab tab_Products;
@@ -105,9 +107,13 @@ public class ProductController implements Initializable {
     @FXML
     private DatePicker datePicker_ImportDate;
 
-    //mode = 0: product
-    //mode = 1: import
-    private int mode;
+    //viewMode = 0: product
+    //viewMode = 1: import
+    private int viewMode;
+
+    //accountMode = 1: manager
+    //accountMode = 2: sale
+    private int accountMode;
 
     private ObservableList<Integer> idObservableList;
     private ObservableList<String> typeObservableList;
@@ -115,23 +121,23 @@ public class ProductController implements Initializable {
     private ObservableList<Product> productObservableList;
     private ObservableList<Import> importObservableList;
 
+    private Account account;
     private ProductRepo productRepo;
     private ImportRepo importRepo;
     private TypeRepo typeRepo;
     private BrandRepo brandRepo;
     private SupplierRepo supplierRepo;
 
-    public ProductController(){
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.account = HomeController.account;
         this.productRepo = new ProductRepo();
         this.importRepo = new ImportRepo();
         this.brandRepo = new BrandRepo();
         this.typeRepo = new TypeRepo();
         this.supplierRepo = new SupplierRepo();
-        this.mode = 0;
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+        this.viewMode = 0;
+        this.accountMode = account.getEmployeeID();
 
         col_ID.setCellValueFactory(new PropertyValueFactory<>("id"));
         col_Name.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -190,7 +196,7 @@ public class ProductController implements Initializable {
 
     @FXML
     void checkDetail(ActionEvent event) throws IOException {
-        if (mode == 0){
+        if (viewMode == 0){
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/product/ProductDetail.fxml"));
             Parent root = loader.load();
             ProductDetailController productDetailController = loader.getController();
@@ -208,7 +214,7 @@ public class ProductController implements Initializable {
             stage.setScene(new Scene(root));
             stage.setTitle("Thông tin sản phẩm");
             stage.show();
-        } else if (mode == 1){
+        } else if (viewMode == 1){
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/product/ImportDetail.fxml"));
             Parent root = loader.load();
             ImportDetailController importDetailController = loader.getController();
@@ -222,9 +228,9 @@ public class ProductController implements Initializable {
 
     @FXML
     void export(ActionEvent event) {
-        if (mode == 0){
+        if (viewMode == 0){
 
-        } else if (mode == 1){
+        } else if (viewMode == 1){
 
         }
     }
@@ -236,16 +242,16 @@ public class ProductController implements Initializable {
 
     @FXML
     void importFile(ActionEvent event){
-        if (mode == 0){
+        if (viewMode == 0){
 
-        } else if (mode == 1){
+        } else if (viewMode == 1){
 
         }
     }
 
     @FXML
     void importManually(ActionEvent event) throws IOException {
-        if (mode == 0){
+        if (viewMode == 0){
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/product/ProductDetail.fxml"));
             Parent root = loader.load();
             ProductDetailController productDetailController = loader.getController();
@@ -256,7 +262,7 @@ public class ProductController implements Initializable {
             stage.setScene(new Scene(root));
             stage.setTitle("Thông tin sản phẩm");
             stage.show();
-        } else if (mode == 1){
+        } else if (viewMode == 1){
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/product/ImportDetail.fxml"));
             Parent root = loader.load();
             ImportDetailController importDetailController = loader.getController();
@@ -270,19 +276,19 @@ public class ProductController implements Initializable {
 
     @FXML
     void selectedImport() {
-        this.mode = 1;
+        this.viewMode = 1;
         updateTabImport();
     }
 
     @FXML
     void selectedProduct() {
-        this.mode = 0;
+        this.viewMode = 0;
         updateTabProduct();
     }
 
     @FXML
     void search(ActionEvent event){
-        if(mode == 0){
+        if(viewMode == 0){
             int id = 0;
             try {
                 id = comboBox_ProductID.getValue().intValue();
@@ -299,7 +305,7 @@ public class ProductController implements Initializable {
             productObservableList = FXCollections.observableList(list);
             table_Product.setItems(productObservableList);
 
-        } else if(mode == 1){
+        } else if(viewMode == 1){
             int id = 0;
             try {
                 id = comboBox_ImportID.getValue().intValue();
