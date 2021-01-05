@@ -64,6 +64,7 @@ public class EmployeeController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         commonController = new CommonController();
         employeeService = new EmployeeService();
+
         initTable();
         loadData();
     }
