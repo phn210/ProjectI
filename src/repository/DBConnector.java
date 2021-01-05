@@ -3,7 +3,7 @@ package repository;
 import java.sql.*;
 
 public class DBConnector {
-    static Connection connection;
+    public static Connection connection;
     private static String connectionURL = "jdbc:sqlserver://localhost;database=ProjectI;";
     private static String user = "sa";
     private static String password = "sa";

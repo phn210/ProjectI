@@ -5,3 +5,5 @@ out/
 #except
 !.idea/libraries
 
+src/test.java
+src/repository/DBConnector.java
