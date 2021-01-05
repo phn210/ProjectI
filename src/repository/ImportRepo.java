@@ -31,81 +31,30 @@ public class ImportRepo extends BaseRepo<Import>{
         return getList(rs);
     }
 
-    public List<Import> getAllImport(){
-        List<Import> list = new ArrayList<>();
+//    public ArrayList<ImportDetail> getImportDetail(Import imprt) throws SQLException {
+//        String query = "select * from Import_Detail " +
+//                    "where import_id = ?";
+//        PreparedStatement preparedStatement = prepare(query);
+//        preparedStatement.setInt(1, imprt.getId());
+//        ResultSet rs = preparedStatement.executeQuery();
+//        return getList(rs);
+//    }
 
-        String query = "select * from import";
-
-        try(Connection con = DBConnector.getConnection()){
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            while(rs.next()){
-                Import imprt = new Import();
-                imprt.setId(rs.getInt("id"));
-                imprt.setSupplierID(rs.getInt("supplier"));
-                imprt.setImportDate(rs.getDate("import_date"));
-                imprt.setTotalMoney(rs.getDouble("total_money"));
-                list.add(imprt);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return list;
-    }
-
-    public List<ImportDetail> getImportDetail(Import imprt){
-        List<ImportDetail> list = new ArrayList<>();
-
-        String query = "select * from Import_Detail " +
-                    "where import_id = ?";
-        try (Connection con = DBConnector.getConnection()){
-            PreparedStatement pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, imprt.getId());
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                ImportDetail importDetail = new ImportDetail();
-                importDetail.setImportID(rs.getInt("import_id"));
-                importDetail.setProductID(rs.getInt("product_id"));
-                importDetail.setAmount(rs.getInt("amount"));
-                importDetail.setImportPrice(rs.getDouble("import_price"));
-                list.add(importDetail);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return list;
-    }
-
-    public Import getImport(ImportDetail importDetail){
-        Import imprt = new Import();
-
-        String query = "select * from Import " +
+    public Import getImport(ImportDetail importDetail) throws SQLException {
+                String query = "select * from Import " +
                     "where id = ?";
-        try (Connection con = DBConnector.getConnection()){
-            PreparedStatement pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, importDetail.getImportID());
-            ResultSet rs = pstmt.executeQuery();
 
-            if(rs.isBeforeFirst()){
-                rs.next();
-                imprt.setId(rs.getInt("id"));
-                imprt.setSupplierID(rs.getInt("supplier"));
-                imprt.setImportDate(rs.getDate("import_date"));
-                imprt.setTotalMoney(rs.getDouble("total_money"));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        PreparedStatement preparedStatement = prepare(query);
+        preparedStatement.setInt(1, importDetail.getImportID());
+        ResultSet rs = preparedStatement.executeQuery();
+
+        if(rs.isBeforeFirst()) {
+            return getObject(rs);
         }
-
-        return imprt;
+        return null;
     }
 
-    public List<Import> search(int id, String supplier, Date importDate){
-        List<Import> list = new ArrayList<>();
-
+    public ArrayList<Import> search(int id, String supplier, Date importDate) throws SQLException {
         String query = "select * from Import, (select id as s_id, " +
                     "name as s_name from Supplier) as supplier " +
                     "where Import.supplier_id  = supplier.s_id";
@@ -117,22 +66,9 @@ public class ImportRepo extends BaseRepo<Import>{
         if(!(importDate == null))
             query = query + " and import_date = " + "'%" + importDate + "%'";
 
-        try (Connection con = DBConnector.getConnection()){
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-
-            while (rs.next()) {
-                Import imprt = new Import();
-                imprt.setId(rs.getInt("id"));
-                imprt.setSupplierID(rs.getInt("supplier_id"));
-                imprt.setImportDate(rs.getDate("import_date"));
-                imprt.setTotalMoney(rs.getDouble("total_money"));
-                list.add(imprt);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return list;
+        PreparedStatement preparedStatement = prepare(query);
+        ResultSet rs = preparedStatement.executeQuery();
+        return getList(rs);
     }
 
 
