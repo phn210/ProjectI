@@ -52,7 +52,7 @@ public class BrandRepo extends BaseRepo<Brand>{
         return getObject(rs);
     }
 
-    public boolean addBrand(Brand brand) throws SQLException {
+    public boolean insertBrand(Brand brand) throws SQLException {
         String insert = "insert into Brand(name, country) " +
                     "values (?, ?)";
 

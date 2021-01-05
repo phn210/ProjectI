@@ -9,6 +9,8 @@ import javafx.scene.control.TextField;
 import model.entity.Brand;
 import repository.BrandRepo;
 
+import java.sql.SQLException;
+
 public class BrandDetailController {
 
     @FXML
@@ -75,12 +77,20 @@ public class BrandDetailController {
             if(mode == 0){
                 this.brand.setName(name);
                 this.brand.setCountry(country);
-                res = brandRepo.addBrand(brand);
+                try {
+                    res = brandRepo.insertBrand(brand);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
                 if (res) button_Submit.setVisible(false);
             } else if (mode == 1) {
                 this.brand.setName(name);
                 this.brand.setCountry(country);
-                res = brandRepo.updateBrand(brand);
+                try {
+                    res = brandRepo.updateBrand(brand);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
             CommonController.resultNoti(res);
 
