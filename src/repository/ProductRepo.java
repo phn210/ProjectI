@@ -33,6 +33,17 @@ public class ProductRepo extends BaseRepo<Product>{
         return getList(rs);
     }
 
+    public Product findByID(int id) throws SQLException {
+        Product product = new Product();
+        String query = "select * from Product " +
+                        "where id = " + id;
+        PreparedStatement preparedStatement = prepare(query);
+        preparedStatement.setInt(1, id);
+        ResultSet rs = preparedStatement.executeQuery();
+        rs.first();
+        return getObject(rs);
+    }
+
     //--------------------------------------------------------------------------------
     
     public List<Product> getAllProduct() throws SQLException {
@@ -43,23 +54,9 @@ public class ProductRepo extends BaseRepo<Product>{
         return getList(rs);
     }
 
-    public List<ImportDetail> getImportDetails(Product product) throws SQLException {
-        String query = "select * from Import_Detail " +
-                        "where product_id = ?";
-        PreparedStatement stmt = prepare(query);
-        ResultSet rs = stmt.executeQuery();
-        return getList(rs);
-    }
+
     
-    public Product getProduct(int id) throws SQLException {
-        Product product = new Product();
-        String query = "select * from Product " +
-                    "where id = " + id;
-        PreparedStatement stmt = prepare(query);
-        ResultSet rs = stmt.executeQuery();
-        rs.first();
-        return getObject(rs);
-    }
+
 
     public boolean addProduct(Product product) throws SQLException {
         String insert = "insert into Product(name, description, retail_price, " +

@@ -41,30 +41,6 @@ public class TypeRepo extends BaseRepo<Type> {
         return getObject(rs);
     }
 
-    public List<String> getAllTypeName() throws SQLException {
-        String query = "select * from Type";
-        PreparedStatement preparedStatement = prepare(query);
-        ResultSet rs = preparedStatement.executeQuery();
-        ArrayList<Type> typeArrayList = getList(rs);
-        List<String> nameArrayList = new ArrayList<>();
-        for (int i = 0; i < typeArrayList.size(); i++) {
-            nameArrayList.add(typeArrayList.get(i).getName());
-        }
-        return nameArrayList;
-    }
-
-    public Type getType(Product product) throws SQLException {
-        Type type = new Type();
-
-        String query = "select * from Type " +
-                "where id = ?";
-        PreparedStatement pstmt = prepare(query);
-        pstmt.setInt(1, product.getTypeID());
-        ResultSet rs = pstmt.executeQuery();
-        rs.first();
-        return getObject(rs);
-    }
-
     public boolean addType(Type type) throws SQLException {
         String insert = "insert into Type(name, description) " +
                 "values (?, ?)";

@@ -24,6 +24,7 @@ public class CommonController {
             return null;
         }
     }
+
     public void switchScene(Scene scene){
         try{
             primaryStage.setScene(scene);

@@ -14,10 +14,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.entity.*;
-import repository.*;
+import model.form.ProductDetailForm;
+import service.product.ProductsService;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDetailController {
@@ -47,7 +50,7 @@ public class ProductDetailController {
     private TextArea textArea_Description;
 
     @FXML
-    private TableView<ImportDetail> table_ImportRecord;
+    private TableView<ProductDetailForm> table_ImportRecord;
 
     @FXML
     private TableColumn<ImportDetail, Integer> col_ID;
@@ -78,25 +81,20 @@ public class ProductDetailController {
     private Product product;
     private Type type;
     private Brand brand;
-    private ProductRepo productRepo;
-    private ImportRepo importRepo;
-    private TypeRepo typeRepo;
-    private BrandRepo brandRepo;
-    private SupplierRepo supplierRepo;
+    private ProductsService productsService;
 
-    private ObservableList<ImportDetail> importDetailObservableList;
+    private ObservableList<ProductDetailForm> productDetailFormObservableList;
     private ObservableList<String> typeObservableList;
     private ObservableList<String> brandObservableList;
+
+    private CommonController commonController;
 
     public ProductDetailController(){
         this.product = new Product();
         this.type = new Type();
         this.brand = new Brand();
-        this.productRepo = new ProductRepo();
-        this.importRepo = new ImportRepo();
-        this. typeRepo = new TypeRepo();
-        this.brandRepo = new BrandRepo();
-        this.supplierRepo = new SupplierRepo();
+        this.productsService = new ProductsService();
+        this.commonController = new CommonController();
     }
 
     public void initialize(){
@@ -113,8 +111,8 @@ public class ProductDetailController {
         button_Submit.setText("Thêm");
 
         col_ID.setCellValueFactory(new PropertyValueFactory<>("importID"));
-        col_Supplier.setCellValueFactory(t -> new ReadOnlyObjectWrapper<>(supplierRepo.getSupplier(importRepo.getImport(t.getValue())).getName()));
-        col_Date.setCellValueFactory(t -> new ReadOnlyObjectWrapper<>(importRepo.getImport(t.getValue()).getImportDate()));
+        col_Supplier.setCellValueFactory(t -> new ReadOnlyObjectWrapper<>();
+        col_Date.setCellValueFactory(t -> new ReadOnlyObjectWrapper<>();
         col_Amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         col_ImportPrice.setCellValueFactory(new PropertyValueFactory<>("importPrice"));
 
@@ -126,16 +124,19 @@ public class ProductDetailController {
     public void initialize(Product product){
         this.mode = 1;
         this.product = product;
-
-        this.type = typeRepo.getType(this.product);
-        this.brand = brandRepo.getBrand(this.product);
+        try {
+            this.type = productsService.typeRepo.findByID(product.getTypeID());
+            this.brand = productsService.brandRepo.findByID(product.getBrandID());
+        } catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        }
 
         textField_ID.setText(String.valueOf(product.getId()));
         textField_Name.setText(product.getName());
         textField_Amount.setText(String.valueOf(product.getAmount()));
         textArea_Description.setText(product.getDescription());
-        comboBox_Type.setValue(typeRepo.getType(product).getName());
-        comboBox_Brand.setValue(brandRepo.getBrand(product).getName());
+        comboBox_Type.setValue(type.getName());
+        comboBox_Brand.setValue(brand.getName());
         textField_Price.setText(String.valueOf(product.getRetailPrice()));
         textField_Discount.setText(String.valueOf(product.getDiscount()));
 
@@ -150,39 +151,54 @@ public class ProductDetailController {
         button_Delete.setVisible(true);
         button_Submit.setText("Cập nhật");
 
-        col_ID.setCellValueFactory(new PropertyValueFactory<>("importID"));
-        col_Supplier.setCellValueFactory(t -> new ReadOnlyObjectWrapper<>(supplierRepo.getSupplier(importRepo.getImport(t.getValue())).getName()));
-        col_Date.setCellValueFactory(t -> new ReadOnlyObjectWrapper<>(importRepo.getImport(t.getValue()).getImportDate()));
-        col_Amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        col_ImportPrice.setCellValueFactory(new PropertyValueFactory<>("importPrice"));
+        initTable();
 
         updateTable();
         updateType();
         updateBrand();
     }
 
+    public void initTable(){
+        col_ID.setCellValueFactory(new PropertyValueFactory<>("importID"));
+        col_Supplier.setCellValueFactory(new PropertyValueFactory<>("supplier"));
+        col_Date.setCellValueFactory(new PropertyValueFactory<>("importDate"));
+        col_Amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        col_ImportPrice.setCellValueFactory(new PropertyValueFactory<>("importPrice"));
+    }
+
     public void updateTable(){
-        List<ImportDetail> list = productRepo.getImportDetails(this.product);
-        importDetailObservableList = FXCollections.observableList(list);
-        table_ImportRecord.setItems(importDetailObservableList);
+        List<ProductDetailForm> list = new ArrayList<>();
+        try {
+           list = productsService.getAllProductDetailForm(this.product);
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        productDetailFormObservableList = FXCollections.observableList(list);
+        table_ImportRecord.setItems(productDetailFormObservableList);
     }
 
     public void updateType(){
-        List<String> list = typeRepo.getAllTypeName();
+        List<String> list = new ArrayList<>();
+        try {
+            list = productsService.getAllTypeName();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
         list.add("Thêm mới");
         typeObservableList = FXCollections.observableList(list);
         comboBox_Type.setItems(typeObservableList);
     }
 
     public void updateBrand(){
-        List<String> list = brandRepo.getAllBrandName();
+        List<String> list = new ArrayList<>();
+        try {
+            list = productsService.getAllBrandName();;
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
         list.add("Thêm mới");
         brandObservableList = FXCollections.observableList(list);
         comboBox_Brand.setItems(brandObservableList);
-    }
-
-    public void updateProduct(){
-        product = productRepo.getProduct(product.getId());
     }
 
     @FXML
@@ -252,7 +268,7 @@ public class ProductDetailController {
     @FXML
     void selectBrand(ActionEvent event) {
         int brandIndex = comboBox_Brand.getSelectionModel().getSelectedIndex();
-        this.brand = brandRepo.getAllBrand().get(brandIndex);
+        this.brand = productsService.brandRepo.getAllBrandNam
     }
 
     @FXML
@@ -298,7 +314,7 @@ public class ProductDetailController {
 
                 res = productRepo.updateProduct(product);
             }
-            CommonController.resultNoti(res);
+            commonController.resultNoti(res);
         }
     }
 
