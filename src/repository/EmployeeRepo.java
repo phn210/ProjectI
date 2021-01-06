@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class EmployeeRepo extends BaseRepo<Employee>{
@@ -98,5 +99,33 @@ public class EmployeeRepo extends BaseRepo<Employee>{
         preparedStatement.setDate(1, date);
         ResultSet resultSet = preparedStatement.executeQuery();
         return getList(resultSet);
+    }
+
+    public ArrayList<Employee> search(int id, String name, String phone, int age, String citizenId) throws SQLException {
+        String sql = "SELECT * FROM employee ";
+        String append = "";
+        if(id != -1){
+            append += " AND id = " + id + " ";
+        }
+        if(!name.isEmpty()){
+            append += " AND name like "+"'%"+name+"%'"+" ";
+        }
+        if(!phone.isEmpty()){
+            append += " AND phone = '" + phone + "' ";
+        }
+        if(age != -1){
+            append += " AND YEAR(dob) = " + (LocalDate.now().getYear()-age) + " ";
+        }
+        if(!citizenId.isEmpty()){
+            append += " AND citizen_id = '" + citizenId + "' ";
+        }
+        if(append.length() > 5){
+            append = " WHERE " + append.substring(5,append.length());
+            sql += append;
+        }
+        PreparedStatement preparedStatement = prepare(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return getList(resultSet);
+
     }
 }

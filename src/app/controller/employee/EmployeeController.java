@@ -247,8 +247,11 @@ public class EmployeeController implements Initializable {
             age = Integer.parseInt(ageTextField.getText());
         }
         String citizenId = citizenIdTextField.getText().trim();
-        String sql = "SELECT * FROM employe ";
-        String append = "WHERE ";
-        
+        try {
+            employeeDetailFormObservableList = FXCollections.observableArrayList(employeeService.search(id, name, phone, age, citizenId));
+            table.setItems(employeeDetailFormObservableList);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
     }
 }

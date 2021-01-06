@@ -70,4 +70,16 @@ public class EmployeeService {
     public void addEmployee(Employee employee) throws SQLException {
         employeeRepo.insert(employee);
     }
+
+    public ArrayList<EmployeeDetailForm> search(int id, String name, String phone, int age, String citizenId) throws SQLException {
+        ArrayList<EmployeeDetailForm> employeeDetailFormArrayList = new ArrayList<>();
+        ArrayList<Employee> employeeArrayList = employeeRepo.search(id, name, phone, age, citizenId);
+        for (int i = 0; i < employeeArrayList.size(); i++) {
+            Employee employee = employeeArrayList.get(i);
+            Branch branch = branchRepo.findById(employee.getBranchID());
+            EmployeeDetailForm employeeDetailForm = new EmployeeDetailForm(employee, branch);
+            employeeDetailFormArrayList.add(employeeDetailForm);
+        }
+        return employeeDetailFormArrayList;
+    }
 }
