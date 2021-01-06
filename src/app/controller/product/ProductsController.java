@@ -1,8 +1,8 @@
 package app.controller.product;
 
+import app.controller.CommonController;
 import app.controller.Main;
 import app.controller.home.HomeController;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,8 +20,7 @@ import model.entity.Import;
 import model.entity.Product;
 import model.form.ImportForm;
 import model.form.ProductForm;
-import repository.*;
-import service.ProductsService;
+import service.product.ProductsService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -126,11 +125,14 @@ public class ProductsController implements Initializable {
     private ObservableList<ImportForm> importObservableList;
 
     private Account account;
-    private ProductsService productsService
+    private ProductsService productsService;
+
+    private CommonController commonController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.account = HomeController.account;
+        this.commonController = new CommonController();
         this.productsService = new ProductsService();
         this.viewMode = 0;
         this.accountMode = account.getEmployeeID();
@@ -170,36 +172,34 @@ public class ProductsController implements Initializable {
             sqlException.printStackTrace();
         }
         productObservableList = FXCollections.observableList(list);
-
         table_Product.setItems(productObservableList);
 
-        List<Integer> idList = new ArrayList<>();
-        for (Product product : products){
-            idList.add(product.getId());
+        try {
+            typeObservableList = FXCollections.observableList(productsService.getAllTypeName());
+        } catch (SQLException sqlException){
+            sqlException.printStackTrace();
         }
-        idObservableList = FXCollections.observableList(idList);
-        comboBox_ProductID.setItems(idObservableList);
-
-        typeObservableList = FXCollections.observableList(typeRepo.getAllTypeName());
         comboBox_Type.setItems(typeObservableList);
     }
 
     public void updateTabImport(){
         searchPane_Products.setVisible(false);
         searchPane_Imports.setVisible(true);
+        List<ImportForm> list = new ArrayList<>();
 
-        List<Import> imports = importRepo.getAllImport();
-        importObservableList = FXCollections.observableList(imports);
+        try {
+            list = productsService.getAllImportForm();
+        } catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        }
+        importObservableList = FXCollections.observableList(list);
         table_Import.setItems(importObservableList);
 
-        List<Integer> idList = new ArrayList<>();
-        for (Import imprt : imports){
-            idList.add(imprt.getId());
+        try {
+            supplierObservableList = FXCollections.observableList(productsService.getAllSupplierName());
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
         }
-        idObservableList = FXCollections.observableList(idList);
-        comboBox_ImportID.setItems(idObservableList);
-
-        supplierObservableList = FXCollections.observableList(supplierRepo.getAllSupplierName());
         comboBox_Supplier.setItems(supplierObservableList);
     }
 

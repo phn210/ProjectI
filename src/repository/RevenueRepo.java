@@ -23,10 +23,20 @@ public class RevenueRepo extends BaseRepo<Revenue>{
     }
 
     @Override
-    protected ArrayList<Revenue> findAll() throws SQLException {
+    public ArrayList<Revenue> findAll() throws SQLException {
         String query = "select * from Revenue";
         PreparedStatement preparedStatement = prepare(query);
         ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
+
+    @Override
+    public int insert(Revenue revenue) throws SQLException{
+        return 0;
+    };
+
+    @Override
+    public int update(Revenue revenue) throws SQLException{
+        return 0;
+    };
 }

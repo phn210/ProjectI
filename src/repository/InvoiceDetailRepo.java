@@ -23,10 +23,20 @@ public class InvoiceDetailRepo extends BaseRepo<InvoiceDetail>{
     }
 
     @Override
-    protected ArrayList<InvoiceDetail> findAll() throws SQLException {
+    public ArrayList<InvoiceDetail> findAll() throws SQLException {
         String query = "select * from InvoiceDetail";
         PreparedStatement preparedStatement = prepare(query);
         ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
+
+    @Override
+    public int insert(InvoiceDetail invoiceDetail) throws SQLException{
+        return 0;
+    };
+
+    @Override
+    public int update(InvoiceDetail invoiceDetail) throws SQLException{
+        return 0;
+    };
 }

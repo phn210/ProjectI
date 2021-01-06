@@ -14,7 +14,7 @@ public class ImportRepo extends BaseRepo<Import>{
     }
 
     @Override
-    protected Import getObject(ResultSet rs) throws SQLException {
+    public Import getObject(ResultSet rs) throws SQLException {
         Import imprt = new Import();
         imprt.setId(rs.getInt("id"));
         imprt.setSupplierID(rs.getInt("supplier"));
@@ -24,26 +24,37 @@ public class ImportRepo extends BaseRepo<Import>{
     }
 
     @Override
-    protected ArrayList<Import> findAll() throws SQLException {
+    public ArrayList<Import> findAll() throws SQLException {
         String query = "select * from import";
         PreparedStatement preparedStatement = prepare(query);
         ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
 
+    public Import findByID(int id) throws SQLException {
+        String query = "select * from Import " +
+                        "where id = ?";
+        PreparedStatement preparedStatement = prepare(query);
+        preparedStatement.setInt(1, id);
+        ResultSet rs = preparedStatement.executeQuery();
+        rs.first();
+        return getObject(rs);
+    }
+
+    @Override
+    public int insert(Import anImport) throws SQLException{
+        return 0;
+    };
+
+    @Override
+    public int update(Import anImport) throws SQLException{
+        return 0;
+    };
+
     public List<Import> getAllImport() throws SQLException {
         String query = "select * from import";
         Statement stmt = prepare(query);
         ResultSet rs = stmt.executeQuery(query);
-        return getList(rs);
-    }
-
-    public ArrayList<Import> getImportDetail(Import imprt) throws SQLException {
-        String query = "select * from Import_Detail " +
-                    "where import_id = ?";
-        PreparedStatement pstmt = prepare(query);
-        pstmt.setInt(1, imprt.getId());
-        ResultSet rs = pstmt.executeQuery(query);
         return getList(rs);
     }
 

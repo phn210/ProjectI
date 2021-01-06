@@ -1,6 +1,9 @@
 package repository;
 
+import javafx.stage.Stage;
+import model.entity.Import;
 import model.entity.ImportDetail;
+import model.entity.Product;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +12,7 @@ import java.util.ArrayList;
 
 public class ImportDetailRepo extends BaseRepo<ImportDetail>{
     @Override
-    protected ImportDetail getObject(ResultSet rs) throws SQLException {
+    public ImportDetail getObject(ResultSet rs) throws SQLException {
         ImportDetail importDetail = new ImportDetail();
         importDetail.setImportID(rs.getInt("import_id"));
         importDetail.setProductID(rs.getInt("product_id"));
@@ -19,10 +22,39 @@ public class ImportDetailRepo extends BaseRepo<ImportDetail>{
     }
 
     @Override
-    protected ArrayList<ImportDetail> findAll() throws SQLException {
+    public ArrayList<ImportDetail> findAll() throws SQLException {
         String query = "select * from Import_Detail";
         PreparedStatement preparedStatement = prepare(query);
         ResultSet rs = preparedStatement.executeQuery();
+        return getList(rs);
+    }
+
+    @Override
+    public int insert(ImportDetail importDetail) throws SQLException{
+        return 0;
+    };
+
+    @Override
+    public int update(ImportDetail importDetail) throws SQLException{
+        return 0;
+    };
+
+
+    public ArrayList<ImportDetail> getImportDetails(Product product) throws SQLException {
+        String query = "select * from Import_Detail " +
+                "where product_id = ?";
+        PreparedStatement preparedStatement = prepare(query);
+        preparedStatement.setInt(1, product.getId());
+        ResultSet rs = preparedStatement.executeQuery();
+        return getList(rs);
+    }
+
+    public ArrayList<ImportDetail> getImportDetails(Import anImport) throws SQLException {
+        String query = "select * from Import_Detail " +
+                "where import_id = ?";
+        PreparedStatement preparedStatement = prepare(query);
+        preparedStatement.setInt(1, anImport.getId());
+        ResultSet rs = preparedStatement.executeQuery(query);
         return getList(rs);
     }
 }

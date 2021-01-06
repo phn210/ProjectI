@@ -19,7 +19,7 @@ public class AccountRepo extends BaseRepo<Account> {
     }
 
     @Override
-    protected ArrayList<Account> findAll() throws SQLException {
+    public ArrayList<Account> findAll() throws SQLException {
         String query = "select * from Account";
         PreparedStatement preparedStatement = prepare(query);
         ResultSet rs = preparedStatement.executeQuery();
@@ -38,6 +38,15 @@ public class AccountRepo extends BaseRepo<Account> {
         }else{
             return null;
         }
-
     }
+
+    @Override
+    public int insert(Account account) throws SQLException{
+        return 0;
+    };
+
+    @Override
+    public int update(Account account) throws SQLException{
+        return 0;
+    };
 }

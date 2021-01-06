@@ -22,7 +22,7 @@ public class BrandRepo extends BaseRepo<Brand>{
     }
 
     @Override
-    protected ArrayList<Brand> findAll() throws SQLException {
+    public ArrayList<Brand> findAll() throws SQLException {
         String query = "select * from Brand";
         PreparedStatement preparedStatement = prepare(query);
         ResultSet rs = preparedStatement.executeQuery();
@@ -40,28 +40,16 @@ public class BrandRepo extends BaseRepo<Brand>{
         return getObject(rs);
     }
 
-    public List<String> getAllBrandName() throws SQLException {
-        String query = "select name from Brand";
-        PreparedStatement preparedStatement = prepare(query);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        ArrayList<Brand> brandArrayList = getList(resultSet);
-        List<String> nameArrayList = new ArrayList<>();
-        for (int i = 0; i < brandArrayList.size(); i++) {
-            nameArrayList.add(brandArrayList.get(i).getName());
-        }
-        return nameArrayList;
-    }
+    @Override
+    public int insert(Brand brand) throws SQLException{
+        return 0;
+    };
 
-    public Brand getBrand(Product product) throws SQLException {
-        Brand brand = new Brand();
-        String query = "select * from Brand " +
-                "where id = ?";
-        PreparedStatement pstmt = prepare(query);
-        pstmt.setInt(1, product.getBrandID());
-        ResultSet rs = pstmt.executeQuery();
-        rs.first();
-        return getObject(rs);
-    }
+    @Override
+    public int update(Brand brand) throws SQLException{
+        return 0;
+    };
+    
 
     public boolean insertBrand(Brand brand) throws SQLException {
         String insert = "insert into Brand(name, country) " +
@@ -84,6 +72,8 @@ public class BrandRepo extends BaseRepo<Brand>{
         pstmt.setInt(3, brand.getId());
         return pstmt.executeUpdate() > 0;
     }
+
+
 
 
 }

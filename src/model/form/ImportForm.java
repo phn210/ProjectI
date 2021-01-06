@@ -1,6 +1,8 @@
 package model.form;
 
+import model.entity.Import;
 import model.entity.ImportDetail;
+import model.entity.Supplier;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -13,7 +15,15 @@ public class ImportForm {
     private ArrayList<ImportDetail> importDetails;
 
     public ImportForm(){
+        this.importDetails = new ArrayList<>();
+    }
 
+    public ImportForm(Import anImport, Supplier supplier){
+        this.setId(anImport.getId());
+        this.setSupplier(supplier.getName());
+        this.setImportDate(anImport.getImportDate());
+        this.setTotalMoney(anImport.getTotalMoney());
+        this.importDetails = new ArrayList<>();
     }
 
     public int getId() {
