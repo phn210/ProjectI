@@ -50,4 +50,24 @@ public class EmployeeService {
     public void updateEmployee(Employee employee) throws SQLException {
         employeeRepo.update(employee);
     }
+
+    public Account getAccount(int id) throws SQLException {
+        return accountRepo.findByEmployeeId(id);
+    }
+
+    public Branch getBranchById(int id) throws SQLException {
+        return branchRepo.findById(id);
+    }
+
+    public void registerAccount(Account account) throws SQLException {
+        accountRepo.insert(account);
+    }
+
+    public void updateAccount(Account account) throws SQLException {
+        accountRepo.update(account);
+    }
+
+    public void addEmployee(Employee employee) throws SQLException {
+        employeeRepo.insert(employee);
+    }
 }

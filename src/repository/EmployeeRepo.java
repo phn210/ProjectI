@@ -45,7 +45,21 @@ public class EmployeeRepo extends BaseRepo<Employee>{
 
     @Override
     public int insert(Employee employee) throws SQLException{
-        return 0;
+        String sql = "INSERT INTO employee " +
+                "VALUES(? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? )";
+        PreparedStatement preparedStatement = prepare(sql);
+        preparedStatement.setString(1, employee.getName());
+        preparedStatement.setDate(2, employee.getDob());
+        preparedStatement.setString(3, employee.getPhone());
+        preparedStatement.setString(4, employee.getAddress());
+        preparedStatement.setDate(5, employee.getStartDay());
+        preparedStatement.setDouble(6, employee.getSalaryLevel());
+        preparedStatement.setString(7, employee.getCitizenID());
+        preparedStatement.setString(8, employee.getInsuranceID());
+        preparedStatement.setInt(9, employee.getRole());
+        preparedStatement.setInt(10, employee.getBranchID());
+        preparedStatement.setBoolean(11, employee.isWorking());
+        return preparedStatement.executeUpdate();
     };
 
     @Override

@@ -60,6 +60,12 @@ public class HomeController implements Initializable {
     }
 
     public void toHome(){
+        Pane userDetailPane = null;
+        try {
+            userDetailPane = commonController.getPane("home/UserDetail/UserDetail.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         mainPane.setBottom(userDetailPane);
     }
 

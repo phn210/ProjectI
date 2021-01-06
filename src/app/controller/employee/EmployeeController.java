@@ -7,18 +7,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import model.entity.Branch;
+import model.entity.Employee;
 import model.form.EmployeeDetailForm;
 import service.employee.EmployeeService;
 
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EmployeeController implements Initializable {
@@ -123,5 +129,73 @@ public class EmployeeController implements Initializable {
             throwables.printStackTrace();
         }
         table.setItems(employeeDetailFormObservableList);
+    }
+
+    public void addEmployee(){
+        Dialog<ButtonType> addEmployeeDialog = new Dialog<>();
+
+        ButtonType acceptButtonType = new ButtonType("Xác nhận", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButtonType = new ButtonType("Thoát", ButtonBar.ButtonData.CANCEL_CLOSE);
+        addEmployeeDialog.getDialogPane().getButtonTypes().addAll(acceptButtonType, cancelButtonType);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField nameTextField = new TextField();
+        nameTextField.setPromptText("Tên nhân viên");
+
+        ComboBox<String> branchComboBox = new ComboBox<>();
+        ObservableList<String> branchComboBoxList;
+        ArrayList<Branch> branchArrayList = new ArrayList<>();
+        try {
+            branchArrayList = employeeService.getAllBranch();
+            branchComboBoxList = FXCollections.observableArrayList(employeeService.getAllBranchName());
+            branchComboBox.setItems(branchComboBoxList);
+            branchComboBox.setValue(branchComboBoxList.get(0));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        ComboBox<String> roleComboBox = new ComboBox<>();
+        ObservableList<String> roleComboBoxList;
+        roleComboBoxList = FXCollections.observableArrayList("Quản lí", "Nhân viên bán hàng", "Nhân viên kĩ thuật");
+        roleComboBox.setItems(roleComboBoxList);
+        roleComboBox.setValue(roleComboBoxList.get(2));
+
+        grid.add(new Label("Tên nhân viên: "), 0, 0);
+        grid.add(nameTextField, 1, 0);
+        grid.add(new Label("Chi nhánh: "), 0, 1);
+        grid.add(branchComboBox, 1, 1);
+        grid.add(new Label("Vai trò: "), 0, 2);
+        grid.add(roleComboBox, 1, 2);
+
+        Node acceptButton = addEmployeeDialog.getDialogPane().lookupButton(acceptButtonType);
+        acceptButton.setDisable(true);
+        nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            acceptButton.setDisable(newValue.trim().isEmpty());
+        });
+        addEmployeeDialog.getDialogPane().setContent(grid);
+        Optional<ButtonType> result = addEmployeeDialog.showAndWait();
+        if(result.get() == acceptButtonType){
+            String name = nameTextField.getText();
+            Branch branch = branchArrayList.get(branchComboBox.getSelectionModel().getSelectedIndex());
+            int role;
+            if(roleComboBox.getValue().equalsIgnoreCase("Quản lí")){
+                role = 1;
+            }else if(roleComboBox.getValue().equalsIgnoreCase("Nhân viên bán hàng")){
+                role = 2;
+            }else{
+                role = 3;
+            }
+            Employee employee = new Employee(name, role, branch.getId());
+            try {
+                employeeService.addEmployee(employee);
+                loadData();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
     }
 }

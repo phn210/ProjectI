@@ -40,13 +40,40 @@ public class AccountRepo extends BaseRepo<Account> {
         }
     }
 
+    public Account findByEmployeeId(int id) throws SQLException {
+        String sql = "SELECT * FROM Account WHERE employee_id = ?";
+        PreparedStatement preparedStatement = prepare(sql);
+        preparedStatement.setInt(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if(resultSet.next()){
+            resultSet.first();
+            return getObject(resultSet);
+        }else{
+            return null;
+        }
+    }
+
     @Override
     public int insert(Account account) throws SQLException{
-        return 0;
+        String sql = "INSERT INTO Account " +
+                "VALUES(?,?,?)";
+        PreparedStatement preparedStatement = prepare(sql);
+        preparedStatement.setInt(1, account.getEmployeeID());
+        preparedStatement.setString(2, account.getUsername());
+        preparedStatement.setString(3, account.getPassword());
+        return preparedStatement.executeUpdate();
     };
 
     @Override
     public int update(Account account) throws SQLException{
-        return 0;
+        String sql = "UPDATE Account " +
+                "SET username = ?, " +
+                "password = ? " +
+                "WHERE employee_id = ?";
+        PreparedStatement preparedStatement = prepare(sql);
+        preparedStatement.setString(1, account.getUsername());
+        preparedStatement.setString(2, account.getPassword());
+        preparedStatement.setInt(3, account.getEmployeeID());
+        return preparedStatement.executeUpdate();
     };
 }

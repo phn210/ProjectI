@@ -145,6 +145,7 @@
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
                         <Button layoutX="1048.0" layoutY="55.0" mnemonicParsing="false" onAction="#save" prefHeight="50.0" prefWidth="100.0" text="Lưu" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="100.0" />
+                        <Button fx:id="informationButton" layoutX="987.0" layoutY="4.0" mnemonicParsing="false" onAction="#informationAccount" prefHeight="50.0" prefWidth="150.0" text="Thông tin tài khoản" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="240.0" />
                      </children>
                   </AnchorPane>
                </children>

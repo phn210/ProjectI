@@ -1,6 +1,7 @@
 package model.entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class Employee {
     private int id;
@@ -18,6 +19,15 @@ public class Employee {
 
     public Employee(){
 
+    }
+
+    public Employee(String name, int role, int branchID) {
+        this.name = name;
+        this.role = role;
+        this.branchID = branchID;
+        startDay = Date.valueOf(LocalDate.now());
+        salaryLevel = 0.0;
+        working = true;
     }
 
     public int getId() {

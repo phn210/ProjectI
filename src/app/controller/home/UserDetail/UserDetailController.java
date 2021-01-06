@@ -81,4 +81,5 @@ public class UserDetailController implements Initializable {
             throwables.printStackTrace();
         }
     }
+
 }

@@ -29,7 +29,7 @@
                      <children>
                         <MenuButton contentDisplay="TOP" mnemonicParsing="false" prefHeight="94.0" prefWidth="98.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Thêm">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="Thủ công" />
+                            <MenuItem mnemonicParsing="false" onAction="#addEmployee" text="Thủ công" />
                             <MenuItem mnemonicParsing="false" text="File" />
                           </items>
                            <graphic>

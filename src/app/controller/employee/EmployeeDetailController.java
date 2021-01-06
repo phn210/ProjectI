@@ -6,7 +6,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import model.entity.Account;
 import model.entity.Branch;
 import model.entity.Employee;
 import model.form.EmployeeDetailForm;
@@ -17,6 +21,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EmployeeDetailController implements Initializable {
@@ -74,6 +79,9 @@ public class EmployeeDetailController implements Initializable {
 
     ObservableList<String> workingComboBoxList;
 
+    @FXML
+    Button informationButton;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         employeeService = new EmployeeService();
@@ -116,11 +124,11 @@ public class EmployeeDetailController implements Initializable {
         insuranceIdTextField.setText(employeeDetailForm.getInsuranceId());
         salaryLevelTextField.setText(String.valueOf(employeeDetailForm.getSalaryLevel()));
         salaryLevelTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            try{
-                if(!newValue.isEmpty()){
+            try {
+                if (!newValue.isEmpty()) {
                     Double.parseDouble(newValue);
                 }
-            }catch (NumberFormatException ex){
+            } catch (NumberFormatException ex) {
                 commonController.resultNoti(false, "Mức lương phải là số");
             }
         });
@@ -149,26 +157,26 @@ public class EmployeeDetailController implements Initializable {
             role = 3;
         }
         Date date;
-        if(dobDatePicker.getValue() != null ){
+        if (dobDatePicker.getValue() != null) {
             date = Date.valueOf(dobDatePicker.getValue());
-        }else{
+        } else {
             date = null;
         }
         String phone = phoneTextField.getText();
         String insuranceId = insuranceIdTextField.getText();
         double salaryLevel = 0;
-        if(!salaryLevelTextField.getText().isEmpty()){
+        if (!salaryLevelTextField.getText().isEmpty()) {
             salaryLevel = Double.parseDouble(salaryLevelTextField.getText());
         }
         String address = addressTextField.getText();
         int branchId = branchArrayList.get(branchComboBox.getSelectionModel().getSelectedIndex()).getId();
-        boolean working  = false;
-        if(workingComboBox.getValue().equalsIgnoreCase("Đang đi làm")){
+        boolean working = false;
+        if (workingComboBox.getValue().equalsIgnoreCase("Đang đi làm")) {
             working = true;
         }
-        String content = "Bạn có muốn cập nhật thông tin của nhân viên có id là :"+id+ " Không?";
+        String content = "Bạn có muốn cập nhật thông tin của nhân viên có id là :" + id + " Không?";
         boolean confirm = commonController.confirmAlert(content);
-        if(confirm){
+        if (confirm) {
             Employee employee = new Employee();
             employee.setId(id);
             employee.setName(name);
@@ -183,11 +191,84 @@ public class EmployeeDetailController implements Initializable {
             employee.setWorking(working);
             try {
                 employeeService.updateEmployee(employee);
+                Branch branch = employeeService.getBranchById(employee.getBranchID());
+                employeeDetailForm = new EmployeeDetailForm(employee, branch);
                 commonController.resultNoti(true, "Bạn đã cập nhật thông tin thành công");
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
                 commonController.resultNoti(false);
             }
         }
+    }
+
+    public void informationAccount() {
+        try {
+            Account account = employeeService.getAccount(employeeDetailForm.getEmployeeId());
+            Dialog<ButtonType> informationAccountDialog = new Dialog<>();
+
+            ButtonType acceptButtonType = new ButtonType("Xác nhận", ButtonBar.ButtonData.OK_DONE);
+            ButtonType cancelButtonType = new ButtonType("Thoát", ButtonBar.ButtonData.CANCEL_CLOSE);
+            informationAccountDialog.getDialogPane().getButtonTypes().addAll(acceptButtonType, cancelButtonType);
+
+            GridPane grid = new GridPane();
+            grid.setHgap(10);
+            grid.setVgap(10);
+            grid.setPadding(new Insets(20, 150, 10, 10));
+
+            TextField usernameTextField = new TextField();
+            usernameTextField.setPromptText("Tài khoản");
+
+
+            TextField passwordTextField = new TextField();
+            passwordTextField.setPromptText("Mật khẩu");
+            if(account != null){
+                usernameTextField.setText(account.getUsername());
+                passwordTextField.setText(account.getPassword());
+            }
+
+
+            grid.add(new Label("Tài khoản: "), 0, 0);
+            grid.add(usernameTextField, 1, 0);
+            grid.add(new Label("Mật khẩu: "), 0, 1);
+            grid.add(passwordTextField, 1, 1);
+
+            Node acceptButton = informationAccountDialog.getDialogPane().lookupButton(acceptButtonType);
+            acceptButton.setDisable(false);
+            usernameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+                acceptButton.setDisable(newValue.trim().isEmpty());
+            });
+
+            informationAccountDialog.getDialogPane().setContent(grid);
+            Optional<ButtonType> result = informationAccountDialog.showAndWait();
+            if (result.get() == acceptButtonType) {
+                String username = usernameTextField.getText();
+                String password = passwordTextField.getText();
+                if (password.trim().isEmpty()) {
+                    commonController.resultNoti(false, "Mật khẩu không thể để trống");
+                } else {
+                    try {
+                        if (account == null) {
+                            account = new Account();
+                            account.setEmployeeID(employeeDetailForm.getEmployeeId());
+                            account.setUsername(username);
+                            account.setPassword(password);
+                            employeeService.registerAccount(account);
+                            commonController.resultNoti(true, "Đăng kí tài khoản thành công");
+                        } else {
+                            account.setUsername(username);
+                            account.setPassword(password);
+                            employeeService.updateAccount(account);
+                            commonController.resultNoti(true, "Chỉnh sửa thông tin tài khoản thành công");
+                        }
+
+                    } catch (SQLException ex) {
+                        commonController.resultNoti(false, "Tài khoản đã tồn tại!");
+                    }
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 }
