@@ -16,4 +16,12 @@ public class CustomerService {
     public ArrayList<Customer> getAllCustomer() throws SQLException {
         return customerRepo.findAll();
     }
+
+    public void addCustomer(Customer customer) throws SQLException {
+        customerRepo.insert(customer);
+    }
+
+    public void updateCustomer(Customer customer) throws SQLException {
+        customerRepo.update(customer);
+    }
 }

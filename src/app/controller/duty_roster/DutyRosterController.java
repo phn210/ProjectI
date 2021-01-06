@@ -312,8 +312,9 @@ public class DutyRosterController implements Initializable {
             }else{
                 Calendar calendar = new GregorianCalendar(year, month-1, 1);
                 int numberOfDays = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-                Date date = new Date(year, month, numberOfDays);
-                SalaryTableController.date = date;
+//                LocalDate date = new LocalDate(year, month, numberOfDays);
+                LocalDate localDate = LocalDate.of(year, month, numberOfDays);
+                SalaryTableController.localDate = localDate;
                 Stage stage = new Stage();
                 try {
                     Parent root = FXMLLoader.load(getClass().getResource("../../UI/duty_roster/SalaryTable.fxml"));

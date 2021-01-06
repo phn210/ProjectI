@@ -13,7 +13,6 @@ public class CustomerRepo extends BaseRepo<Customer>{
         customer.setName(rs.getNString("name"));
         customer.setPhone(rs.getString("phone"));
         customer.setAddress(rs.getNString("address"));
-        customer.setPoint(rs.getInt("point"));
         customer.setEmail(rs.getString("email"));
         return customer;
     }
@@ -38,11 +37,30 @@ public class CustomerRepo extends BaseRepo<Customer>{
 
     @Override
     public int insert(Customer customer) throws SQLException{
-        return 0;
+        String sql = "INSERT INTO customer " +
+                "VALUES(?,?,?,?)";
+        PreparedStatement preparedStatement = prepare(sql);
+        preparedStatement.setString(1, customer.getName());
+        preparedStatement.setString(2, customer.getPhone());
+        preparedStatement.setString(3, customer.getAddress());
+        preparedStatement.setString(4, customer.getEmail());
+        return preparedStatement.executeUpdate();
     };
 
     @Override
     public int update(Customer customer) throws SQLException{
-        return 0;
+        String sql = "UPDATE customer " +
+                "SET name = ?, " +
+                "phone = ?, " +
+                "address = ?, " +
+                "email = ? " +
+                "WHERE id = ?";
+        PreparedStatement preparedStatement = prepare(sql);
+        preparedStatement.setString(1, customer.getName());
+        preparedStatement.setString(2, customer.getPhone());
+        preparedStatement.setString(3, customer.getAddress());
+        preparedStatement.setString(4, customer.getEmail());
+        preparedStatement.setInt(5, customer.getId());
+        return preparedStatement.executeUpdate();
     };
 }
