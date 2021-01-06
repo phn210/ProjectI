@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -127,6 +128,10 @@ public class InvoicesController implements Initializable {
             stage.setScene(new Scene(root));
             stage.setTitle("Thêm hóa đơn");
             stage.show();
+            Stage bigStage = (Stage)(table_Invoice.getParent().getScene().getWindow());
+            bigStage.setOnCloseRequest(event1 -> {
+                stage.close();
+            });
 
             stage.setOnCloseRequest(e -> updateTable());
 

@@ -1,5 +1,6 @@
 package app.controller.invoice;
 
+import app.controller.CommonController;
 import app.controller.home.HomeController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -91,14 +92,17 @@ public class InvoiceDetailController {
     private Invoice invoice;
     private Customer customer;
     private Account account;
+    private CommonController commonController;
 
-    static InvoiceDetailForm newInvoiceDetailForm;
+    static Customer newCustomer = null;
+    static InvoiceDetailForm newInvoiceDetailForm = null;
 
     public InvoiceDetailController(){
         this.invoicesService = new InvoicesService();
         this.invoiceForm = new InvoiceForm();
         this.invoice = new Invoice();
         this.account = HomeController.account;
+        this.commonController = new CommonController();
     }
 
     public void initialize(){
@@ -205,7 +209,20 @@ public class InvoiceDetailController {
 
     @FXML
     void findCustomer(ActionEvent event) {
-
+        newCustomer = null;
+        Stage stage = new Stage();
+        stage.setScene(commonController.makeScene("/invoice/FindCustomer.fxml"));
+        stage.setTitle("Tìm khách hàng");
+        stage.show();
+        stage.setOnCloseRequest(e -> {
+            if(newCustomer == null) {
+                System.out.println("Chưa thêm khách hàng");
+                return;
+            } else {
+                this.customer = newCustomer;
+                updateCustomer();
+            }
+        });
     }
 
     @FXML

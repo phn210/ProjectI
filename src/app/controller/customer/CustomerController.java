@@ -17,7 +17,6 @@ import model.entity.Customer;
 import model.form.EmployeeDetailForm;
 import service.customer.CustomerService;
 
-import javax.xml.soap.Text;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Optional;
