@@ -103,7 +103,7 @@ public class HomeController implements Initializable {
 
     public void toInvoiceTab(){
         try {
-            mainPane.setBottom(commonController.getPane("/invoice/Invoices"));
+            mainPane.setBottom(commonController.getPane("/invoice/Invoices.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -16,8 +16,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.entity.*;
 import model.form.ImportDetailForm;
 import model.form.ImportForm;
@@ -136,25 +138,26 @@ public class FindProductController implements Initializable{
     }
 
     @FXML
-    void checkDetail(ActionEvent event) throws IOException {
+    void checkDetail(MouseEvent event) throws IOException {
+        if(event.getClickCount() == 2) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/product/ProductDetail.fxml"));
+            Parent root = loader.load();
+            ProductDetailController productDetailController = loader.getController();
+            try {
+                productDetailController.initializeViewOnly(table_Product.getSelectionModel().getSelectedItem());
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("Vui lòng chọn sản phẩm!");
+                alert.setHeaderText("Warning!");
+                alert.show();
+            }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/product/ProductDetail.fxml"));
-        Parent root = loader.load();
-        ProductDetailController productDetailController = loader.getController();
-        try {
-            productDetailController.initializeViewOnly(table_Product.getSelectionModel().getSelectedItem());
-        } catch(NullPointerException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Vui lòng chọn sản phẩm!");
-            alert.setHeaderText("Warning!");
-            alert.show();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Thông tin sản phẩm");
+            stage.show();
         }
-
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setTitle("Thông tin sản phẩm");
-        stage.show();
     }
 
     @FXML
@@ -251,28 +254,25 @@ public class FindProductController implements Initializable{
                 } catch (NumberFormatException numberFormatException) {
                     commonController.resultNoti(false, "Số lượng không hợp lệ");
                 }
-//                ImportDetail importDetail = invoicesService.importDetailRepo.findByID(importID, selectedProduct.getId());
-                if (comboBox_ImportID.getValue() == null) {
-                    commonController.resultNoti(false, "Mật khẩu không thể để trống");
+                if (amount == 0) {
+                    commonController.resultNoti(false, "Số lượng không hợp lệ");
+                }
+                if (amount > selectedProduct.getAmount()) {
+                    commonController.resultNoti(false, "Không còn đủ sản phẩm");
                 } else {
-//                    try {
-//                        if (account == null) {
-//                            account = new Account();
-//                            account.setEmployeeID(employeeDetailForm.getEmployeeId());
-//                            account.setUsername(username);
-//                            account.setPassword(password);
-//                            employeeService.registerAccount(account);
-//                            commonController.resultNoti(true, "Đăng kí tài khoản thành công");
-//                        } else {
-//                            account.setUsername(username);
-//                            account.setPassword(password);
-//                            employeeService.updateAccount(account);
-//                            commonController.resultNoti(true, "Chỉnh sửa thông tin tài khoản thành công");
-//                        }
-//
-//                    } catch (SQLException ex) {
-//                        commonController.resultNoti(false, "Tài khoản đã tồn tại!");
-//                    }
+                    try {
+                        ImportDetail importDetail = invoicesService.importDetailRepo.findByID(selectedProduct.getId(), importID);
+                        Product product = invoicesService.productRepo.findByID(selectedProduct.getId());
+                        InvoiceDetailForm invoiceDetailForm = new InvoiceDetailForm(importDetail, product, amount);
+                        InvoiceDetailController.newInvoiceDetailForm = invoiceDetailForm;
+                        commonController.resultNoti(true, "Chọn sản phẩm thành công");
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        stage.fireEvent(
+                                new WindowEvent(((Node) event.getSource()).getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST)
+                        );
+                    } catch (SQLException ex) {
+                        commonController.resultNoti(false, "Có lỗi xảy ra!");
+                    }
                 }
             }
         }

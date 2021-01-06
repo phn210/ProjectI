@@ -92,7 +92,7 @@ public class InvoiceDetailController {
     private Customer customer;
     private Account account;
 
-    static Product newProduct;
+    static InvoiceDetailForm newInvoiceDetailForm;
 
     public InvoiceDetailController(){
         this.invoicesService = new InvoicesService();
@@ -171,15 +171,10 @@ public class InvoiceDetailController {
     @FXML
     void addProduct(ActionEvent event) {
         try {
-            newProduct = null;
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/invoice/FindProduct.fxml"));
+            newInvoiceDetailForm = null;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/invoice/FindProduct.fxml"));
             Parent root = loader.load();
             FindProductController findProductController = new FindProductController();
-            try {
-//                findProductController.initialize();
-            } catch(NullPointerException e) {
-                e.printStackTrace();
-            }
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -187,13 +182,14 @@ public class InvoiceDetailController {
             stage.show();
             stage.setOnCloseRequest(e -> {
                 try {
-//                    this.invoiceDetailFormObservableList.add(newInvoiceDetail);
+                    this.invoiceDetailFormObservableList.add(newInvoiceDetailForm);
                 } catch (NullPointerException nullPointerException){
-                    nullPointerException.printStackTrace();
+                    System.out.println("Chưa thêm sản phẩm nào");
                     return;
                 }
                 table_InvoiceDetail.setItems(invoiceDetailFormObservableList);
                 table_InvoiceDetail.refresh();
+                updateCost();
             });
 
         } catch (IOException ioException){

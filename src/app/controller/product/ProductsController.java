@@ -267,7 +267,6 @@ public class ProductsController implements Initializable {
             ProductDetailController productDetailController = loader.getController();
             productDetailController.initialize();
 
-
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Thông tin sản phẩm");

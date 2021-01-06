@@ -90,7 +90,7 @@
             </GridPane>
          </center>
          <left>
-            <TableView fx:id="table_Product" prefHeight="700.0" prefWidth="943.0" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
+            <TableView fx:id="table_Product" onMouseClicked="#checkDetail" prefHeight="700.0" prefWidth="943.0" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
                <columns>
                   <TableColumn fx:id="col_ID" prefWidth="68.33333587646484" text="ID" />
                   <TableColumn fx:id="col_Name" prefWidth="216.00003814697266" text="Tên sản phẩm" />
