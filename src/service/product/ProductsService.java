@@ -66,6 +66,18 @@ public class ProductsService {
         return brandNames;
     }
 
+    public ArrayList<ProductDetailForm> getAllProductDetailForm(Product product) throws SQLException, NullPointerException {
+        ArrayList<ImportDetail> importDetails = importDetailRepo.getImportDetails(product);
+        ArrayList<ProductDetailForm> productDetailForms = new ArrayList<>();
+        for(ImportDetail importDetail: importDetails){
+            Import anImport = importRepo.findByID(importDetail.getImportID());
+            Supplier supplier = supplierRepo.findByID(anImport.getSupplierID());
+            ProductDetailForm productDetailForm = new ProductDetailForm(importDetail, anImport, supplier);
+            productDetailForms.add(productDetailForm);
+        }
+        return productDetailForms;
+    }
+
     public ArrayList<ImportForm> getAllImportForm() throws SQLException, NullPointerException {
         ArrayList<Import> imports = importRepo.findAll();
         ArrayList<ImportForm> importForms = new ArrayList<>();
@@ -97,16 +109,15 @@ public class ProductsService {
         return suppliers;
     }
 
-    public ArrayList<ProductDetailForm> getAllProductDetailForm(Product product) throws SQLException, NullPointerException {
-        ArrayList<ImportDetail> importDetails = importDetailRepo.getImportDetails(product);
-        ArrayList<ProductDetailForm> productDetailForms = new ArrayList<>();
+    public ArrayList<ImportDetailForm> getAllImportDetailForm(Import anImport) throws SQLException, NullPointerException {
+        ArrayList<ImportDetail> importDetails = importDetailRepo.getImportDetails(anImport);
+        ArrayList<ImportDetailForm> importDetailForms = new ArrayList<>();
         for(ImportDetail importDetail: importDetails){
-            Import anImport = importRepo.findByID(importDetail.getImportID());
-            Supplier supplier = supplierRepo.findByID(anImport.getSupplierID());
-            ProductDetailForm productDetailForm = new ProductDetailForm(importDetail, anImport, supplier);
-            productDetailForms.add(productDetailForm);
+            Product product = productRepo.findByID(importDetail.getProductID());
+            ImportDetailForm importDetailForm = new ImportDetailForm(importDetail, product);
+            importDetailForms.add(importDetailForm);
         }
-        return productDetailForms;
+        return importDetailForms;
     }
 
 

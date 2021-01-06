@@ -211,7 +211,7 @@ public class InvoiceDetailController {
     void findCustomer(ActionEvent event) {
         newCustomer = null;
         Stage stage = new Stage();
-        stage.setScene(commonController.makeScene("/invoice/FindCustomer.fxml"));
+        stage.setScene(commonController.makeScene("/app/UI/invoice/FindCustomer.fxml"));
         stage.setTitle("Tìm khách hàng");
         stage.show();
         stage.setOnCloseRequest(e -> {

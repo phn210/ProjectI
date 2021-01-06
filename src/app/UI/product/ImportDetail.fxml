@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -45,7 +46,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="209.0" spacing="10.0" GridPane.columnIndex="3">
                                  <children>
                                     <Label text="Total money" wrapText="true" />
-                                    <TextField />
+                                    <TextField fx:id="textField_TotalMoney" editable="false" />
                                  </children>
                                  <padding>
                                     <Insets right="15.0" />
@@ -53,14 +54,15 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="276.0" spacing="10.0" GridPane.columnIndex="1">
                                  <children>
-                                    <Label text="Supplier" wrapText="true" />
-                                    <TextField prefHeight="26.0" prefWidth="200.0" />
+                                    <Label prefHeight="66.0" prefWidth="45.0" text="Supplier" wrapText="true" />
+                                    <ComboBox fx:id="comboBox_Supplier" prefHeight="26.0" prefWidth="105.0" />
+                                    <TextField fx:id="textField_Supplier" editable="false" prefHeight="26.0" prefWidth="107.0" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="152.0" spacing="10.0">
                                  <children>
                                     <Label text="ID" wrapText="true" />
-                                    <TextField prefHeight="26.0" prefWidth="75.0" />
+                                    <TextField fx:id="textField_ID" editable="false" prefHeight="26.0" prefWidth="75.0" />
                                  </children>
                                  <padding>
                                     <Insets left="15.0" />
@@ -69,7 +71,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="2">
                                  <children>
                                     <Label text="Date" wrapText="true" />
-                                    <DatePicker prefHeight="26.0" prefWidth="168.0" />
+                                    <DatePicker fx:id="datePicker_Date" editable="false" prefHeight="26.0" prefWidth="168.0" />
                                  </children>
                               </HBox>
                            </children>
@@ -78,7 +80,7 @@
                   </GridPane>
                </top>
                <bottom>
-                  <TableView prefHeight="483.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+                  <TableView fx:id="table_ImportDetail" prefHeight="483.0" prefWidth="900.0" BorderPane.alignment="CENTER">
                     <columns>
                       <TableColumn fx:id="col_ID" prefWidth="88.00000303983688" text="Product ID" />
                       <TableColumn fx:id="col_Name" prefWidth="364.80003356933594" text="Product" />
@@ -95,7 +97,7 @@
                <right>
                   <HBox alignment="CENTER_RIGHT" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#addProduct" prefWidth="70.0" text="Thêm SP" />
+                        <Button fx:id="button_FindProduct" mnemonicParsing="false" onAction="#addProduct" prefWidth="70.0" text="Thêm SP" />
                         <Button fx:id="button_Submit" mnemonicParsing="false" onAction="#submit" prefWidth="70.0" text="Submit" />
                      </children>
                      <padding>
