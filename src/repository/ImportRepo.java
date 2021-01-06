@@ -59,17 +59,13 @@ public class ImportRepo extends BaseRepo<Import>{
     }
 
     public Import getImport(ImportDetail importDetail) throws SQLException {
-        Import imprt = new Import();
         String query = "select * from Import " +
                     "where id = ?";
         PreparedStatement pstmt = prepare(query);
         pstmt.setInt(1, importDetail.getImportID());
         ResultSet rs = pstmt.executeQuery();
-        imprt.setId(rs.getInt("id"));
-        imprt.setSupplierID(rs.getInt("supplier"));
-        imprt.setImportDate(rs.getDate("import_date"));
-        imprt.setTotalMoney(rs.getDouble("total_money"));
-        return imprt;
+        rs.first();
+        return getObject(rs);
     }
 
     public ArrayList<Import> search(int id, String supplier, Date importDate) throws SQLException {

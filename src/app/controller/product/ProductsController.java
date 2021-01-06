@@ -89,7 +89,7 @@ public class ProductsController implements Initializable {
     private TextField textField_Brand;
 
     @FXML
-    private ComboBox<Integer> comboBox_ProductID;
+    private TextField textField_ProductID;
 
     @FXML
     private ComboBox<String> comboBox_Type;
@@ -101,7 +101,7 @@ public class ProductsController implements Initializable {
     private GridPane searchPane_Imports;
 
     @FXML
-    private ComboBox<Integer> comboBox_ImportID;
+    private TextField textField_ImportID;
 
     @FXML
     private ComboBox<String> comboBox_Supplier;
@@ -172,6 +172,7 @@ public class ProductsController implements Initializable {
         }
         productObservableList = FXCollections.observableList(list);
         table_Product.setItems(productObservableList);
+        table_Product.refresh();
 
         try {
             typeObservableList = FXCollections.observableList(productsService.getAllTypeName());
@@ -193,6 +194,7 @@ public class ProductsController implements Initializable {
         }
         importObservableList = FXCollections.observableList(list);
         table_Import.setItems(importObservableList);
+        table_Import.refresh();
 
         try {
             supplierObservableList = FXCollections.observableList(productsService.getAllSupplierName());
@@ -297,20 +299,24 @@ public class ProductsController implements Initializable {
     @FXML
     void search(ActionEvent event){
         if(viewMode == 0){
-            int id = 0;
+            int productID = 0;
             String type = new String();
             try {
-                id = comboBox_ProductID.getValue().intValue();
+                productID = Integer.parseInt(textField_ProductID.getText());
+            } catch (NumberFormatException numberFormatException){
+                System.out.println("No ID input!");
+            }
+            try {
                 type = comboBox_Type.getValue();
-            } catch (NullPointerException nullPointerException){
-                nullPointerException.printStackTrace();
+            } catch (NullPointerException nullPointerException) {
+                System.out.println("No type input");
             }
             String name = textField_Name.getText();
             String brand = textField_Brand.getText();
             boolean discount = checkBox_Discount.isSelected();
 
             try {
-                ArrayList<Product> list = productsService.productRepo.search(id, name, type, brand, discount);
+                ArrayList<Product> list = productsService.productRepo.search(productID, name, type, brand, discount);
                 productObservableList = FXCollections.observableList(productsService.toProductForm(list));
                 table_Product.setItems(productObservableList);
             } catch (SQLException sqlException){
@@ -318,17 +324,27 @@ public class ProductsController implements Initializable {
             }
 
         } else if(viewMode == 1){
-            int id = 0;
+            int importID = 0;
             String supplier = new String();
             Date importDate = null;
             try {
-                id = comboBox_ImportID.getValue().intValue();
+                importID = Integer.parseInt(textField_ImportID.getText());
+            } catch (NumberFormatException numberFormatException){
+                System.out.println("No ID input!");
+            }
+            try {
                 supplier = comboBox_Supplier.getValue();
+            } catch (NullPointerException nullPointerException) {
+                System.out.println("No supplier input");
+            }
+            try {
                 importDate = Date.valueOf(datePicker_ImportDate.getValue());
-            } catch (NullPointerException e) {}
+            } catch (NullPointerException nullPointerException) {
+                System.out.println("No date input");
+            }
 
             try {
-                ArrayList<Import> list = productsService.importRepo.search(id, supplier, importDate);
+                ArrayList<Import> list = productsService.importRepo.search(importID, supplier, importDate);
                 importObservableList = FXCollections.observableList(productsService.toImportForm(list));
                 table_Import.setItems(importObservableList);
             } catch (SQLException sqlException) {

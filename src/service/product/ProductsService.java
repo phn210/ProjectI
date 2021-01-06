@@ -49,23 +49,21 @@ public class ProductsService {
     }
 
     public ArrayList<String> getAllTypeName() throws SQLException, NullPointerException {
-        ArrayList<Product> products = productRepo.findAll();
-        ArrayList<String> types = new ArrayList<>();
-        for(Product product : products){
-            Type type = typeRepo.findByID(product.getTypeID());
-            types.add(type.getName());
+        ArrayList<Type> types = typeRepo.findAll();
+        ArrayList<String> typeNames = new ArrayList<>();
+        for(Type type : types){
+            typeNames.add(typeRepo.findByID(type.getId()).getName());
         }
-        return types;
+        return typeNames;
     }
 
     public ArrayList<String> getAllBrandName() throws SQLException, NullPointerException {
-        ArrayList<Product> products = productRepo.findAll();
-        ArrayList<String> brands = new ArrayList<>();
-        for(Product product : products){
-            Brand brand = brandRepo.findByID(product.getBrandID());
-            brands.add(brand.getName());
+        ArrayList<Brand> brands = brandRepo.findAll();
+        ArrayList<String> brandNames = new ArrayList<>();
+        for(Brand brand : brands){
+            brandNames.add(brandRepo.findByID(brand.getId()).getName());
         }
-        return brands;
+        return brandNames;
     }
 
     public ArrayList<ImportForm> getAllImportForm() throws SQLException, NullPointerException {

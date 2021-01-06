@@ -1,6 +1,7 @@
 package service.invoice;
 
 import model.entity.*;
+import model.form.InvoiceDetailForm;
 import model.form.InvoiceForm;
 import repository.*;
 
@@ -13,6 +14,8 @@ public class InvoicesService {
     public CustomerRepo customerRepo;
     public EmployeeRepo employeeRepo;
     public BranchRepo branchRepo;
+    public ProductRepo productRepo;
+    public ImportDetailRepo importDetailRepo;
 
     public InvoicesService(){
         this.invoiceRepo = new InvoiceRepo();
@@ -20,6 +23,8 @@ public class InvoicesService {
         this.customerRepo = new CustomerRepo();
         this.employeeRepo = new EmployeeRepo();
         this.branchRepo = new BranchRepo();
+        this.productRepo = new ProductRepo();
+        this.importDetailRepo = new ImportDetailRepo();
     }
 
     public ArrayList<InvoiceForm> getAllInvoiceForm() throws SQLException, NullPointerException {
@@ -35,4 +40,23 @@ public class InvoicesService {
         return invoiceForms;
     }
 
+    public ArrayList<InvoiceDetailForm> getAllInvoiceDetailForm() throws SQLException {
+        ArrayList<InvoiceDetail> invoiceDetails = invoiceDetailRepo.findAll();
+        ArrayList<InvoiceDetailForm> invoiceDetailForms = new ArrayList<>();
+        for(InvoiceDetail invoiceDetail: invoiceDetails){
+            Product product = productRepo.findByID(invoiceDetail.getProductID());
+            InvoiceDetailForm invoiceDetailForm = new InvoiceDetailForm(invoiceDetail, product);
+            invoiceDetailForms.add(invoiceDetailForm);
+        }
+        return invoiceDetailForms;
+    }
+
+    public ArrayList<Integer> getAllInvoiceID() throws SQLException {
+        ArrayList<Invoice> invoices = invoiceRepo.findAll();
+        ArrayList<Integer> invoiceIDs = new ArrayList<>();
+        for(Invoice invoice: invoices){
+            invoiceIDs.add(invoice.getId());
+        }
+        return invoiceIDs;
+    }
 }
