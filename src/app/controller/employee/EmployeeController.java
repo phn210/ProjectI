@@ -75,6 +75,7 @@ public class EmployeeController implements Initializable {
 
     @FXML
     TableColumn<EmployeeDetailForm, String> addressColumn;
+
     private ObservableList<EmployeeDetailForm> employeeDetailFormObservableList;
 
     @Override
