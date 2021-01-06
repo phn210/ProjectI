@@ -41,7 +41,7 @@ public class SalaryRepo extends BaseRepo<Salary>{
     @Override
     public int insert(Salary salary) throws SQLException{
         String sql = "INSERT INTO salary " +
-                "VALUES(?,?,?,?,?,?,)";
+                "VALUES(?,?,?,?,?,?)";
         PreparedStatement preparedStatement = prepare(sql);
         preparedStatement.setInt(1, salary.getEmployeeID());
         preparedStatement.setInt(2, salary.getMonth());
