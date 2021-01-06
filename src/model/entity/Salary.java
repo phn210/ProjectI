@@ -5,7 +5,7 @@ public class Salary {
     private int month ;
     private int year;
     private Double salaryLevel;
-    private Float totalHour;
+    private Double totalHour;
     private Double totalSalary;
 
     public Salary(){
@@ -44,11 +44,11 @@ public class Salary {
         this.salaryLevel = salaryLevel;
     }
 
-    public Float getTotalHour() {
+    public Double getTotalHour() {
         return totalHour;
     }
 
-    public void setTotalHour(Float totalHour) {
+    public void setTotalHour(Double totalHour) {
         this.totalHour = totalHour;
     }
 

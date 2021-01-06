@@ -42,7 +42,7 @@
                               </ImageView>
                            </graphic>
                         </MenuButton>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="94.0" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Chi tiết">
+                        <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="93.0" prefWidth="121.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Tính Lương">
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

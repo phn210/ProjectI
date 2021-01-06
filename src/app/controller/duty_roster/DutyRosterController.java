@@ -1,24 +1,33 @@
 package app.controller.duty_roster;
 
 import app.controller.CommonController;
+import app.controller.employee.EmployeeDetailController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import model.entity.DutyRoster;
 import model.entity.Employee;
 import model.form.DutyRosterDetailForm;
+import model.form.EmployeeDetailForm;
 import service.duty_roster.DutyRosterService;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -58,6 +67,75 @@ public class DutyRosterController implements Initializable {
 
     private void initTable(){
         initColumns();
+        table.setRowFactory(RowFactory -> {
+            TableRow<DutyRosterDetailForm> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    DutyRosterDetailForm rowData = row.getItem();
+                    Dialog<ButtonType> editDialog = new Dialog<>();
+                    String header = "Sửa ca làm việc ngày "+rowData.getDate()+" của nhân viên có ID: "+rowData.getEmployeeId();
+                    editDialog.setHeaderText(header);
+                    ButtonType acceptButtonType = new ButtonType("Xác nhận", ButtonBar.ButtonData.OK_DONE);
+                    ButtonType cancelButtonType = new ButtonType("Thoát", ButtonBar.ButtonData.CANCEL_CLOSE);
+                    editDialog.getDialogPane().getButtonTypes().addAll(acceptButtonType, cancelButtonType);
+
+
+                    GridPane grid = new GridPane();
+                    grid.setHgap(10);
+                    grid.setVgap(10);
+                    grid.setPadding(new Insets(20, 150, 10, 10));
+
+                    TextField totalHoursTextField = new TextField();
+                    totalHoursTextField.setPromptText("Số giờ làm việc");
+                    totalHoursTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+                        try{
+                            if(!newValue.isEmpty()){
+                                double hours = Double.parseDouble(newValue);
+                                if(hours > 24){
+                                    commonController.resultNoti(false, "Số giờ không thể lớn hơn 24 giờ");
+                                    totalHoursTextField.setText("");
+                                }
+                            }
+                        }catch (NumberFormatException ex){
+                            commonController.resultNoti(false, "Số giờ làm không hợp lệ");
+                            totalHoursTextField.setText("");
+                        }
+                    });
+
+
+                    TextField noteTextField = new TextField();
+                    noteTextField.setPromptText("Ghi chú");
+
+                    grid.add(new Label("Số giờ làm việc: "), 0, 0);
+                    grid.add(totalHoursTextField, 1, 0);
+                    grid.add(new Label("Ghi chú: "), 0, 1);
+                    grid.add(noteTextField, 1, 1);
+                    editDialog.getDialogPane().setContent(grid);
+
+                    editDialog.getDialogPane().setContent(grid);
+                    Optional<ButtonType> result = editDialog.showAndWait();
+                    if(result.get() == acceptButtonType){
+                        double totalHours = 0;
+                        if(!totalHoursTextField.getText().isEmpty()){
+                            totalHours = Double.parseDouble(totalHoursTextField.getText());
+                        }
+                        String note = noteTextField.getText();
+                        DutyRoster dutyRoster = new DutyRoster();
+                        dutyRoster.setId(rowData.getEmployeeId());
+                        dutyRoster.setDate(rowData.getDate());
+                        dutyRoster.setNote(note);
+                        dutyRoster.setTotalHour(totalHours);
+                        try {
+                            dutyRosterService.updateDutyRoster(dutyRoster);
+                            loadData();
+                        } catch (SQLException exception) {
+                            exception.printStackTrace();
+                        }
+                    }
+                }
+            });
+            return row;
+        });
     }
 
     private void initColumns(){
@@ -110,7 +188,11 @@ public class DutyRosterController implements Initializable {
         totalHoursTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             try{
                 if(!newValue.isEmpty()){
-                    Double.parseDouble(newValue);
+                    double hours = Double.parseDouble(newValue);
+                    if(hours > 24){
+                        commonController.resultNoti(false, "Số giờ không thể lớn hơn 24 giờ");
+                        totalHoursTextField.setText("");
+                    }
                 }
             }catch (NumberFormatException ex){
                 commonController.resultNoti(false, "Số giờ làm không hợp lệ");
@@ -118,8 +200,8 @@ public class DutyRosterController implements Initializable {
             }
         });
 
-        TextField notTextField = new TextField();
-        notTextField.setPromptText("Ghi chú");
+        TextField noteTextField = new TextField();
+        noteTextField.setPromptText("Ghi chú");
 
 
         Button detailButton = new Button("Chi tiết");
@@ -143,7 +225,7 @@ public class DutyRosterController implements Initializable {
         grid.add(new Label("Số giờ làm việc: "), 0, 2);
         grid.add(totalHoursTextField, 1, 2);
         grid.add(new Label("Ghi chú: "), 0, 3);
-        grid.add(notTextField, 1, 3);
+        grid.add(noteTextField, 1, 3);
 
         addDutyRosterDialog.getDialogPane().setContent(grid);
         Node acceptButton = addDutyRosterDialog.getDialogPane().lookupButton(acceptButtonType);
@@ -157,12 +239,17 @@ public class DutyRosterController implements Initializable {
             int id = Integer.parseInt(idTextField.getText());
             try {
                 Employee employee = dutyRosterService.getEmployee(id);
+                Date startDate = employee.getStartDay();
                 Date date = Date.valueOf(datePicker.getValue().toString());
+                if(date.before(startDate)){
+                    commonController.resultNoti(false, "Ca làm việc không thể có trước ngày vào làm việc");
+                    return;
+                }
                 double totalHours = 0;
                 if(!totalHoursTextField.getText().isEmpty()){
                      totalHours = Double.parseDouble(totalHoursTextField.getText());
                 }
-                String note = notTextField.getText();
+                String note = noteTextField.getText();
                 DutyRoster dutyRoster = new DutyRoster();
                 dutyRoster.setId(id);
                 dutyRoster.setTotalHour(totalHours);
@@ -177,6 +264,58 @@ public class DutyRosterController implements Initializable {
 
             } catch (SQLException throwables) {
                 commonController.resultNoti(false, "ID nhân viên không tồn tại");
+            }
+        }
+    }
+
+    public void calculateSalary(){
+        Dialog<ButtonType> chooseDate = new Dialog<>();
+        ButtonType acceptButtonType = new ButtonType("Xác nhận", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButtonType = new ButtonType("Thoát", ButtonBar.ButtonData.CANCEL_CLOSE);
+        chooseDate.getDialogPane().getButtonTypes().addAll(acceptButtonType, cancelButtonType);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        LocalDate now = LocalDate.now();
+
+        ComboBox<Integer> monthComboBox = new ComboBox<>();
+        ObservableList<Integer> monthList = FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10,11,12);
+        monthComboBox.setItems(monthList);
+        monthComboBox.setValue(now.getMonthValue());
+
+        ComboBox<Integer> yearComboBox = new ComboBox<>();
+        ObservableList<Integer> yearList = FXCollections.observableArrayList();
+        int nowYear = now.getYear();
+        int nowMonth = now.getMonthValue();
+        for (int i = 2010; i <= nowYear; i++) {
+            yearList.add(i);
+        }
+        yearComboBox.setItems(yearList);
+        yearComboBox.setValue(nowYear);
+
+        Optional<ButtonType> result = chooseDate.showAndWait();
+        if(result.get() == acceptButtonType){
+            int month = monthComboBox.getValue();
+            int year = yearComboBox.getValue();
+            if(year == nowYear && month >= nowMonth){
+                commonController.resultNoti(false, "Tháng và năm không hợp lệ");
+            }else{
+                Calendar calendar = new GregorianCalendar(year, month-1, 1);
+                int numberOfDays = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+                Date date = new Date(year, month, numberOfDays);
+                SalaryTableController.date = date;
+                Stage stage = new Stage();
+                try {
+                    Parent root = FXMLLoader.load(getClass().getResource("../../UI/duty_roster/SalaryTable.fxml"));
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

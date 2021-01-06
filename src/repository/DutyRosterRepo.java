@@ -53,4 +53,14 @@ public class DutyRosterRepo extends BaseRepo<DutyRoster>{
         preparedStatement.setDate(4, dutyRoster.getDate());
         return preparedStatement.executeUpdate();
     };
+
+    public ArrayList<DutyRoster> findByIdAndDate(int id, int month, int year) throws SQLException {
+        String sql = "SELECT * FROM Duty_Roster WHERE employee_id = ? AND MONTH(date) = ? AND YEAR(DATE) = ?";
+        PreparedStatement preparedStatement = prepare(sql);
+        preparedStatement.setInt(1, id);
+        preparedStatement.setInt(2, month);
+        preparedStatement.setInt(3, year);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return getList(resultSet);
+    }
 }

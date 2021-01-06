@@ -2,6 +2,7 @@ package repository;
 
 import model.entity.Employee;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -90,4 +91,12 @@ public class EmployeeRepo extends BaseRepo<Employee>{
         preparedStatement.setInt(11, employee.getId());
         return preparedStatement.executeUpdate();
     };
+
+    public ArrayList<Employee> findAllEmployeeWorkBeforeDate(Date date) throws SQLException {
+        String sql = "SELECT * FROM employee WHERE start_day <= ?";
+        PreparedStatement preparedStatement = prepare(sql);
+        preparedStatement.setDate(1, date);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return getList(resultSet);
+    }
 }
