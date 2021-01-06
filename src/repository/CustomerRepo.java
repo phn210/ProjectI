@@ -26,6 +26,16 @@ public class CustomerRepo extends BaseRepo<Customer>{
         return getList(rs);
     }
 
+    public Customer findByID(int id) throws SQLException {
+        String query = "select * from Customer " +
+                "where id = " + id;
+        PreparedStatement preparedStatement = prepare(query);
+        preparedStatement.setInt(1, id);
+        ResultSet rs = preparedStatement.executeQuery();
+        rs.first();
+        return getObject(rs);
+    }
+
     @Override
     public int insert(Customer customer) throws SQLException{
         return 0;

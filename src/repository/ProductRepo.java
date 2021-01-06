@@ -34,7 +34,6 @@ public class ProductRepo extends BaseRepo<Product>{
     }
 
     public Product findByID(int id) throws SQLException {
-        Product product = new Product();
         String query = "select * from Product " +
                         "where id = " + id;
         PreparedStatement preparedStatement = prepare(query);
