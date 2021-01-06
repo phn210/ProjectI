@@ -283,19 +283,26 @@ public class DutyRosterController implements Initializable {
 
         ComboBox<Integer> monthComboBox = new ComboBox<>();
         ObservableList<Integer> monthList = FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10,11,12);
+        int nowMonth = now.getMonthValue();
         monthComboBox.setItems(monthList);
-        monthComboBox.setValue(now.getMonthValue());
+        monthComboBox.setValue(nowMonth);
 
         ComboBox<Integer> yearComboBox = new ComboBox<>();
         ObservableList<Integer> yearList = FXCollections.observableArrayList();
         int nowYear = now.getYear();
-        int nowMonth = now.getMonthValue();
+
         for (int i = 2010; i <= nowYear; i++) {
             yearList.add(i);
         }
         yearComboBox.setItems(yearList);
         yearComboBox.setValue(nowYear);
 
+        grid.add(new Label("Tháng: "), 0, 0);
+        grid.add(monthComboBox, 1, 0);
+        grid.add(new Label("Năm: "), 0, 1);
+        grid.add(yearComboBox, 1, 1);
+
+        chooseDate.getDialogPane().setContent(grid);
         Optional<ButtonType> result = chooseDate.showAndWait();
         if(result.get() == acceptButtonType){
             int month = monthComboBox.getValue();
