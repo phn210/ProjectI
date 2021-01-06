@@ -110,14 +110,14 @@
                <children>
                   <TableView fx:id="table_Invoice" prefHeight="644.0" prefWidth="1146.0" stylesheets="@../../static/css/main.css">
                      <columns>
-                        <TableColumn fx:id="col_ID" prefWidth="68.33333587646484" text="ID" />
-                        <TableColumn fx:id="col_SoldDate" prefWidth="140.79998779296875" text="Ngày xuất" />
-                        <TableColumn fx:id="col_Customer" prefWidth="170.40003967285156" text="Tên khách hàng" />
-                        <TableColumn fx:id="col_Employee" prefWidth="184.79998779296875" text="Tên nhân viên" />
-                        <TableColumn fx:id="col_PayMethod" prefWidth="183.20001220703125" text="Phương thức TT" />
-                        <TableColumn fx:id="col_Tax" prefWidth="120.79998779296875" text="Thuế" />
-                        <TableColumn fx:id="col_Surcharge" prefWidth="123.20001220703125" text="Phụ phí" />
-                        <TableColumn fx:id="col_TotalMoney" minWidth="0.0" prefWidth="155.20001220703125" text="Thành tiền" />
+                        <TableColumn fx:id="col_ID" prefWidth="51.19998240470886" text="ID" />
+                        <TableColumn fx:id="col_SoldDate" prefWidth="140.79995346069336" text="Ngày xuất" />
+                        <TableColumn fx:id="col_Customer" prefWidth="186.3999786376953" text="Tên khách hàng" />
+                        <TableColumn fx:id="col_Employee" prefWidth="190.4000244140625" text="Tên nhân viên" />
+                        <TableColumn fx:id="col_PayMethod" prefWidth="136.79998779296875" text="Phương thức TT" />
+                        <TableColumn fx:id="col_Tax" prefWidth="132.800048828125" text="Thuế" />
+                        <TableColumn fx:id="col_Surcharge" prefWidth="134.39996337890625" text="Phụ phí" />
+                        <TableColumn fx:id="col_TotalMoney" minWidth="0.0" prefWidth="184.00006103515625" text="Thành tiền" />
                      </columns>
                   </TableView>
                </children>

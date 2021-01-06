@@ -32,6 +32,16 @@ public class InvoiceRepo extends BaseRepo<Invoice>{
         return getList(rs);
     }
 
+    public Invoice findByID(int id) throws SQLException {
+        String query = "select * from Invoice " +
+                "where id = " + id;
+        PreparedStatement preparedStatement = prepare(query);
+        preparedStatement.setInt(1, id);
+        ResultSet rs = preparedStatement.executeQuery();
+        rs.first();
+        return getObject(rs);
+    }
+
     @Override
     public int insert(Invoice invoice) throws SQLException{
         return 0;
