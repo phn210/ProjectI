@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.product.ProductController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.invoice.InvoicesController">
    <children>
       <BorderPane prefHeight="760.0" prefWidth="1540.0" style="-fx-background-color: #b3e0ff;">
          <top>
@@ -41,18 +41,6 @@
                               </ImageView>
                            </graphic>
                         </MenuButton>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#checkDetail" prefHeight="94.0" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Chi tiết">
-                           <graphic>
-                              <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../static/img/detail.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <HBox.margin>
-                              <Insets bottom="5.0" top="5.0" />
-                           </HBox.margin>
-                        </Button>
                         <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#export" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Xuất file">
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
@@ -108,16 +96,14 @@
          <left>
             <Pane prefWidth="1140.0" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
                <children>
-                  <TableView fx:id="table_Invoice" prefHeight="644.0" prefWidth="1146.0" stylesheets="@../../static/css/main.css">
+                  <TableView fx:id="table_Invoice" onMouseClicked="#checkDetail" prefHeight="644.0" prefWidth="1146.0" stylesheets="@../../static/css/main.css">
                      <columns>
                         <TableColumn fx:id="col_ID" prefWidth="51.19998240470886" text="ID" />
-                        <TableColumn fx:id="col_SoldDate" prefWidth="140.79995346069336" text="Ngày xuất" />
-                        <TableColumn fx:id="col_Customer" prefWidth="186.3999786376953" text="Tên khách hàng" />
-                        <TableColumn fx:id="col_Employee" prefWidth="190.4000244140625" text="Tên nhân viên" />
-                        <TableColumn fx:id="col_PayMethod" prefWidth="136.79998779296875" text="Phương thức TT" />
-                        <TableColumn fx:id="col_Tax" prefWidth="132.800048828125" text="Thuế" />
-                        <TableColumn fx:id="col_Surcharge" prefWidth="134.39996337890625" text="Phụ phí" />
-                        <TableColumn fx:id="col_TotalMoney" minWidth="0.0" prefWidth="184.00006103515625" text="Thành tiền" />
+                        <TableColumn fx:id="col_SoldDate" prefWidth="174.93335723876953" text="Ngày xuất" />
+                        <TableColumn fx:id="col_Customer" prefWidth="223.46670532226562" text="Tên khách hàng" />
+                        <TableColumn fx:id="col_Employee" prefWidth="194.666748046875" text="Tên nhân viên" />
+                        <TableColumn fx:id="col_PayMethod" prefWidth="190.93341064453125" text="Phương thức TT" />
+                        <TableColumn fx:id="col_TotalMoney" minWidth="0.0" prefWidth="309.06658935546875" text="Thành tiền" />
                      </columns>
                   </TableView>
                </children>
@@ -181,11 +167,11 @@
                                     <Insets left="25.0" />
                                  </padding></Label>
                               <Label alignment="CENTER" prefHeight="26.0" prefWidth="207.0" GridPane.rowIndex="6" />
-                              <ComboBox fx:id="comboBox_ID" editable="true" prefHeight="26.0" prefWidth="250.0" GridPane.columnIndex="1" />
                               <DatePicker fx:id="datePicker_SoldDate" prefHeight="26.0" prefWidth="212.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <ComboBox fx:id="comboBox_PayMethod" editable="true" prefHeight="26.0" prefWidth="254.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <TextField fx:id="textField_Customer" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <TextField fx:id="textField_Employee" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="textField_ID" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                      </children>
