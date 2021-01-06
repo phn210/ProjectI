@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.entity.*;
 import model.form.ProductDetailForm;
+import model.form.ProductForm;
 import service.product.ProductsService;
 
 import java.io.IOException;
@@ -38,7 +39,13 @@ public class ProductDetailController {
     private ComboBox<String> comboBox_Type;
 
     @FXML
+    private TextField textField_Type;
+
+    @FXML
     private ComboBox<String> comboBox_Brand;
+
+    @FXML
+    private TextField textField_Brand;
 
     @FXML
     private TextField textField_Price;
@@ -53,22 +60,19 @@ public class ProductDetailController {
     private TableView<ProductDetailForm> table_ImportRecord;
 
     @FXML
-    private TableColumn<ImportDetail, Integer> col_ID;
+    private TableColumn<ProductDetailForm, Integer> col_ID;
 
     @FXML
-    private TableColumn<ImportDetail, String> col_Supplier;
+    private TableColumn<ProductDetailForm, String> col_Supplier;
 
     @FXML
-    private TableColumn<ImportDetail, Date> col_Date;
+    private TableColumn<ProductDetailForm, Date> col_Date;
 
     @FXML
-    private TableColumn<ImportDetail, Integer> col_Amount;
+    private TableColumn<ProductDetailForm, Integer> col_Amount;
 
     @FXML
-    private TableColumn<ImportDetail, Double> col_ImportPrice;
-
-    @FXML
-    private Button button_Delete;
+    private TableColumn<ProductDetailForm, Double> col_ImportPrice;
 
     @FXML
     private Button button_Submit;
@@ -107,12 +111,11 @@ public class ProductDetailController {
         comboBox_Type.setDisable(false);
         comboBox_Brand.setDisable(false);
         button_Export.setVisible(false);
-        button_Delete.setVisible(false);
         button_Submit.setText("Thêm");
 
         col_ID.setCellValueFactory(new PropertyValueFactory<>("importID"));
-        col_Supplier.setCellValueFactory(t -> new ReadOnlyObjectWrapper<>();
-        col_Date.setCellValueFactory(t -> new ReadOnlyObjectWrapper<>();
+        col_Supplier.setCellValueFactory(new PropertyValueFactory<>("supplier"));
+        col_Date.setCellValueFactory(new PropertyValueFactory<>("importDate"));
         col_Amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         col_ImportPrice.setCellValueFactory(new PropertyValueFactory<>("importPrice"));
 
@@ -121,10 +124,10 @@ public class ProductDetailController {
         updateBrand();
     }
 
-    public void initialize(Product product){
+    public void initialize(ProductForm productForm){
         this.mode = 1;
-        this.product = product;
         try {
+            this.product = productsService.productRepo.findByID(productForm.getId());
             this.type = productsService.typeRepo.findByID(product.getTypeID());
             this.brand = productsService.brandRepo.findByID(product.getBrandID());
         } catch (SQLException sqlException){
@@ -135,8 +138,8 @@ public class ProductDetailController {
         textField_Name.setText(product.getName());
         textField_Amount.setText(String.valueOf(product.getAmount()));
         textArea_Description.setText(product.getDescription());
-        comboBox_Type.setValue(type.getName());
-        comboBox_Brand.setValue(brand.getName());
+        textField_Type.setText(type.getName());
+        textField_Brand.setText(brand.getName());
         textField_Price.setText(String.valueOf(product.getRetailPrice()));
         textField_Discount.setText(String.valueOf(product.getDiscount()));
 
@@ -145,10 +148,9 @@ public class ProductDetailController {
         textField_Amount.setEditable(false);
         textArea_Description.setEditable(true);
         comboBox_Type.setDisable(true);
-        comboBox_Brand.setDisable(false);
-        comboBox_Type.setDisable(false);
+        comboBox_Brand.setDisable(true);
+        comboBox_Type.setDisable(true);
         button_Export.setVisible(true);
-        button_Delete.setVisible(true);
         button_Submit.setText("Cập nhật");
 
         initTable();
@@ -202,31 +204,11 @@ public class ProductDetailController {
     }
 
     @FXML
-    void delete(ActionEvent event) {
-        boolean res;
-        if (product.getAmount() > 0)
-            res = false;
-        else {
-            res = productRepo.deleteProduct(product);
-            if (res) {
-                button_Delete.setVisible(false);
-                button_Submit.setVisible(false);
-            }
-        }
-        CommonController.resultNoti(res);
-    }
-
-    @FXML
     void handleBrand(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/products/BrandDetail.fxml"));
             Parent root = loader.load();
             BrandDetailController brandDetailController = loader.getController();
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Thông tin nhãn hàng");
-            stage.show();
 
             if (this.mode == 0) {
                 brandDetailController.initialize();
@@ -234,6 +216,10 @@ public class ProductDetailController {
                 brandDetailController.initialize(this.brand);
             }
 
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Thông tin nhãn hàng");
+            stage.show();
             stage.setOnCloseRequest(e -> updateBrand());
         }
     }
@@ -244,18 +230,16 @@ public class ProductDetailController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/products/TypeDetail.fxml"));
             Parent root = loader.load();
             TypeDetailController typeDetailController = loader.getController();
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Thông tin loại sản phẩm");
-            stage.show();
-
             if (this.mode == 0) {
                 typeDetailController.initialize();
             } else if (this.mode == 1) {
                 typeDetailController.initialize(this.type);
             }
 
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Thông tin loại sản phẩm");
+            stage.show();
             stage.setOnCloseRequest(e -> updateType());
         }
     }
@@ -267,19 +251,59 @@ public class ProductDetailController {
 
     @FXML
     void selectBrand(ActionEvent event) {
-        int brandIndex = comboBox_Brand.getSelectionModel().getSelectedIndex();
         try {
-            this.brand = productsService.brandRepo.findAll().get(brandIndex);
-        } catch (SQLException sqlException){
+            if (comboBox_Brand.getSelectionModel().getSelectedItem().equals("Thêm mới")){
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/products/BrandDetail.fxml"));
+                    Parent root = loader.load();
+                    BrandDetailController brandDetailController = new BrandDetailController();
+                    brandDetailController.initialize();
+
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("Thông tin nhãn hàng");
+                    stage.show();
+                    stage.setOnCloseRequest(e -> {
+                        updateBrand();
+                        comboBox_Brand.setValue(null);
+                    });
+                } catch (IOException ioException){
+                    ioException.printStackTrace();
+                }
+            } else {
+                int brandIndex = comboBox_Brand.getSelectionModel().getSelectedIndex();
+                this.brand = productsService.brandRepo.findAll().get(brandIndex);
+            }
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
     }
 
     @FXML
     void selectType(ActionEvent event) {
-        int typeIndex = comboBox_Type.getSelectionModel().getSelectedIndex();
-        try{
-            this.type = productsService.typeRepo.findAll().get(typeIndex);
+        try {
+            if (comboBox_Type.getSelectionModel().getSelectedItem().equals("Thêm mới")) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/products/TypeDetail.fxml"));
+                    Parent root = loader.load();
+                    TypeDetailController typeDetailController = loader.getController();
+                    typeDetailController.initialize();
+
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("Thông tin loại sản phẩm");
+                    stage.show();
+                    stage.setOnCloseRequest(e -> {
+                        updateType();
+                        comboBox_Type.setValue(null);
+                    });
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            } else {
+                int typeIndex = comboBox_Type.getSelectionModel().getSelectedIndex();
+                this.type = productsService.typeRepo.findAll().get(typeIndex);
+            }
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
@@ -300,29 +324,31 @@ public class ProductDetailController {
             alert.setHeaderText("Warning!");
             alert.show();
         } else {
-            boolean res = false;
-//            if (mode == 0){
-//                product.setName(name);
-//                product.setDescription(description);
-//                if (retailPrice.equals("")) product.setRetailPrice(0.0);
-//                else product.setRetailPrice(Double.parseDouble(retailPrice));
-//                if (discount.equals("")) product.setDiscount(0);
-//                else product.setDiscount(Integer.parseInt(discount));
-//                product.setTypeID(this.type.getId());
-//                product.setBrandID(this.brand.getId());
-//
-//                res = productRepo.addProduct(product);
-//                if (res) button_Submit.setVisible(false);
-//            } else if (mode == 1) {
-//                product.setDescription(description);
-//                if (retailPrice.equals("")) product.setRetailPrice(0.0);
-//                else product.setRetailPrice(Double.parseDouble(retailPrice));
-//                if (discount.equals("")) product.setDiscount(0);
-//                else product.setDiscount(Integer.parseInt(discount));
-//
-//                res = productRepo.updateProduct(product);
-//            }
-            commonController.resultNoti(res);
+            int res = 0;
+            product.setDescription(description);
+            if (retailPrice.equals("")) product.setRetailPrice(0.0);
+            else product.setRetailPrice(Double.parseDouble(retailPrice));
+            if (discount.equals("")) product.setDiscount(0);
+            else product.setDiscount(Integer.parseInt(discount));
+            try {
+                if (mode == 0) {
+                    product.setName(name);
+                    product.setTypeID(this.type.getId());
+                    product.setBrandID(this.brand.getId());
+
+                    res = productsService.productRepo.insert(product);
+                    if (res > 0) {
+                        button_Submit.setVisible(false);
+                        commonController.resultNoti(true);
+                    } else commonController.resultNoti(false);
+                } else if (mode == 1) {
+                    res = productsService.productRepo.update(product);
+                    if (res > 0) commonController.resultNoti(true);
+                    else commonController.resultNoti(false);
+                }
+            } catch (SQLException sqlException){
+                sqlException.printStackTrace();
+            }
         }
     }
 

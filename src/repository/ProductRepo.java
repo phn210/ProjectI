@@ -46,32 +46,9 @@ public class ProductRepo extends BaseRepo<Product>{
 
     @Override
     public int insert(Product product) throws SQLException{
-        return 0;
-    };
-
-    @Override
-    public int update(Product product) throws SQLException{
-        return 0;
-    };
-
-    //--------------------------------------------------------------------------------
-    
-    public List<Product> getAllProduct() throws SQLException {
-        List<Product> list = new ArrayList<>();
-        String query = "select * from Product";
-        PreparedStatement stmt = prepare(query);
-        ResultSet rs = stmt.executeQuery();
-        return getList(rs);
-    }
-
-
-    
-
-
-    public boolean addProduct(Product product) throws SQLException {
         String insert = "insert into Product(name, description, retail_price, " +
-                        "discount, brand_id, type_id, amount) " +
-                        "values (?, ?, ?, ?, ?, ?, 0)";
+                "discount, brand_id, type_id, amount) " +
+                "values (?, ?, ?, ?, ?, ?, 0)";
         PreparedStatement pstmt = prepare(insert);
         pstmt.setNString(1, product.getName());
         pstmt.setNString(2, product.getDescription());
@@ -79,42 +56,31 @@ public class ProductRepo extends BaseRepo<Product>{
         pstmt.setInt(4, product.getDiscount());
         pstmt.setInt(5, product.getBrandID());
         pstmt.setInt(6, product.getTypeID());
-        return pstmt.executeUpdate() > 0;
-    }
+        return pstmt.executeUpdate();
+    };
 
-    public boolean updateProduct(Product product) throws SQLException {
+    @Override
+    public int update(Product product) throws SQLException{
         String update = "update Product " +
-                    "set name = ?," +
-                    "description = ?, " +
-                    "retail_price = ?, " +
-                    "discount = ?, " +
-                    "brand_id = ?, " +
-                    "type_id = ? " +
-                    "where id = ?";
-            PreparedStatement pstmt = prepare(update);
-            pstmt.setNString(1, product.getName());
-            pstmt.setNString(2, product.getDescription());
-            pstmt.setDouble(3, product.getRetailPrice());
-            pstmt.setInt(4, product.getDiscount());
-            pstmt.setInt(5, product.getBrandID());
-            pstmt.setInt(6, product.getTypeID());
-            pstmt.setInt(7, product.getId());
+                "set name = ?," +
+                "description = ?, " +
+                "retail_price = ?, " +
+                "discount = ?, " +
+                "brand_id = ?, " +
+                "type_id = ? " +
+                "where id = ?";
+        PreparedStatement pstmt = prepare(update);
+        pstmt.setNString(1, product.getName());
+        pstmt.setNString(2, product.getDescription());
+        pstmt.setDouble(3, product.getRetailPrice());
+        pstmt.setInt(4, product.getDiscount());
+        pstmt.setInt(5, product.getBrandID());
+        pstmt.setInt(6, product.getTypeID());
+        pstmt.setInt(7, product.getId());
+        return pstmt.executeUpdate();
+    };
 
-           return pstmt.executeUpdate() > 0;
-    }
-
-    public boolean deleteProduct(Product product) throws SQLException {
-        if (product.getAmount() > 0) return false;
-        String delete = "delete from Product " +
-                    "where id = ?";
-        PreparedStatement pstmt = prepare(delete);
-        pstmt.setInt(1, product.getId());
-        return pstmt.executeUpdate()>0;
-    }
-
-    public List<Product> search(int id, String name, String type, String brand, boolean discount) throws SQLException {
-        List<Product> list = new ArrayList<>();
-
+    public ArrayList<Product> search(int id, String name, String type, String brand, boolean discount) throws SQLException {
         String query = "select * from Product, " +
                     "(select id as t_id, name as t_name from Type) as type, " +
                     "(select id as b_id, name as b_name from Brand) as brand " +

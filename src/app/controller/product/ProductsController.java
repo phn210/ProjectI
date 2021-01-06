@@ -1,7 +1,6 @@
 package app.controller.product;
 
 import app.controller.CommonController;
-import app.controller.Main;
 import app.controller.home.HomeController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -206,7 +205,7 @@ public class ProductsController implements Initializable {
     @FXML
     void checkDetail(ActionEvent event) throws IOException {
         if (viewMode == 0){
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/product/ProductDetail.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/product/ProductDetail.fxml"));
             Parent root = loader.load();
             ProductDetailController productDetailController = loader.getController();
             try {
@@ -224,7 +223,7 @@ public class ProductsController implements Initializable {
             stage.setTitle("Thông tin sản phẩm");
             stage.show();
         } else if (viewMode == 1){
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/product/ImportDetail.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/product/ImportDetail.fxml"));
             Parent root = loader.load();
             ImportDetailController importDetailController = loader.getController();
 
@@ -261,7 +260,7 @@ public class ProductsController implements Initializable {
     @FXML
     void importManually(ActionEvent event) throws IOException {
         if (viewMode == 0){
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/product/ProductDetail.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/product/ProductDetail.fxml"));
             Parent root = loader.load();
             ProductDetailController productDetailController = loader.getController();
             productDetailController.initialize();
@@ -272,7 +271,7 @@ public class ProductsController implements Initializable {
             stage.setTitle("Thông tin sản phẩm");
             stage.show();
         } else if (viewMode == 1){
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/app/UI/product/ImportDetail.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/product/ImportDetail.fxml"));
             Parent root = loader.load();
             ImportDetailController importDetailController = loader.getController();
 
@@ -299,38 +298,42 @@ public class ProductsController implements Initializable {
     void search(ActionEvent event){
         if(viewMode == 0){
             int id = 0;
-            try {
-                id = comboBox_ProductID.getValue().intValue();
-            } catch (NullPointerException e){}
-            String name = textField_Name.getText();
             String type = new String();
             try {
+                id = comboBox_ProductID.getValue().intValue();
                 type = comboBox_Type.getValue();
-            } catch (NullPointerException e) {}
+            } catch (NullPointerException nullPointerException){
+                nullPointerException.printStackTrace();
+            }
+            String name = textField_Name.getText();
             String brand = textField_Brand.getText();
             boolean discount = checkBox_Discount.isSelected();
 
-            List<Product> list = productRepo.search(id, name, type, brand, discount);
-            productObservableList = FXCollections.observableList(list);
-            table_Product.setItems(productObservableList);
+            try {
+                ArrayList<Product> list = productsService.productRepo.search(id, name, type, brand, discount);
+                productObservableList = FXCollections.observableList(productsService.toProductForm(list));
+                table_Product.setItems(productObservableList);
+            } catch (SQLException sqlException){
+                sqlException.printStackTrace();
+            }
 
         } else if(viewMode == 1){
             int id = 0;
-            try {
-                id = comboBox_ImportID.getValue().intValue();
-            } catch (NullPointerException e) {}
             String supplier = new String();
-            try {
-                supplier = comboBox_Supplier.getValue();
-            } catch (NullPointerException e){}
             Date importDate = null;
             try {
+                id = comboBox_ImportID.getValue().intValue();
+                supplier = comboBox_Supplier.getValue();
                 importDate = Date.valueOf(datePicker_ImportDate.getValue());
-            } catch (NullPointerException e){}
+            } catch (NullPointerException e) {}
 
-            List<Import> list = importRepo.search(id, supplier, importDate);
-            importObservableList = FXCollections.observableList(list);
-            table_Import.setItems(importObservableList);
+            try {
+                ArrayList<Import> list = productsService.importRepo.search(id, supplier, importDate);
+                importObservableList = FXCollections.observableList(productsService.toImportForm(list));
+                table_Import.setItems(importObservableList);
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
+            }
         }
     }
 

@@ -72,7 +72,7 @@ public class ImportRepo extends BaseRepo<Import>{
         return imprt;
     }
 
-    public List<Import> search(int id, String supplier, Date importDate) throws SQLException {
+    public ArrayList<Import> search(int id, String supplier, Date importDate) throws SQLException {
         String query = "select * from Import, (select id as s_id, " +
                     "name as s_name from Supplier) as supplier " +
                     "where Import.supplier_id  = supplier.s_id";

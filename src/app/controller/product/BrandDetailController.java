@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import model.entity.Brand;
 import repository.BrandRepo;
+import service.product.ProductsService;
 
 import java.sql.SQLException;
 
@@ -28,11 +29,13 @@ public class BrandDetailController {
     private int mode;
 
     private Brand brand;
-    private BrandRepo brandRepo;
+    private ProductsService productsService;
+    private CommonController commonController;
 
     public BrandDetailController(){
         this.brand = new Brand();
-        this.brandRepo = new BrandRepo();
+        this.productsService = new ProductsService();
+        this.commonController = new CommonController();
     }
 
     public void initialize(){
@@ -73,26 +76,25 @@ public class BrandDetailController {
             alert.show();
             return;
         } else {
-            boolean res = false;
-            if(mode == 0){
+            try {
+                int res = 0;
                 this.brand.setName(name);
                 this.brand.setCountry(country);
-                try {
-                    res = brandRepo.insertBrand(brand);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                if (mode == 0) {
+                    res = productsService.brandRepo.insert(brand);
+                    if (res > 0) {
+                        button_Submit.setVisible(false);
+                        commonController.resultNoti(true);
+                    } else commonController.resultNoti(false);
+
+                } else if (mode == 1) {
+                    res = productsService.brandRepo.update(brand);
+                    if (res > 0) commonController.resultNoti(true);
+                    else commonController.resultNoti(false);
                 }
-                if (res) button_Submit.setVisible(false);
-            } else if (mode == 1) {
-                this.brand.setName(name);
-                this.brand.setCountry(country);
-                try {
-                    res = brandRepo.updateBrand(brand);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
+            } catch (SQLException sqlException){
+                sqlException.printStackTrace();
             }
-            CommonController.resultNoti(res);
 
         }
     }

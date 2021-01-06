@@ -34,7 +34,17 @@ public class ProductsService {
             ProductForm productForm = new ProductForm(product, type, brand);
             productForms.add(productForm);
         }
+        return productForms;
+    }
 
+    public ArrayList<ProductForm> toProductForm(ArrayList<Product> products) throws SQLException, NullPointerException{
+        ArrayList<ProductForm> productForms = new ArrayList<>();
+        for(Product product : products){
+            Type type = typeRepo.findByID(product.getTypeID());
+            Brand brand = brandRepo.findByID(product.getBrandID());
+            ProductForm productForm = new ProductForm(product, type, brand);
+            productForms.add(productForm);
+        }
         return productForms;
     }
 
@@ -69,6 +79,16 @@ public class ProductsService {
         return importForms;
     }
 
+    public ArrayList<ImportForm> toImportForm(ArrayList<Import> imports) throws SQLException, NullPointerException {
+        ArrayList<ImportForm> importForms = new ArrayList<>();
+        for(Import anImport : imports){
+            Supplier supplier = supplierRepo.findByID(anImport.getSupplierID());
+            ImportForm importForm = new ImportForm(anImport, supplier);
+            importForms.add(importForm);
+        }
+        return importForms;
+    }
+
     public ArrayList<String> getAllSupplierName() throws SQLException, NullPointerException {
         ArrayList<Import> imports = importRepo.findAll();
         ArrayList<String> suppliers = new ArrayList<>();
@@ -90,4 +110,6 @@ public class ProductsService {
         }
         return productDetailForms;
     }
+
+
 }

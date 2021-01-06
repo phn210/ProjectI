@@ -66,7 +66,8 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="3">
                                  <children>
                                     <Label text="Type" wrapText="true" />
-                                    <ComboBox fx:id="comboBox_Type" onAction="#selectType" onMouseClicked="#handleType" prefHeight="26.0" prefWidth="148.0" />
+                                    <ComboBox fx:id="comboBox_Type" onAction="#selectType" prefHeight="26.0" prefWidth="79.0" />
+                                    <TextField fx:id="textField_Type" editable="false" onMouseClicked="#handleType" prefHeight="26.0" prefWidth="78.0" />
                                  </children>
                                  <padding>
                                     <Insets left="10.0" />
@@ -75,7 +76,8 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="209.0" spacing="10.0" GridPane.columnIndex="4">
                                  <children>
                                     <Label text="Brand" wrapText="true" />
-                                    <ComboBox fx:id="comboBox_Brand" onAction="#selectBrand" onMouseClicked="#handleBrand" prefHeight="26.0" prefWidth="148.0" />
+                                    <ComboBox fx:id="comboBox_Brand" onAction="#selectBrand" prefHeight="26.0" prefWidth="73.0" />
+                                    <TextField fx:id="textField_Brand" editable="false" onMouseClicked="#handleBrand" prefHeight="26.0" prefWidth="67.0" />
                                  </children>
                                  <padding>
                                     <Insets left="10.0" />
@@ -162,7 +164,6 @@
                <right>
                   <HBox alignment="CENTER_RIGHT" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="button_Delete" mnemonicParsing="false" onAction="#delete" prefHeight="26.0" prefWidth="70.0" text="Xóa" />
                         <Button fx:id="button_Submit" mnemonicParsing="false" onAction="#submit" prefWidth="70.0" text="Submit" />
                      </children>
                      <padding>
