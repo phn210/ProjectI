@@ -5,7 +5,6 @@ public class Customer {
     private String name;
     private String phone;
     private String address;
-    private int point;
     private String email;
 
     public Customer(){
@@ -42,14 +41,6 @@ public class Customer {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public int getPoint() {
-        return point;
-    }
-
-    public void setPoint(int point) {
-        this.point = point;
     }
 
     public String getEmail() {
