@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.product.ProductDetailController">
+<AnchorPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.invoice.InvoiceDetailController">
    <children>
       <BorderPane prefHeight="700.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -162,7 +162,7 @@
                   <HBox alignment="CENTER_RIGHT" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
                         <Button mnemonicParsing="false" onAction="#addProduct" text="Thêm sản phẩm" />
-                        <Button mnemonicParsing="false" onAction="#submit" prefWidth="70.0" text="Thêm">
+                        <Button mnemonicParsing="false" onAction="#submit" prefHeight="30.0" prefWidth="103.0" text="Tạo hóa đơn">
                            <font>
                               <Font name="System Bold Italic" size="13.0" />
                            </font></Button>

@@ -139,7 +139,9 @@ public class ProductDetailController {
         textField_Amount.setText(String.valueOf(product.getAmount()));
         textArea_Description.setText(product.getDescription());
         textField_Type.setText(type.getName());
+        comboBox_Type.setValue(type.getName());
         textField_Brand.setText(brand.getName());
+        comboBox_Brand.setValue(brand.getName());
         textField_Price.setText(String.valueOf(product.getRetailPrice()));
         textField_Discount.setText(String.valueOf(product.getDiscount()));
 
@@ -158,6 +160,40 @@ public class ProductDetailController {
         updateTable();
         updateType();
         updateBrand();
+    }
+
+    public void initializeViewOnly(ProductForm productForm){
+        try {
+            this.product = productsService.productRepo.findByID(productForm.getId());
+            this.type = productsService.typeRepo.findByID(product.getTypeID());
+            this.brand = productsService.brandRepo.findByID(product.getBrandID());
+        } catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        }
+
+        textField_ID.setText(String.valueOf(product.getId()));
+        textField_Name.setText(product.getName());
+        textField_Amount.setText(String.valueOf(product.getAmount()));
+        textArea_Description.setText(product.getDescription());
+        textField_Type.setText(type.getName());
+        comboBox_Type.setValue(type.getName());
+        textField_Brand.setText(brand.getName());
+        comboBox_Brand.setValue(brand.getName());
+        textField_Price.setText(String.valueOf(product.getRetailPrice()));
+        textField_Discount.setText(String.valueOf(product.getDiscount()));
+
+        textField_ID.setEditable(false);
+        textField_Name.setEditable(false);
+        textField_Amount.setEditable(false);
+        textArea_Description.setEditable(false);
+        comboBox_Type.setDisable(true);
+        comboBox_Brand.setDisable(true);
+        button_Export.setVisible(false);
+        button_Submit.setVisible(false);
+
+        initTable();
+
+        updateTable();
     }
 
     public void initTable(){
@@ -206,7 +242,7 @@ public class ProductDetailController {
     @FXML
     void handleBrand(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/products/BrandDetail.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/product/BrandDetail.fxml"));
             Parent root = loader.load();
             BrandDetailController brandDetailController = loader.getController();
 
@@ -227,7 +263,7 @@ public class ProductDetailController {
     @FXML
     void handleType(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/products/TypeDetail.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/product/TypeDetail.fxml"));
             Parent root = loader.load();
             TypeDetailController typeDetailController = loader.getController();
             if (this.mode == 0) {

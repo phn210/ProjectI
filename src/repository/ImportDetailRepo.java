@@ -40,21 +40,16 @@ public class ImportDetailRepo extends BaseRepo<ImportDetail>{
     };
 
 
-    public ArrayList<ImportDetail> getImportDetails(Product product) throws SQLException {
+    public ImportDetail findByID(int productID, int importID) throws SQLException {
         String query = "select * from Import_Detail " +
-                "where product_id = ?";
+                "where product_id = ? " +
+                "and import_id = ?";
         PreparedStatement preparedStatement = prepare(query);
-        preparedStatement.setInt(1, product.getId());
+        preparedStatement.setInt(1, productID);
+        preparedStatement.setInt(2, importID);
         ResultSet rs = preparedStatement.executeQuery();
-        return getList(rs);
+        rs.first();
+        return getObject(rs);
     }
 
-    public ArrayList<ImportDetail> getImportDetails(Import anImport) throws SQLException {
-        String query = "select * from Import_Detail " +
-                "where import_id = ?";
-        PreparedStatement preparedStatement = prepare(query);
-        preparedStatement.setInt(1, anImport.getId());
-        ResultSet rs = preparedStatement.executeQuery(query);
-        return getList(rs);
-    }
 }
