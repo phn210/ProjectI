@@ -16,10 +16,9 @@ public class ProductForm {
     private String brand;
     private String type;
     private int amount;
-    private ArrayList<ImportDetail> importDetails;
 
-    public ProductForm() {
-        this.importDetails = new ArrayList<>();
+    public ProductForm(){
+
     }
 
     public ProductForm(Product product, Type type, Brand brand){
@@ -31,7 +30,6 @@ public class ProductForm {
         this.setBrand(brand.getName());
         this.setType(type.getName());
         this.setAmount(product.getAmount());
-        this.importDetails = new ArrayList<>();
     }
 
     public int getId() {
@@ -98,11 +96,4 @@ public class ProductForm {
         this.amount = amount;
     }
 
-    public ArrayList<ImportDetail> getImportDetails() {
-        return importDetails;
-    }
-
-    public void setImportDetails(ArrayList<ImportDetail> importDetails) {
-        this.importDetails = importDetails;
-    }
 }

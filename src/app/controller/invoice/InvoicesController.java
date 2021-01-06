@@ -4,7 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -12,9 +16,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import model.form.InvoiceForm;
 import service.invoice.InvoicesService;
 
+import javax.imageio.IIOException;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -111,7 +118,26 @@ public class InvoicesController implements Initializable {
 
     @FXML
     void importManually(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/invoice/InvoiceDetail.fxml"));
+            Parent root = loader.load();
+            InvoiceDetailController invoiceDetailController = loader.getController();
+            invoiceDetailController.initialize();
 
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Thêm hóa đơn");
+            stage.show();
+            Stage bigStage = (Stage)(table_Invoice.getParent().getScene().getWindow());
+            bigStage.setOnCloseRequest(event1 -> {
+                stage.close();
+            });
+
+            stage.setOnCloseRequest(e -> updateTable());
+
+        } catch (IOException ioException){
+            ioException.printStackTrace();
+        }
     }
 
     @FXML

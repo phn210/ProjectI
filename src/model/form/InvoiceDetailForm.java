@@ -1,11 +1,13 @@
 package model.form;
 
+import model.entity.ImportDetail;
+import model.entity.Invoice;
 import model.entity.InvoiceDetail;
 import model.entity.Product;
 
 public class InvoiceDetailForm {
-    private int invoiceID;
-    private String product;
+    private int productID;
+    private String productName;
     private int importID;
     private int amount;
     private Double retailPrice;
@@ -17,9 +19,9 @@ public class InvoiceDetailForm {
 
     }
 
-    public InvoiceDetailForm(InvoiceDetail invoiceDetail, Product product){
-        this.setInvoiceID(invoiceDetail.getInvoiceID());
-        this.setProduct(product.getName());
+    public InvoiceDetailForm(InvoiceDetail invoiceDetail, Product productName){
+        this.setProductID(productName.getId());
+        this.setProductName(productName.getName());
         this.setImportID(invoiceDetail.getImportID());
         this.setAmount(invoiceDetail.getAmount());
         this.setRetailPrice(invoiceDetail.getRetailPrice());
@@ -28,20 +30,31 @@ public class InvoiceDetailForm {
         this.setTotalMoney(invoiceDetail.getTotalMoney());
     }
 
-    public int getInvoiceID() {
-        return invoiceID;
+    public InvoiceDetailForm(ImportDetail importDetail, Product productName, int amount){
+        this.setProductID(productName.getId());
+        this.setProductName(productName.getName());
+        this.setImportID(importDetail.getImportID());
+        this.setAmount(amount);
+        this.setRetailPrice(productName.getRetailPrice());
+        this.setImportPrice(importDetail.getImportPrice());
+        this.setDiscount(productName.getDiscount());
+        this.setTotalMoney(productName.getRetailPrice()*discount*amount);
     }
 
-    public void setInvoiceID(int invoiceID) {
-        this.invoiceID = invoiceID;
+    public int getProductID() {
+        return productID;
     }
 
-    public String getProduct() {
-        return product;
+    public void setProductID(int productID) {
+        this.productID = productID;
     }
 
-    public void setProduct(String product) {
-        this.product = product;
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public int getImportID() {

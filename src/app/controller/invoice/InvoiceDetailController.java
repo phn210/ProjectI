@@ -1,5 +1,6 @@
 package app.controller.invoice;
 
+import app.controller.CommonController;
 import app.controller.home.HomeController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -91,14 +92,17 @@ public class InvoiceDetailController {
     private Invoice invoice;
     private Customer customer;
     private Account account;
+    private CommonController commonController;
 
-    static Product newProduct;
+    static Customer newCustomer = null;
+    static InvoiceDetailForm newInvoiceDetailForm = null;
 
     public InvoiceDetailController(){
         this.invoicesService = new InvoicesService();
         this.invoiceForm = new InvoiceForm();
         this.invoice = new Invoice();
         this.account = HomeController.account;
+        this.commonController = new CommonController();
     }
 
     public void initialize(){
@@ -171,15 +175,10 @@ public class InvoiceDetailController {
     @FXML
     void addProduct(ActionEvent event) {
         try {
-            newProduct = null;
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/invoice/FindProduct.fxml"));
+            newInvoiceDetailForm = null;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/invoice/FindProduct.fxml"));
             Parent root = loader.load();
             FindProductController findProductController = new FindProductController();
-            try {
-//                findProductController.initialize();
-            } catch(NullPointerException e) {
-                e.printStackTrace();
-            }
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -187,13 +186,14 @@ public class InvoiceDetailController {
             stage.show();
             stage.setOnCloseRequest(e -> {
                 try {
-//                    this.invoiceDetailFormObservableList.add(newInvoiceDetail);
+                    this.invoiceDetailFormObservableList.add(newInvoiceDetailForm);
                 } catch (NullPointerException nullPointerException){
-                    nullPointerException.printStackTrace();
+                    System.out.println("Chưa thêm sản phẩm nào");
                     return;
                 }
                 table_InvoiceDetail.setItems(invoiceDetailFormObservableList);
                 table_InvoiceDetail.refresh();
+                updateCost();
             });
 
         } catch (IOException ioException){
@@ -209,7 +209,20 @@ public class InvoiceDetailController {
 
     @FXML
     void findCustomer(ActionEvent event) {
-
+        newCustomer = null;
+        Stage stage = new Stage();
+        stage.setScene(commonController.makeScene("/invoice/FindCustomer.fxml"));
+        stage.setTitle("Tìm khách hàng");
+        stage.show();
+        stage.setOnCloseRequest(e -> {
+            if(newCustomer == null) {
+                System.out.println("Chưa thêm khách hàng");
+                return;
+            } else {
+                this.customer = newCustomer;
+                updateCustomer();
+            }
+        });
     }
 
     @FXML

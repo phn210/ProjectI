@@ -52,10 +52,10 @@ public class InvoicesService {
     }
 
     public ArrayList<Integer> getImportIDs(int productID) throws SQLException {
-        ArrayList<ImportDetail> importDetails = importDetailRepo.findAll();
+        ArrayList<ImportDetail> importDetails = importDetailRepo.getImportDetails(productRepo.findByID(productID));
         ArrayList<Integer> importIDs = new ArrayList<>();
         for(ImportDetail importDetail: importDetails){
-            importIDs.add(importDetailRepo.findByProductID(productID).getImportID());
+            importIDs.add(importDetail.getImportID());
         }
         return importIDs;
     }

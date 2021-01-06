@@ -76,7 +76,7 @@ public class ImportDetailRepo extends BaseRepo<ImportDetail>{
                 "where product_id = ?";
         PreparedStatement preparedStatement = prepare(query);
         preparedStatement.setInt(1, product.getId());
-        ResultSet rs = preparedStatement.executeQuery(query);
+        ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
 

@@ -1,5 +1,7 @@
 package model.entity;
 
+import model.form.InvoiceDetailForm;
+
 public class InvoiceDetail {
     private int invoiceID;
     private int productID;
@@ -12,6 +14,28 @@ public class InvoiceDetail {
 
     public InvoiceDetail(){
 
+    }
+
+    public InvoiceDetail(Invoice invoice, ImportDetail importDetail, Product product, int amount){
+        this.setInvoiceID(invoice.getId());
+        this.setProductID(product.getId());
+        this.setImportID(importDetail.getImportID());
+        this.setAmount(amount);
+        this.setRetailPrice(product.getRetailPrice());
+        this.setImportPrice(importDetail.getImportPrice());
+        this.setDiscount(product.getDiscount());
+        this.setTotalMoney(product.getRetailPrice()*discount*amount);
+    }
+
+    public InvoiceDetail(Invoice invoice, InvoiceDetailForm invoiceDetailForm){
+        this.setInvoiceID(invoice.getId());
+        this.setProductID(invoiceDetailForm.getProductID());
+        this.setImportID(invoiceDetailForm.getImportID());
+        this.setAmount(invoiceDetailForm.getAmount());
+        this.setRetailPrice(invoiceDetailForm.getRetailPrice());
+        this.setImportPrice(invoiceDetailForm.getImportPrice());
+        this.setDiscount(invoiceDetailForm.getDiscount());
+        this.setTotalMoney(invoiceDetailForm.getTotalMoney());
     }
 
     public int getInvoiceID() {
