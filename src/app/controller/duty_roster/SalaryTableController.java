@@ -14,10 +14,11 @@ import service.duty_roster.DutyRosterService;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class SalaryTableController implements Initializable {
-    public static Date date;
+    public static LocalDate localDate;
 
     DutyRosterService dutyRosterService;
 
@@ -53,7 +54,7 @@ public class SalaryTableController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dutyRosterService = new DutyRosterService();
-        tableNameLabel.setText("Bảng lương tháng "+date.getMonth()+" năm "+date.getYear());
+        tableNameLabel.setText("Bảng lương tháng "+localDate.getMonthValue()+" năm "+localDate.getYear());
         initTable();
         loadData();
 
@@ -75,7 +76,7 @@ public class SalaryTableController implements Initializable {
 
     private void loadData(){
         try {
-            salaryDetailFormObservableList = FXCollections.observableArrayList(dutyRosterService.getAllSalaryDetail(date));
+            salaryDetailFormObservableList = FXCollections.observableArrayList(dutyRosterService.getAllSalaryDetail(localDate));
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

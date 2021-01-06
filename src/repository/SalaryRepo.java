@@ -55,17 +55,15 @@ public class SalaryRepo extends BaseRepo<Salary>{
     @Override
     public int update(Salary salary) throws SQLException{
         String sql = "UPDATE salary " +
-                "SET salary_level = ?, " +
-                "total_hour = ?, " +
+                "SET total_hour = ?, " +
                 "total_salary = ? " +
                 "WHERE employee_id = ? AND month = ? AND year = ?";
         PreparedStatement preparedStatement = prepare(sql);
-        preparedStatement.setDouble(1, salary.getSalaryLevel());
-        preparedStatement.setDouble(2, salary.getTotalHour());
-        preparedStatement.setDouble(3, salary.getTotalSalary());
-        preparedStatement.setInt(4, salary.getEmployeeID());
-        preparedStatement.setInt(5, salary.getMonth());
-        preparedStatement.setInt(6, salary.getYear());
+        preparedStatement.setDouble(1, salary.getTotalHour());
+        preparedStatement.setDouble(2, salary.getTotalSalary());
+        preparedStatement.setInt(3, salary.getEmployeeID());
+        preparedStatement.setInt(4, salary.getMonth());
+        preparedStatement.setInt(5, salary.getYear());
         return preparedStatement.executeUpdate();
     };
 }

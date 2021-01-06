@@ -11,7 +11,11 @@ import repository.SalaryRepo;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Savepoint;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class DutyRosterService {
     DutyRosterRepo dutyRosterRepo;
@@ -62,22 +66,34 @@ public class DutyRosterService {
         return employeeRepo.findById(id);
     }
 
-    public ArrayList<SalaryDetailForm> getAllSalaryDetail(Date date) throws SQLException {
-        ArrayList<Salary> salaryArrayList = salaryRepo.findByMonthAndYear(date.getMonth(), date.getYear());
-        ArrayList<Employee> employeeArrayList = employeeRepo.findAllEmployeeWorkBeforeDate(date);
+    public ArrayList<SalaryDetailForm> getAllSalaryDetail(LocalDate localDate) throws SQLException {
+        ArrayList<Salary> salaryArrayList = salaryRepo.findByMonthAndYear(localDate.getMonthValue(), localDate.getYear());
+        ArrayList<Employee> employeeArrayList = employeeRepo.findAllEmployeeWorkBeforeDate(Date.valueOf(localDate));
         ArrayList<SalaryDetailForm> salaryDetailFormArrayList = new ArrayList<>();
+        for (int i = 0; i < salaryArrayList.size(); i++) {
+            Salary salary = salaryArrayList.get(i);
+            ArrayList<DutyRoster> dutyRosterArrayList = dutyRosterRepo.findByIdAndDate(salary.getEmployeeID(), salary.getMonth(), salary.getYear());
+            double newTotalHour = 0;
+            for (int j = 0; j < dutyRosterArrayList.size(); j++) {
+                newTotalHour += dutyRosterArrayList.get(j).getTotalHour();
+            }
+            salary.setTotalHour(newTotalHour);
+            salary.setTotalSalary(newTotalHour*salary.getSalaryLevel());
+            salaryRepo.update(salary);
+            salaryArrayList.set(i, salary);
+        }
         for (int i = 0; i < employeeArrayList.size(); i++) {
             Employee employee = employeeArrayList.get(i);
             if(!include(salaryArrayList, employee)){
                 Salary salary = new Salary();
                 salary.setEmployeeID(employee.getId());
-                salary.setMonth(date.getMonth());
-                salary.setYear(date.getYear());
+                salary.setMonth(localDate.getMonthValue());
+                salary.setYear(localDate.getYear());
                 salary.setSalaryLevel(employee.getSalaryLevel());
-                ArrayList<DutyRoster> dutyRosterArrayList = dutyRosterRepo.findByIdAndDate(employee.getId(), date.getMonth(), date.getYear());
+                ArrayList<DutyRoster> dutyRosterArrayList = dutyRosterRepo.findByIdAndDate(employee.getId(), localDate.getMonthValue(), localDate.getYear());
                 double totalHours = 0;
                 for (int j = 0; j < dutyRosterArrayList.size(); j++) {
-                    totalHours += dutyRosterArrayList.get(i).getTotalHour();
+                    totalHours += dutyRosterArrayList.get(j).getTotalHour();
                 }
                 salary.setTotalHour(totalHours);
                 salary.setTotalSalary(totalHours*salary.getSalaryLevel());
@@ -105,4 +121,17 @@ public class DutyRosterService {
         }
         return false;
     }
+
+    public double amountOfMoneyToBePaid(int month, int year) throws SQLException {
+        double result = 0;
+        Calendar calendar = new GregorianCalendar(year, month-1, 1);
+        int numberOfDays = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        LocalDate localDate = LocalDate.of(year, month, numberOfDays);
+        ArrayList<SalaryDetailForm> salaryDetailFormArrayList = getAllSalaryDetail(localDate);
+        for (int i = 0; i < salaryDetailFormArrayList.size(); i++) {
+            result += salaryDetailFormArrayList.get(i).getTotalSalary();
+        }
+        return result;
+    }
+
 }
