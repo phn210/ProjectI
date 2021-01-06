@@ -13,14 +13,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        CommonController.primaryStage = primaryStage;
         DBConnector myConnector = new DBConnector();
         myConnector.getConnection();
         Parent root = FXMLLoader.load(getClass().getResource("/app/UI/Login.fxml"));
-        this.primaryStage.setTitle("Công ty NNN - Nhóm N07");
-        this.primaryStage.setScene(new Scene(root));
-        this.primaryStage.resizableProperty().setValue(false);
-        this.primaryStage.show();
+        primaryStage.setTitle("Công ty NNN - Nhóm N07");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.resizableProperty().setValue(false);
+        CommonController.primaryStage = primaryStage;
+        primaryStage.show();
     }
 
     public static void main(String[] args) {

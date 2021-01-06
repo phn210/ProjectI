@@ -9,14 +9,45 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import model.entity.Account;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class CommonController {
     public static Stage primaryStage;
+
+    private StringConverter<LocalDate> converter;
+
+    public CommonController() {
+        String pattern = "dd-MM-yyyy";
+        converter = new StringConverter<LocalDate>() {
+            DateTimeFormatter dateFormatter =
+                    DateTimeFormatter.ofPattern(pattern);
+
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return dateFormatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateFormatter);
+                } else {
+                    return null;
+                }
+            }
+        };
+    }
 
     public Scene makeScene(String fxmlpath){
         try{
@@ -89,5 +120,9 @@ public class CommonController {
         FXMLLoader loader = new FXMLLoader();
         pane = loader.load(fileURL);
         return pane;
+    }
+
+    public StringConverter<LocalDate> getConverter() {
+        return converter;
     }
 }

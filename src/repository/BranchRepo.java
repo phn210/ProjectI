@@ -30,6 +30,7 @@ public class BranchRepo extends BaseRepo<Branch>{
     public Branch findById(int id) throws SQLException {
         String sql = "SELECT * FROM Branch WHERE id = ?";
         PreparedStatement preparedStatement = prepare(sql);
+        preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.first();
         return getObject(resultSet);

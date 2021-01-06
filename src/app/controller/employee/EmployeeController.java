@@ -51,6 +51,8 @@ public class EmployeeController implements Initializable {
     @FXML
     TableColumn<EmployeeDetailForm, String> branchNameColumn;
 
+    @FXML
+    TableColumn<EmployeeDetailForm, String> addressColumn;
     private ObservableList<EmployeeDetailForm> employeeDetailFormObservableList;
 
     @Override
@@ -92,9 +94,10 @@ public class EmployeeController implements Initializable {
     private void initColumns() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("EmployeeId"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        dobColumn.setCellValueFactory(new PropertyValueFactory<>("dobColumn"));
+        dobColumn.setCellValueFactory(new PropertyValueFactory<>("dob"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         citizenIdColumn.setCellValueFactory(new PropertyValueFactory<>("citizenId"));
+        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         roleColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<EmployeeDetailForm, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<EmployeeDetailForm, String> param) {

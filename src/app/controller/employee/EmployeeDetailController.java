@@ -79,10 +79,13 @@ public class EmployeeDetailController implements Initializable {
         employeeService = new EmployeeService();
         commonController = new CommonController();
         roleComboBoxList = FXCollections.observableArrayList("Quản lí", "Nhân viên bán hàng", "Nhân viên kĩ thuật");
+        roleComboBox.setItems(roleComboBoxList);
         workingComboBoxList = FXCollections.observableArrayList("Đang đi làm", "Đã nghỉ việc");
+        workingComboBox.setItems(workingComboBoxList);
         try {
             branchArrayList = employeeService.getAllBranch();
             branchComboBoxList = FXCollections.observableArrayList(employeeService.getAllBranchName());
+            branchComboBox.setItems(branchComboBoxList);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -101,9 +104,10 @@ public class EmployeeDetailController implements Initializable {
             roleName = "Nhân viên kỹ thuật";
         }
         roleComboBox.setValue(roleName);
+        dobDatePicker.setConverter(commonController.getConverter());
         if (employeeDetailForm.getDob() != null) {
             Date date = employeeDetailForm.getDob();
-            dobDatePicker.setValue(LocalDate.of(date.getYear(), date.getMonth(), date.getDay()));
+            dobDatePicker.setValue(LocalDate.parse(date.toString()));
         } else {
             dobDatePicker.setValue(null);
         }

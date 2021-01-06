@@ -37,6 +37,7 @@ public class EmployeeRepo extends BaseRepo<Employee>{
     public Employee findById(int id) throws SQLException {
         String sql = "SELECT * FROM Employee WHERE id = ?";
         PreparedStatement preparedStatement = prepare(sql);
+        preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.first();
         return getObject(resultSet);
@@ -49,7 +50,7 @@ public class EmployeeRepo extends BaseRepo<Employee>{
 
     @Override
     public int update(Employee employee) throws SQLException{
-        String sql = "UPDATE emmployee " +
+        String sql = "UPDATE employee " +
                 "SET name = ?, " +
                 "dob = ?, " +
                 "phone = ?, " +

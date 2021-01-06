@@ -29,8 +29,8 @@
                      <children>
                         <MenuButton contentDisplay="TOP" mnemonicParsing="false" prefHeight="94.0" prefWidth="98.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Thêm">
                           <items>
-                            <MenuItem mnemonicParsing="false" onAction="#importManually" text="Thủ công" />
-                            <MenuItem mnemonicParsing="false" onAction="#importFile" text="File" />
+                            <MenuItem mnemonicParsing="false" text="Thủ công" />
+                            <MenuItem mnemonicParsing="false" text="File" />
                           </items>
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
@@ -40,7 +40,7 @@
                               </ImageView>
                            </graphic>
                         </MenuButton>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#checkDetail" prefHeight="94.0" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Chi tiết">
+                        <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="94.0" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Chi tiết">
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -52,7 +52,7 @@
                               <Insets bottom="5.0" top="5.0" />
                            </HBox.margin>
                         </Button>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#export" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Xuất file">
+                        <Button contentDisplay="TOP" mnemonicParsing="false" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Xuất file">
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -76,7 +76,7 @@
                <right>
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="400.0" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#help" prefHeight="94.0" prefWidth="100.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Help">
+                        <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="94.0" prefWidth="100.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Help">
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -131,7 +131,7 @@
                      <children>
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="30.0" GridPane.rowIndex="2">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#search" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Tìm kiếm" />
+                              <Button mnemonicParsing="false" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Tìm kiếm" />
                            </children>
                            <padding>
                               <Insets right="20.0" />
