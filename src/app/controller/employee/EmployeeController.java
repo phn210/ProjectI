@@ -34,6 +34,22 @@ public class EmployeeController implements Initializable {
     CommonController commonController;
 
     @FXML
+    TextField idTextField;
+
+    @FXML
+    TextField nameTextField;
+
+    @FXML
+    TextField ageTextField;
+
+    @FXML
+    TextField phoneTextField;
+
+    @FXML
+    TextField citizenIdTextField;
+
+
+    @FXML
     TableView<EmployeeDetailForm> table;
 
     @FXML
@@ -66,6 +82,26 @@ public class EmployeeController implements Initializable {
         commonController = new CommonController();
         employeeService = new EmployeeService();
 
+        idTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            try{
+                if(!newValue.isEmpty()){
+                    Integer.parseInt(newValue);
+                }
+            }catch (NumberFormatException ex){
+                commonController.resultNoti(false, "ID không hợp lệ");
+                idTextField.setText("");
+            }
+        });
+        ageTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            try{
+                if(!newValue.isEmpty()){
+                    Integer.parseInt(newValue);
+                }
+            }catch (NumberFormatException ex){
+                commonController.resultNoti(false, "Tuổi không hợp lệ");
+                ageTextField.setText("");
+            }
+        });
         initTable();
         loadData();
     }
@@ -197,5 +233,22 @@ public class EmployeeController implements Initializable {
                 throwables.printStackTrace();
             }
         }
+    }
+
+    public void search(){
+        int id = -1;
+        if(!idTextField.getText().trim().isEmpty()){
+            id = Integer.parseInt(idTextField.getText());
+        }
+        String name = nameTextField.getText().trim();
+        String phone = phoneTextField.getText().trim();
+        int age = -1;
+        if(!ageTextField.getText().trim().isEmpty()){
+            age = Integer.parseInt(ageTextField.getText());
+        }
+        String citizenId = citizenIdTextField.getText().trim();
+        String sql = "SELECT * FROM employe ";
+        String append = "WHERE ";
+        
     }
 }
