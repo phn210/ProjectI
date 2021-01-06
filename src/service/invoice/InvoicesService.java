@@ -51,12 +51,12 @@ public class InvoicesService {
         return invoiceDetailForms;
     }
 
-    public ArrayList<Integer> getAllInvoiceID() throws SQLException {
-        ArrayList<Invoice> invoices = invoiceRepo.findAll();
-        ArrayList<Integer> invoiceIDs = new ArrayList<>();
-        for(Invoice invoice: invoices){
-            invoiceIDs.add(invoice.getId());
+    public ArrayList<Integer> getImportIDs(int productID) throws SQLException {
+        ArrayList<ImportDetail> importDetails = importDetailRepo.findAll();
+        ArrayList<Integer> importIDs = new ArrayList<>();
+        for(ImportDetail importDetail: importDetails){
+            importIDs.add(importDetailRepo.findByProductID(productID).getImportID());
         }
-        return invoiceIDs;
+        return importIDs;
     }
 }

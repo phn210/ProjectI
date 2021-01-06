@@ -52,4 +52,14 @@ public class ImportDetailRepo extends BaseRepo<ImportDetail>{
         return getObject(rs);
     }
 
+    public ImportDetail findByProductID(int productID) throws SQLException {
+        String query = "select * from Import_Detail " +
+                "where product_id = ?";
+        PreparedStatement preparedStatement = prepare(query);
+        preparedStatement.setInt(1, productID);
+        ResultSet rs = preparedStatement.executeQuery();
+        rs.first();
+        return getObject(rs);
+    }
+
 }

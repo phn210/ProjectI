@@ -176,7 +176,7 @@ public class InvoiceDetailController {
             Parent root = loader.load();
             FindProductController findProductController = new FindProductController();
             try {
-                findProductController.initialize();
+//                findProductController.initialize();
             } catch(NullPointerException e) {
                 e.printStackTrace();
             }
@@ -187,7 +187,7 @@ public class InvoiceDetailController {
             stage.show();
             stage.setOnCloseRequest(e -> {
                 try {
-                    this.invoiceDetailFormObservableList.add(newInvoiceDetail);
+//                    this.invoiceDetailFormObservableList.add(newInvoiceDetail);
                 } catch (NullPointerException nullPointerException){
                     nullPointerException.printStackTrace();
                     return;

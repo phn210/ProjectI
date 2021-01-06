@@ -215,9 +215,9 @@ public class FindProductController implements Initializable{
         TextField textField_Amount = new TextField();
         textField_Amount.setPromptText("Số lượng");
 
-        ComboBox<Integer> comboBox_InvoiceID = new ComboBox();
+        ComboBox<Integer> comboBox_ImportID = new ComboBox();
         try {
-            comboBox_InvoiceID.setItems(FXCollections.observableArrayList(invoicesService.getAllInvoiceID()));
+            comboBox_ImportID.setItems(FXCollections.observableArrayList(invoicesService.getImportIDs(selectedProduct.getId())));
         } catch (SQLException sqlException){
             sqlException.printStackTrace();
         }
@@ -227,7 +227,7 @@ public class FindProductController implements Initializable{
         grid.add(new Label("Số lượng: "), 2, 0);
 
         grid.add(textField_ID, 0, 1);
-        grid.add(comboBox_InvoiceID,1,1);
+        grid.add(comboBox_ImportID,1,1);
         grid.add(textField_Amount, 2, 1);
 
         Node acceptButton = addProductDialog.getDialogPane().lookupButton(acceptButtonType);
@@ -240,37 +240,39 @@ public class FindProductController implements Initializable{
 
         Optional<ButtonType> result = addProductDialog.showAndWait();
         if (result.get() == acceptButtonType) {
-            int invoiceID = 0;
+            int importID = 0;
             int amount = 0;
-            if(comboBox_InvoiceID.getValue() == null || textField_Amount.getText().equals("") || textField_Amount.getText().){
-                commonController.resultNoti(false, "Chọn mã lô nhập");
+            if(comboBox_ImportID.getValue() == null || textField_Amount.getText().isEmpty()){
+                commonController.resultNoti(false, "Vui lòng nhập đủ thông tin");
             } else {
-            try {
-                amount = Integer.parseInt(textField_Amount.getText());
-            } catch (NumberFormatException numberFormatException){
-                commonController.resultNoti(false, "Số lượng không hợp lệ");
-            }
-            ImportDetail importDetail = invoicesService.importDetailRepo.findByID(invoiceID, selectedProduct.getId());
-            if (comboBox_InvoiceID.getValue() == null) {
-                commonController.resultNoti(false, "Mật khẩu không thể để trống");
-            } else {
+                importID = comboBox_ImportID.getValue();
                 try {
-                    if (account == null) {
-                        account = new Account();
-                        account.setEmployeeID(employeeDetailForm.getEmployeeId());
-                        account.setUsername(username);
-                        account.setPassword(password);
-                        employeeService.registerAccount(account);
-                        commonController.resultNoti(true, "Đăng kí tài khoản thành công");
-                    } else {
-                        account.setUsername(username);
-                        account.setPassword(password);
-                        employeeService.updateAccount(account);
-                        commonController.resultNoti(true, "Chỉnh sửa thông tin tài khoản thành công");
-                    }
-
-                } catch (SQLException ex) {
-                    commonController.resultNoti(false, "Tài khoản đã tồn tại!");
+                    amount = Integer.parseInt(textField_Amount.getText());
+                } catch (NumberFormatException numberFormatException) {
+                    commonController.resultNoti(false, "Số lượng không hợp lệ");
+                }
+//                ImportDetail importDetail = invoicesService.importDetailRepo.findByID(importID, selectedProduct.getId());
+                if (comboBox_ImportID.getValue() == null) {
+                    commonController.resultNoti(false, "Mật khẩu không thể để trống");
+                } else {
+//                    try {
+//                        if (account == null) {
+//                            account = new Account();
+//                            account.setEmployeeID(employeeDetailForm.getEmployeeId());
+//                            account.setUsername(username);
+//                            account.setPassword(password);
+//                            employeeService.registerAccount(account);
+//                            commonController.resultNoti(true, "Đăng kí tài khoản thành công");
+//                        } else {
+//                            account.setUsername(username);
+//                            account.setPassword(password);
+//                            employeeService.updateAccount(account);
+//                            commonController.resultNoti(true, "Chỉnh sửa thông tin tài khoản thành công");
+//                        }
+//
+//                    } catch (SQLException ex) {
+//                        commonController.resultNoti(false, "Tài khoản đã tồn tại!");
+//                    }
                 }
             }
         }
