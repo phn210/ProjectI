@@ -22,6 +22,7 @@ public class EmployeeRepo extends BaseRepo<Employee>{
         employee.setInsuranceID(rs.getString("insurance_id"));
         employee.setRole(rs.getInt("role"));
         employee.setBranchID(rs.getInt("branch_id"));
+        employee.setWorking(rs.getBoolean("working"));
         return employee;
     }
 
@@ -48,6 +49,30 @@ public class EmployeeRepo extends BaseRepo<Employee>{
 
     @Override
     public int update(Employee employee) throws SQLException{
-        return 0;
+        String sql = "UPDATE emmployee " +
+                "SET name = ?, " +
+                "dob = ?, " +
+                "phone = ?, " +
+                "address = ?, " +
+                "salary_level = ?, " +
+                "citizen_id = ?, " +
+                "insurance_id = ?, " +
+                "role = ?, " +
+                "branch_id = ?," +
+                "working = ? " +
+                "WHERE id = ?";
+        PreparedStatement preparedStatement = prepare(sql);
+        preparedStatement.setString(1, employee.getName());
+        preparedStatement.setDate(2, employee.getDob());
+        preparedStatement.setString(3, employee.getPhone());
+        preparedStatement.setString(4, employee.getAddress());
+        preparedStatement.setDouble(5, employee.getSalaryLevel());
+        preparedStatement.setString(6, employee.getCitizenID());
+        preparedStatement.setString(7, employee.getInsuranceID());
+        preparedStatement.setInt(8, employee.getRole());
+        preparedStatement.setInt(9, employee.getBranchID());
+        preparedStatement.setBoolean(10, employee.isWorking());
+        preparedStatement.setInt(11, employee.getId());
+        return preparedStatement.executeUpdate();
     };
 }

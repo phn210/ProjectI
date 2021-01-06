@@ -20,6 +20,7 @@ public class EmployeeDetailForm {
     private int branchId;
     private String branchName;
     private int role;
+    private boolean working;
 
 
     public EmployeeDetailForm(Employee employee, Branch branch){
@@ -35,6 +36,7 @@ public class EmployeeDetailForm {
         branchId = branch.getId();
         branchName = branch.getName();
         role = employee.getRole();
+        working = employee.isWorking();
     }
 
 
@@ -134,4 +136,11 @@ public class EmployeeDetailForm {
         this.role = role;
     }
 
+    public boolean isWorking() {
+        return working;
+    }
+
+    public void setWorking(boolean working) {
+        this.working = working;
+    }
 }

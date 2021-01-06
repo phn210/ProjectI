@@ -33,4 +33,21 @@ public class EmployeeService {
         }
         return employeeDetailFormArrayList;
     }
+
+    public ArrayList<String> getAllBranchName() throws SQLException {
+        ArrayList<Branch> branchArrayList = branchRepo.findAll();
+        ArrayList<String> branchNameArrayList = new ArrayList<>();
+        for (int i = 0; i < branchArrayList.size(); i++) {
+            branchNameArrayList.add(branchArrayList.get(i).getName());
+        }
+        return branchNameArrayList;
+    }
+
+    public ArrayList<Branch> getAllBranch() throws SQLException {
+        return branchRepo.findAll();
+    }
+
+    public void updateEmployee(Employee employee) throws SQLException {
+        employeeRepo.update(employee);
+    }
 }

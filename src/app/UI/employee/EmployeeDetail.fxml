@@ -133,24 +133,17 @@
                               <Insets left="40.0" />
                            </padding>
                         </Label>
-                        <TextField GridPane.columnIndex="4" />
-                        <TextField fx:id="usernameTextField" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-                        <Label text="Tài khoản: " GridPane.columnIndex="3" GridPane.rowIndex="5">
+                        <TextField fx:id="nameTextField" GridPane.columnIndex="4" />
+                        <Label layoutX="670.0" layoutY="325.0" text="Trạng thái" GridPane.columnIndex="3" GridPane.rowIndex="5">
                            <padding>
                               <Insets left="40.0" />
                            </padding>
                         </Label>
-                        <Label text="Mật khẩu" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </Label>
-                        <TextField fx:id="passwordTextField" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                        <ComboBox fx:id="workingComboBox" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
                      </children>
                   </GridPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <Button layoutX="965.0" layoutY="67.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Xóa" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="250.0" />
                         <Button layoutX="1048.0" layoutY="55.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Lưu" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="100.0" />
                      </children>
                   </AnchorPane>

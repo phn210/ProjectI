@@ -14,6 +14,7 @@ public class Employee {
     private String insuranceID;
     private int role;
     private int branchID;
+    private boolean working;
 
     public Employee(){
 
@@ -105,5 +106,13 @@ public class Employee {
 
     public void setBranchID(int branchID) {
         this.branchID = branchID;
+    }
+
+    public boolean isWorking() {
+        return working;
+    }
+
+    public void setWorking(boolean working) {
+        this.working = working;
     }
 }

@@ -5,12 +5,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.entity.Account;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 
 public class CommonController {
     public static Stage primaryStage;
@@ -59,6 +62,21 @@ public class CommonController {
             alert.setHeaderText("Error!");
             alert.show();
         }
+    }
+
+    public boolean confirmAlert(String content){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText(content);
+        alert.setHeaderText("Confirm!");
+        ButtonType xacNhanButtonType = new ButtonType("Xác nhận", ButtonBar.ButtonData.OK_DONE);
+        ButtonType thoatButtonType = new ButtonType("Thoát", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().clear();
+        alert.getButtonTypes().addAll(xacNhanButtonType, thoatButtonType);
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get() == xacNhanButtonType){
+            return true;
+        }
+        return false;
     }
 
     public  void toHome(){
