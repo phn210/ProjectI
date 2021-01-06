@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.customer.CustomerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.customer.CustomerController">
    <children>
       <BorderPane prefHeight="760.0" prefWidth="1540.0" style="-fx-background-color: #b3e0ff;">
          <top>
@@ -101,11 +101,10 @@
                   <TableView fx:id="table_Customer" prefHeight="645.0" prefWidth="1146.0" stylesheets="@../../static/css/main.css">
                      <columns>
                         <TableColumn fx:id="idColumn" prefWidth="68.33333587646484" text="ID" />
-                        <TableColumn fx:id="nameColumn" prefWidth="235.2000274658203" text="Họ và tên" />
-                        <TableColumn fx:id="phoneColumn" prefWidth="191.199951171875" text="Số điện thoại" />
-                        <TableColumn fx:id="addressColumn" prefWidth="328.7999572753906" text="Địa chỉ" />
-                        <TableColumn fx:id="pointColumn" prefWidth="83.199951171875" text="Điểm" />
-                        <TableColumn fx:id="emailColumn" prefWidth="236.00006103515625" text="Email" />
+                        <TableColumn fx:id="nameColumn" prefWidth="282.3999786376953" text="Họ và tên" />
+                        <TableColumn fx:id="phoneColumn" prefWidth="188.00006103515625" text="Số điện thoại" />
+                        <TableColumn fx:id="addressColumn" prefWidth="336.0001220703125" text="Địa chỉ" />
+                        <TableColumn fx:id="emailColumn" prefWidth="267.19976806640625" text="Email" />
                      </columns>
                   </TableView>
                </children>
