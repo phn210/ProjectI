@@ -95,7 +95,7 @@ public class ImportDetailController {
 
         comboBox_Supplier.setDisable(false);
 
-        initTable();
+        initForm();
         updateSupplier();
     }
 
@@ -115,15 +115,17 @@ public class ImportDetailController {
         datePicker_Date.setValue(importForm.getImportDate().toLocalDate());
         datePicker_Date.setDisable(true);
 
-        initTable();
+        initForm();
         updateTable();
     }
 
-    public void initTable(){
+    public void initForm(){
         col_ID.setCellValueFactory(new PropertyValueFactory<>("productID"));
         col_Name.setCellValueFactory(new PropertyValueFactory<>("productName"));
         col_Amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         col_ImportPrice.setCellValueFactory(new PropertyValueFactory<>("importPrice"));
+
+        importDetailFormObservableList = FXCollections.observableList(new ArrayList<>());
     }
 
     public void updateTable(){

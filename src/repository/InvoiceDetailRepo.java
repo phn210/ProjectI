@@ -32,7 +32,18 @@ public class InvoiceDetailRepo extends BaseRepo<InvoiceDetail>{
 
     @Override
     public int insert(InvoiceDetail invoiceDetail) throws SQLException{
-        return 0;
+        String insert = "insert into Invoice_Detail " +
+                "values (?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = prepare(insert);
+        preparedStatement.setInt(1, invoiceDetail.getInvoiceID());
+        preparedStatement.setInt(2, invoiceDetail.getProductID());
+        preparedStatement.setInt(3, invoiceDetail.getImportID());
+        preparedStatement.setInt(4, invoiceDetail.getAmount());
+        preparedStatement.setDouble(5, invoiceDetail.getRetailPrice());
+        preparedStatement.setInt(6, invoiceDetail.getDiscount());
+        preparedStatement.setDouble(7, invoiceDetail.getTotalMoney());
+        preparedStatement.setDouble(8, invoiceDetail.getImportPrice());
+        return preparedStatement.executeUpdate();
     };
 
     @Override

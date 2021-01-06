@@ -59,4 +59,11 @@ public class InvoicesService {
         }
         return importIDs;
     }
+
+    public void addInvoice(Invoice invoice, ArrayList<InvoiceDetail> invoiceDetails) throws SQLException {
+        DBConnector.connection.setAutoCommit(false);
+        for(InvoiceDetail invoiceDetail: invoiceDetails){
+
+        }
+    }
 }

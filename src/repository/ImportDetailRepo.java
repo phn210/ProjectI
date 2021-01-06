@@ -31,7 +31,14 @@ public class ImportDetailRepo extends BaseRepo<ImportDetail>{
 
     @Override
     public int insert(ImportDetail importDetail) throws SQLException{
-        return 0;
+        String insert = "insert into Import_Detail " +
+                "values (?, ?, ?, ?)";
+        PreparedStatement preparedStatement = prepare(insert);
+        preparedStatement.setInt(1, importDetail.getImportID());
+        preparedStatement.setInt(2, importDetail.getProductID());
+        preparedStatement.setInt(3, importDetail.getAmount());
+        preparedStatement.setDouble(4, importDetail.getImportPrice());
+        return preparedStatement.executeUpdate();
     };
 
     @Override

@@ -45,8 +45,7 @@ public class ProductRepo extends BaseRepo<Product>{
 
     @Override
     public int insert(Product product) throws SQLException{
-        String insert = "insert into Product(name, description, retail_price, " +
-                "discount, brand_id, type_id, amount) " +
+        String insert = "insert into Product " +
                 "values (?, ?, ?, ?, ?, ?, 0)";
         PreparedStatement pstmt = prepare(insert);
         pstmt.setNString(1, product.getName());
@@ -78,6 +77,26 @@ public class ProductRepo extends BaseRepo<Product>{
         pstmt.setInt(7, product.getId());
         return pstmt.executeUpdate();
     };
+
+    public int add(int id, int amount) throws SQLException {
+        String add = "update Product " +
+                "set amount = amount + ? " +
+                "where id = ?";
+        PreparedStatement preparedStatement = prepare(add);
+        preparedStatement.setInt(1, amount);
+        preparedStatement.setInt(2, id);
+        return preparedStatement.executeUpdate();
+    }
+
+    public int reduce(int id, int amount) throws SQLException {
+        String reduce = "update Product " +
+                    "set amount = amount - ? " +
+                    "where id = ?";
+        PreparedStatement preparedStatement = prepare(reduce);
+        preparedStatement.setInt(1, amount);
+        preparedStatement.setInt(2, id);
+        return preparedStatement.executeUpdate();
+    }
 
     public ArrayList<Product> search(int id, String name, String type, String brand, boolean discount) throws SQLException {
         String query = "select * from Product, " +

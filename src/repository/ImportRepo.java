@@ -43,13 +43,27 @@ public class ImportRepo extends BaseRepo<Import>{
 
     @Override
     public int insert(Import anImport) throws SQLException{
-        return 0;
+        String insert = "insert into Import " +
+                "values (?, ?, ?)";
+        PreparedStatement preparedStatement = prepare(insert);
+        preparedStatement.setInt(1, anImport.getSupplierID());
+        preparedStatement.setDate(2, anImport.getImportDate());
+        preparedStatement.setDouble(3, anImport.getTotalMoney());
+        return preparedStatement.executeUpdate();
     };
 
     @Override
     public int update(Import anImport) throws SQLException{
         return 0;
     };
+
+    public int getLastID() throws SQLException {
+        String getID = "select IDENT_CURRENT('Import')";
+        PreparedStatement preparedStatement = prepare(getID);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.first();
+        return resultSet.getInt(0);
+    }
 
     public List<Import> getAllImport() throws SQLException {
         String query = "select * from import";

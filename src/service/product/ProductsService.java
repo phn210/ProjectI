@@ -78,6 +78,8 @@ public class ProductsService {
         return productDetailForms;
     }
 
+    //-----------------------------------------------------------------
+
     public ArrayList<ImportForm> getAllImportForm() throws SQLException, NullPointerException {
         ArrayList<Import> imports = importRepo.findAll();
         ArrayList<ImportForm> importForms = new ArrayList<>();
@@ -120,6 +122,16 @@ public class ProductsService {
         return importDetailForms;
     }
 
-
+    public void addImport(Import anImport, ArrayList<ImportDetail> importDetails) throws SQLException {
+        DBConnector.connection.setAutoCommit(false);
+        importRepo.insert(anImport);
+        int importID = importRepo.getLastID();
+        for (ImportDetail importDetail: importDetails){
+            importDetailRepo.insert(importDetail);
+            productRepo.add(importDetail.getProductID(), importDetail.getAmount());
+        }
+        DBConnector.connection.commit();
+        DBConnector.connection.setAutoCommit(true);
+    }
 
 }

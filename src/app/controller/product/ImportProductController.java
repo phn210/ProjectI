@@ -1,7 +1,6 @@
 package app.controller.product;
 
 import app.controller.CommonController;
-import app.controller.invoice.InvoiceDetailController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,15 +19,12 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.entity.*;
 import model.form.ImportDetailForm;
-import model.form.ImportForm;
-import model.form.InvoiceDetailForm;
 import model.form.ProductForm;
 import service.invoice.InvoicesService;
 import service.product.ProductsService;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

@@ -44,11 +44,30 @@ public class InvoiceRepo extends BaseRepo<Invoice>{
 
     @Override
     public int insert(Invoice invoice) throws SQLException{
-        return 0;
+        String insert = "insert into Invoice " +
+                "values (?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = prepare(insert);
+        preparedStatement.setDate(1, invoice.getDate());
+        preparedStatement.setInt(2, invoice.getCustomerID());
+        preparedStatement.setInt(3, invoice.getEmployeeID());
+        preparedStatement.setNString(4, invoice.getPaymentMethod());
+        preparedStatement.setDouble(5, invoice.getTotalMoney());
+        preparedStatement.setDouble(6, invoice.getTax());
+        preparedStatement.setDouble(7, invoice.getSurcharge());
+        preparedStatement.setString(8, invoice.getNote());
+        return preparedStatement.executeUpdate();
     };
 
     @Override
     public int update(Invoice invoice) throws SQLException{
         return 0;
     };
+
+    public int getLastID() throws SQLException {
+        String getID = "select IDENT_CURRENT('Invoice')";
+        PreparedStatement preparedStatement = prepare(getID);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.first();
+        return resultSet.getInt(0);
+    }
 }

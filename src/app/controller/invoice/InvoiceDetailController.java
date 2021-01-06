@@ -140,6 +140,8 @@ public class InvoiceDetailController {
         col_Price.setCellValueFactory(new PropertyValueFactory<>("retailPrice"));
         col_Discount.setCellValueFactory(new PropertyValueFactory<>("discount"));
         col_TotalMoney.setCellValueFactory(new PropertyValueFactory<>("totalMoney"));
+
+        invoiceDetailFormObservableList = FXCollections.observableList(new ArrayList<>());
     }
 
     public void updateTable(){
