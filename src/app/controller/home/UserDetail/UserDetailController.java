@@ -50,6 +50,8 @@ public class UserDetailController implements Initializable {
     @FXML
     TextField phoneTextField;
 
+    @FXML
+    TextField addressTextField;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         homeService = new HomeService();
@@ -74,6 +76,7 @@ public class UserDetailController implements Initializable {
             phoneTextField.setText(String.valueOf(employeeDetailForm.getPhone()));
             insuranceIdTextField.setText(employeeDetailForm.getInsuranceId());
             salaryLevelTextField.setText(String.valueOf(employeeDetailForm.getSalaryLevel()));
+            addressTextField.setText(employeeDetailForm.getAddress());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

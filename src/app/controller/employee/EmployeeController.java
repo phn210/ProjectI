@@ -7,10 +7,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.form.EmployeeDetailForm;
 import service.employee.EmployeeService;
@@ -61,20 +62,34 @@ public class EmployeeController implements Initializable {
         loadData();
     }
 
-    private void initTable(){
+    private void initTable() {
         initColumns();
-        table.setRowFactory( RowFactory -> {
+        table.setRowFactory(RowFactory -> {
             TableRow<EmployeeDetailForm> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     EmployeeDetailForm rowData = row.getItem();
+                    EmployeeDetailController.employeeDetailForm = rowData;
+
+                    Stage stage = new Stage();
+                    Scene scene = commonController.makeScene("../UI/employee/EmployeeDetail.fxml");
+                    stage.setScene(scene);
+                    stage.setResizable(false);
+                    stage.show();
+                    Stage bigStage = (Stage)(((Node) event.getSource()).getScene().getWindow());
+                    bigStage.setOnCloseRequest(event1 -> {
+                        stage.close();
+                    });
+                    stage.setOnCloseRequest(event1 -> {
+                        loadData();
+                    });
                 }
             });
-            return row ;
+            return row;
         });
     }
 
-    private void initColumns(){
+    private void initColumns() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("EmployeeId"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         dobColumn.setCellValueFactory(new PropertyValueFactory<>("dobColumn"));
@@ -85,11 +100,11 @@ public class EmployeeController implements Initializable {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<EmployeeDetailForm, String> param) {
                 int role = param.getValue().getRole();
                 String roleName = "";
-                if(role == 1){
+                if (role == 1) {
                     roleName = "Quản lí";
-                }else if(role == 2){
+                } else if (role == 2) {
                     roleName = "Nhân viên bán hàng";
-                }else{
+                } else {
                     roleName = "Nhân viên kỹ thuật";
                 }
                 return new ReadOnlyStringWrapper(roleName);
@@ -98,7 +113,7 @@ public class EmployeeController implements Initializable {
         branchNameColumn.setCellValueFactory(new PropertyValueFactory<>("branchName"));
     }
 
-    private void loadData(){
+    private void loadData() {
         try {
             employeeDetailFormObservableList = FXCollections.observableArrayList(employeeService.getAllEmployee());
         } catch (SQLException throwables) {

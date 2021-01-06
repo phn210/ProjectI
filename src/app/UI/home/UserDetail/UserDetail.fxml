@@ -121,6 +121,12 @@
                            </padding>
                         </Label>
                         <TextField fx:id="salaryLevelTextField" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <Label text="Địa chỉ" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                           <padding>
+                              <Insets left="40.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="addressTextField" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                </children>
