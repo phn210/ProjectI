@@ -130,6 +130,7 @@ public class EmployeeDetailController implements Initializable {
                 }
             } catch (NumberFormatException ex) {
                 commonController.resultNoti(false, "Mức lương phải là số");
+                salaryLevelTextField.setText("");
             }
         });
         addressTextField.setText(employeeDetailForm.getAddress());

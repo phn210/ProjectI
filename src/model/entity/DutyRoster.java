@@ -5,7 +5,7 @@ import java.sql.Date;
 public class DutyRoster {
     private int id;
     private Date date;
-    private float totalHour;
+    private double totalHour;
     private String note;
 
     public DutyRoster(){
@@ -28,11 +28,11 @@ public class DutyRoster {
         this.date = date;
     }
 
-    public float getTotalHour() {
+    public double getTotalHour() {
         return totalHour;
     }
 
-    public void setTotalHour(float totalHour) {
+    public void setTotalHour(double totalHour) {
         this.totalHour = totalHour;
     }
 

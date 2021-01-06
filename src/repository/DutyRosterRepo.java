@@ -2,6 +2,7 @@ package repository;
 
 import model.entity.DutyRoster;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +16,7 @@ public class DutyRosterRepo extends BaseRepo<DutyRoster>{
         dutyRoster.setDate(rs.getDate("date"));
         dutyRoster.setTotalHour(rs.getFloat("total_hour"));
         dutyRoster.setNote(rs.getString("note"));
-        return null;
+        return dutyRoster;
     }
 
     @Override
@@ -26,13 +27,30 @@ public class DutyRosterRepo extends BaseRepo<DutyRoster>{
         return getList(rs);
     }
 
+
     @Override
     public int insert(DutyRoster dutyRoster) throws SQLException{
-        return 0;
+        String sql = "INSERT INTO Duty_Roster " +
+                "VALUES(?,?,?,?)";
+        PreparedStatement preparedStatement = prepare(sql);
+        preparedStatement.setInt(1, dutyRoster.getId());
+        preparedStatement.setDate(2, dutyRoster.getDate());
+        preparedStatement.setDouble(3, dutyRoster.getTotalHour());
+        preparedStatement.setString(4, dutyRoster.getNote());
+        return preparedStatement.executeUpdate();
     };
 
     @Override
     public int update(DutyRoster dutyRoster) throws SQLException{
-        return 0;
+        String sql = "UPDATE Duty_Roster " +
+                "SET total_hour = ?, " +
+                "note = ? " +
+                "WHERE employee_id = ? AND date = ?";
+        PreparedStatement preparedStatement = prepare(sql);
+        preparedStatement.setDouble(1, dutyRoster.getTotalHour());
+        preparedStatement.setString(2, dutyRoster.getNote());
+        preparedStatement.setInt(3, dutyRoster.getId());
+        preparedStatement.setDate(4, dutyRoster.getDate());
+        return preparedStatement.executeUpdate();
     };
 }

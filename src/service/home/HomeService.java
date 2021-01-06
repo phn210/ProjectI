@@ -23,9 +23,6 @@ public class HomeService {
 
     public EmployeeDetailForm getEmployeeDetail(Account account) throws SQLException {
         Employee employee = employeeRepo.findById(account.getEmployeeID());
-        System.out.println(employee.getBranchID());
-        System.out.println(employee.getId());
-        System.out.println(employee.getName());
         Branch branch = branchRepo.findById(employee.getBranchID());
         EmployeeDetailForm employeeDetailForm = new EmployeeDetailForm(employee, branch);
         return employeeDetailForm;

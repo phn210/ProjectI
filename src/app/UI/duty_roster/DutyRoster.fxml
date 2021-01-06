@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.product.ProductsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.duty_roster.DutyRosterController">
    <children>
       <BorderPane prefHeight="760.0" prefWidth="1540.0" style="-fx-background-color: #b3e0ff;">
          <top>
@@ -31,8 +31,8 @@
                      <children>
                         <MenuButton contentDisplay="TOP" mnemonicParsing="false" prefHeight="94.0" prefWidth="98.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Thêm">
                           <items>
-                            <MenuItem mnemonicParsing="false" onAction="#importManually" text="Thủ công" />
-                            <MenuItem mnemonicParsing="false" onAction="#importFile" text="File" />
+                            <MenuItem mnemonicParsing="false" onAction="#addDutyRoster" text="Thủ công" />
+                            <MenuItem mnemonicParsing="false" text="File" />
                           </items>
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
@@ -42,7 +42,7 @@
                               </ImageView>
                            </graphic>
                         </MenuButton>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#checkDetail" prefHeight="94.0" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Chi tiết">
+                        <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="94.0" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Chi tiết">
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -54,7 +54,7 @@
                               <Insets bottom="5.0" top="5.0" />
                            </HBox.margin>
                         </Button>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#export" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Xuất file">
+                        <Button contentDisplay="TOP" mnemonicParsing="false" prefWidth="107.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Xuất file">
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -78,7 +78,7 @@
                <right>
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="400.0" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#help" prefHeight="94.0" prefWidth="100.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Help">
+                        <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="94.0" prefWidth="100.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Help">
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -100,13 +100,13 @@
          <left>
             <Pane prefWidth="1140.0" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
                <children>
-                  <TableView fx:id="table_DutyRoster" prefHeight="645.0" prefWidth="1146.0" stylesheets="@../../static/css/main.css">
+                  <TableView fx:id="table" prefHeight="645.0" prefWidth="1146.0" stylesheets="@../../static/css/main.css">
                      <columns>
-                        <TableColumn fx:id="col_ID" prefWidth="68.33333587646484" text="ID" />
-                        <TableColumn fx:id="col_Name" prefWidth="270.93331146240234" text="Họ và tên" />
-                        <TableColumn fx:id="col_Dow" prefWidth="254.66665649414062" text="Ngày làm việc" />
-                        <TableColumn fx:id="col_TotalHour" prefWidth="109.86672973632812" text="Số giờ làm" />
-                        <TableColumn fx:id="col_Note" prefWidth="437.33331298828125" text="Ghi chú" />
+                        <TableColumn fx:id="idColumn" prefWidth="68.33333587646484" text="ID" />
+                        <TableColumn fx:id="nameColumn" prefWidth="270.93331146240234" text="Họ và tên" />
+                        <TableColumn fx:id="dateColumn" prefWidth="254.66665649414062" text="Ngày làm việc" />
+                        <TableColumn fx:id="totalHoursColumn" prefWidth="109.86672973632812" text="Số giờ làm" />
+                        <TableColumn fx:id="noteColumn" prefWidth="437.33331298828125" text="Ghi chú" />
                      </columns>
                   </TableView>
                </children>
@@ -127,7 +127,7 @@
                      <children>
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="30.0" GridPane.rowIndex="2">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#search" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Tìm kiếm" />
+                              <Button mnemonicParsing="false" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Tìm kiếm" />
                            </children>
                            <padding>
                               <Insets right="20.0" />
