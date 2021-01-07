@@ -118,7 +118,7 @@
                                     <Insets left="40.0" />
                                  </padding>
                               </Label>
-                              <TextArea prefHeight="102.0" prefWidth="256.0" GridPane.columnIndex="1" />
+                              <TextArea fx:id="textArea_Note" prefHeight="102.0" prefWidth="256.0" GridPane.columnIndex="1" />
                               <GridPane prefHeight="112.0" prefWidth="462.0" GridPane.columnIndex="2">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.199951171875" minWidth="10.0" prefWidth="108.3999755859375" />
@@ -161,8 +161,8 @@
                <right>
                   <HBox alignment="CENTER_RIGHT" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#addProduct" text="Thêm sản phẩm" />
-                        <Button mnemonicParsing="false" onAction="#submit" prefHeight="30.0" prefWidth="103.0" text="Tạo hóa đơn">
+                        <Button fx:id="button_FindProduct" mnemonicParsing="false" onAction="#addProduct" text="Thêm sản phẩm" />
+                        <Button fx:id="button_Submit" mnemonicParsing="false" onAction="#submit" prefHeight="30.0" prefWidth="103.0" text="Tạo hóa đơn">
                            <font>
                               <Font name="System Bold Italic" size="13.0" />
                            </font></Button>

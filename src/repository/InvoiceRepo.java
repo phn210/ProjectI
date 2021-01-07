@@ -68,6 +68,6 @@ public class InvoiceRepo extends BaseRepo<Invoice>{
         PreparedStatement preparedStatement = prepare(getID);
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.first();
-        return resultSet.getInt(0);
+        return resultSet.getInt(1);
     }
 }

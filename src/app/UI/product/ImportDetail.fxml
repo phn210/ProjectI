@@ -55,8 +55,8 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="276.0" spacing="10.0" GridPane.columnIndex="1">
                                  <children>
                                     <Label prefHeight="66.0" prefWidth="45.0" text="Supplier" wrapText="true" />
-                                    <ComboBox fx:id="comboBox_Supplier" prefHeight="26.0" prefWidth="105.0" />
-                                    <TextField fx:id="textField_Supplier" editable="false" prefHeight="26.0" prefWidth="107.0" />
+                                    <ComboBox fx:id="comboBox_Supplier" onAction="#selectSupplier" prefHeight="26.0" prefWidth="105.0" />
+                                    <TextField fx:id="textField_Supplier" editable="false" onMouseClicked="#handleSupplier" prefHeight="26.0" prefWidth="107.0" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="152.0" spacing="10.0">

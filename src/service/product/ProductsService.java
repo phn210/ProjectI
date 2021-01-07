@@ -6,6 +6,7 @@ import repository.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductsService {
     public ProductRepo productRepo;
@@ -102,13 +103,12 @@ public class ProductsService {
     }
 
     public ArrayList<String> getAllSupplierName() throws SQLException, NullPointerException {
-        ArrayList<Import> imports = importRepo.findAll();
-        ArrayList<String> suppliers = new ArrayList<>();
-        for(Import anImport: imports){
-            Type type = typeRepo.findByID(anImport.getSupplierID());
-            suppliers.add(type.getName());
+        ArrayList<Supplier> suppliers = supplierRepo.findAll();
+        ArrayList<String> supplierNames = new ArrayList<>();
+        for(Supplier supplier: suppliers){
+            supplierNames.add(supplierRepo.findByID(supplier.getId()).getName());
         }
-        return suppliers;
+        return supplierNames;
     }
 
     public ArrayList<ImportDetailForm> getAllImportDetailForm(Import anImport) throws SQLException, NullPointerException {
@@ -122,11 +122,12 @@ public class ProductsService {
         return importDetailForms;
     }
 
-    public void addImport(Import anImport, ArrayList<ImportDetail> importDetails) throws SQLException {
+    public void addImport(Import anImport, List<ImportDetailForm> importDetailForms) throws SQLException {
         DBConnector.connection.setAutoCommit(false);
         importRepo.insert(anImport);
         int importID = importRepo.getLastID();
-        for (ImportDetail importDetail: importDetails){
+        for (ImportDetailForm importDetailForm: importDetailForms){
+            ImportDetail importDetail = new ImportDetail(importID, importDetailForm);
             importDetailRepo.insert(importDetail);
             productRepo.add(importDetail.getProductID(), importDetail.getAmount());
         }

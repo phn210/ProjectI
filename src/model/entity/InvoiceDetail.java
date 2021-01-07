@@ -16,19 +16,8 @@ public class InvoiceDetail {
 
     }
 
-    public InvoiceDetail(Invoice invoice, ImportDetail importDetail, Product product, int amount){
-        this.setInvoiceID(invoice.getId());
-        this.setProductID(product.getId());
-        this.setImportID(importDetail.getImportID());
-        this.setAmount(amount);
-        this.setRetailPrice(product.getRetailPrice());
-        this.setImportPrice(importDetail.getImportPrice());
-        this.setDiscount(product.getDiscount());
-        this.setTotalMoney(product.getRetailPrice()*discount*amount);
-    }
-
-    public InvoiceDetail(Invoice invoice, InvoiceDetailForm invoiceDetailForm){
-        this.setInvoiceID(invoice.getId());
+    public InvoiceDetail(int invoiceID, InvoiceDetailForm invoiceDetailForm){
+        this.setInvoiceID(invoiceID);
         this.setProductID(invoiceDetailForm.getProductID());
         this.setImportID(invoiceDetailForm.getImportID());
         this.setAmount(invoiceDetailForm.getAmount());

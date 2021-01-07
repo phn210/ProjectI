@@ -1,5 +1,7 @@
 package model.entity;
 
+import model.form.ImportDetailForm;
+
 public class ImportDetail {
     private int importID;
     private int productID;
@@ -8,6 +10,13 @@ public class ImportDetail {
 
     public ImportDetail(){
 
+    }
+
+    public ImportDetail(int importID, ImportDetailForm importDetailForm){
+        this.setImportID(importID);
+        this.setProductID(importDetailForm.getProductID());
+        this.setAmount(importDetailForm.getAmount());
+        this.setImportPrice(importDetailForm.getImportPrice());
     }
 
     public int getImportID() {

@@ -186,6 +186,8 @@ public class ProductDetailController {
         textField_Name.setEditable(false);
         textField_Amount.setEditable(false);
         textArea_Description.setEditable(false);
+        textField_Discount.setEditable(false);
+        textField_Price.setEditable(false);
         comboBox_Type.setDisable(true);
         comboBox_Brand.setDisable(true);
         button_Export.setVisible(false);
@@ -242,7 +244,7 @@ public class ProductDetailController {
     @FXML
     void handleBrand(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/product/BrandDetail.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/product/BrandDetail.fxml"));
             Parent root = loader.load();
             BrandDetailController brandDetailController = loader.getController();
 
@@ -263,7 +265,7 @@ public class ProductDetailController {
     @FXML
     void handleType(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/product/TypeDetail.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/product/TypeDetail.fxml"));
             Parent root = loader.load();
             TypeDetailController typeDetailController = loader.getController();
             if (this.mode == 0) {
@@ -290,7 +292,7 @@ public class ProductDetailController {
         try {
             if (comboBox_Brand.getSelectionModel().getSelectedItem().equals("Thêm mới")){
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/products/BrandDetail.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/products/BrandDetail.fxml"));
                     Parent root = loader.load();
                     BrandDetailController brandDetailController = new BrandDetailController();
                     brandDetailController.initialize();
@@ -320,7 +322,7 @@ public class ProductDetailController {
         try {
             if (comboBox_Type.getSelectionModel().getSelectedItem().equals("Thêm mới")) {
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/UI/products/TypeDetail.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/products/TypeDetail.fxml"));
                     Parent root = loader.load();
                     TypeDetailController typeDetailController = loader.getController();
                     typeDetailController.initialize();

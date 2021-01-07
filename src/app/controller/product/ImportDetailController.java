@@ -7,16 +7,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.entity.Import;
 import model.entity.ImportDetail;
 import model.entity.Supplier;
@@ -29,6 +27,7 @@ import service.product.ProductsService;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +93,7 @@ public class ImportDetailController {
         button_FindProduct.setVisible(true);
 
         comboBox_Supplier.setDisable(false);
-
+        textField_TotalMoney.setText("0.0");
         initForm();
         updateSupplier();
     }
@@ -191,13 +190,68 @@ public class ImportDetailController {
     }
 
     @FXML
+    void selectSupplier(ActionEvent event){
+        try {
+            if (comboBox_Supplier.getSelectionModel().getSelectedItem().equals("Thêm mới")){
+//                try {
+//                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/products/BrandDetail.fxml"));
+//                    Parent root = loader.load();
+//                    BrandDetailController brandDetailController = new BrandDetailController();
+//                    brandDetailController.initialize();
+//
+//                    Stage stage = new Stage();
+//                    stage.setScene(new Scene(root));
+//                    stage.setTitle("Thông tin nhãn hàng");
+//                    stage.show();
+//                    stage.setOnCloseRequest(e -> {
+//                        updateBrand();
+//                        comboBox_Brand.setValue(null);
+//                    });
+//                } catch (IOException ioException){
+//                    ioException.printStackTrace();
+//                }
+            } else {
+                int supplierIndex = comboBox_Supplier.getSelectionModel().getSelectedIndex();
+                this.supplier = productsService.supplierRepo.findAll().get(supplierIndex);
+            }
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+    }
+
+    @FXML
+    void handleSupplier(MouseEvent event){
+
+    }
+
+    @FXML
     void export(ActionEvent event) {
 
     }
 
     @FXML
     void submit(ActionEvent event) {
-
+        if(importDetailFormObservableList.size() == 0){
+            commonController.resultNoti(false, "Chưa thêm sản phẩm");
+        } else if(datePicker_Date.getValue() == null || datePicker_Date.getValue().isAfter(LocalDate.now())){
+            commonController.resultNoti(false, "Ngày không hợp lệ");
+        } else {
+            anImport.setSupplierID(supplier.getId());
+            anImport.setImportDate(Date.valueOf(datePicker_Date.getValue()));
+            anImport.setTotalMoney(Double.parseDouble(textField_TotalMoney.getText()));
+            try{
+                productsService.addImport(anImport, importDetailFormObservableList);
+            } catch (SQLException sqlException){
+                sqlException.printStackTrace();
+                commonController.resultNoti(false);
+                return;
+            }
+            commonController.resultNoti(true, "Thêm thành công lô hàng");
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.fireEvent(
+                    new WindowEvent(((Node) event.getSource()).getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST)
+            );
+        }
     }
 
 }

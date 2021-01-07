@@ -5,8 +5,10 @@ import model.form.InvoiceDetailForm;
 import model.form.InvoiceForm;
 import repository.*;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class InvoicesService {
     public InvoiceRepo invoiceRepo;
@@ -60,10 +62,16 @@ public class InvoicesService {
         return importIDs;
     }
 
-    public void addInvoice(Invoice invoice, ArrayList<InvoiceDetail> invoiceDetails) throws SQLException {
+    public void addInvoice(Invoice invoice, List<InvoiceDetailForm> invoiceDetailForms) throws SQLException {
         DBConnector.connection.setAutoCommit(false);
-        for(InvoiceDetail invoiceDetail: invoiceDetails){
-
+        invoiceRepo.insert(invoice);
+        int invoiceID = invoiceRepo.getLastID();
+        for(InvoiceDetailForm invoiceDetailForm: invoiceDetailForms){
+            InvoiceDetail invoiceDetail = new InvoiceDetail(invoiceID, invoiceDetailForm);
+            invoiceDetailRepo.insert(invoiceDetail);
+            productRepo.reduce(invoiceDetail.getProductID(), invoiceDetail.getAmount());
         }
+        DBConnector.connection.commit();
+        DBConnector.connection.setAutoCommit(true);
     }
 }

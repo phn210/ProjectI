@@ -17,7 +17,7 @@ public class ImportRepo extends BaseRepo<Import>{
     public Import getObject(ResultSet rs) throws SQLException {
         Import imprt = new Import();
         imprt.setId(rs.getInt("id"));
-        imprt.setSupplierID(rs.getInt("supplier"));
+        imprt.setSupplierID(rs.getInt("supplier_id"));
         imprt.setImportDate(rs.getDate("import_date"));
         imprt.setTotalMoney(rs.getDouble("total_money"));
         return imprt;
@@ -62,7 +62,7 @@ public class ImportRepo extends BaseRepo<Import>{
         PreparedStatement preparedStatement = prepare(getID);
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.first();
-        return resultSet.getInt(0);
+        return resultSet.getInt(1);
     }
 
     public List<Import> getAllImport() throws SQLException {
@@ -94,8 +94,8 @@ public class ImportRepo extends BaseRepo<Import>{
         if(!(importDate == null))
             query = query + " and import_date = " + "'%" + importDate + "%'";
 
-        Statement stmt = prepare(query);
-        ResultSet rs = stmt.executeQuery(query);
+        PreparedStatement preparedStatement = prepare(query);
+        ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }
 }

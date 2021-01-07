@@ -271,6 +271,8 @@ public class ProductsController implements Initializable {
             stage.setScene(new Scene(root));
             stage.setTitle("Thông tin sản phẩm");
             stage.show();
+            stage.setOnCloseRequest(e -> updateTabProduct());
+
         } else if (viewMode == 1){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/product/ImportDetail.fxml"));
             Parent root = loader.load();
@@ -280,6 +282,7 @@ public class ProductsController implements Initializable {
             stage.setScene(new Scene(root));
             stage.setTitle("Thông tin đơn nhập");
             stage.show();
+            stage.setOnCloseRequest(e -> updateTabImport());
         }
     }
 

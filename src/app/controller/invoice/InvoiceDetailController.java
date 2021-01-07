@@ -7,11 +7,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.entity.*;
 import model.form.InvoiceDetailForm;
 import model.form.InvoiceForm;
@@ -19,7 +21,9 @@ import service.invoice.InvoicesService;
 
 import javax.imageio.IIOException;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +87,16 @@ public class InvoiceDetailController {
     private ComboBox<String> comboBox_PayMethod;
 
     @FXML
+    private TextArea textArea_Note;
+
+    @FXML
     private TextField textField_InvoiceID;
+
+    @FXML
+    private Button button_FindProduct;
+
+    @FXML
+    private Button button_Submit;
 
     private ObservableList<InvoiceDetailForm> invoiceDetailFormObservableList;
 
@@ -107,7 +120,10 @@ public class InvoiceDetailController {
 
     public void initialize(){
         button_FindCustomer.setVisible(true);
+        comboBox_PayMethod.setDisable(false);
+        textFiled_SoldDate.setText(String.valueOf(LocalDate.now()));
         initForm();
+        initEmployee();
     }
 
     public void initialize(InvoiceForm invoiceForm){
@@ -119,19 +135,27 @@ public class InvoiceDetailController {
         } catch (SQLException sqlException){
             sqlException.printStackTrace();
         }
+
+        textField_InvoiceID.setText(String.valueOf(invoiceForm.getId()));
+        textFiled_SoldDate.setText(String.valueOf(invoiceForm.getDate()));
+        textField_Surcharge.setText(String.valueOf(invoiceForm.getSurcharge()));
+        textField_PayMethod.setText(invoiceForm.getPaymentMethod());
+        comboBox_PayMethod.setValue(invoiceForm.getPaymentMethod());
+        comboBox_PayMethod.setDisable(true);
+        textArea_Note.setText(invoiceForm.getNote());
+
         button_FindCustomer.setVisible(false);
+        button_FindProduct.setVisible(false);
+        button_Submit.setVisible(false);
+
         initForm();
+        initEmployee();
         updateTable();
         updateCustomer();
         updateCost();
     }
 
     public void initForm(){
-        try {
-            textField_Employee.setText(invoicesService.employeeRepo.findById(this.account.getEmployeeID()).getName());
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
         comboBox_PayMethod.setItems(FXCollections.observableArrayList("Tiền mặt", "Thẻ tín dụng", "Ví điện tử", "Chuyển khoản"));
 
         col_ImportID.setCellValueFactory(new PropertyValueFactory<>("importID"));
@@ -142,6 +166,16 @@ public class InvoiceDetailController {
         col_TotalMoney.setCellValueFactory(new PropertyValueFactory<>("totalMoney"));
 
         invoiceDetailFormObservableList = FXCollections.observableList(new ArrayList<>());
+    }
+
+    private void initEmployee(){
+        try {
+            Employee employee = invoicesService.employeeRepo.findById(this.account.getEmployeeID());
+            textField_Employee.setText(employee.getName());
+            textField_Branch.setText(invoicesService.branchRepo.findById(employee.getBranchID()).getName());
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
     }
 
     public void updateTable(){
@@ -229,7 +263,33 @@ public class InvoiceDetailController {
 
     @FXML
     void submit(ActionEvent event) {
-
+        if (invoiceDetailFormObservableList.size() == 0){
+            commonController.resultNoti(false, "Chưa chọn sản phẩm");
+        } else if(customer == null || comboBox_PayMethod.getValue().isEmpty()){
+            commonController.resultNoti(false, "Hóa đơn không hợp lệ");
+        } else {
+            invoice.setDate(Date.valueOf(LocalDate.now()));
+            invoice.setCustomerID(customer.getId());
+            invoice.setEmployeeID(account.getEmployeeID());
+            invoice.setPaymentMethod(comboBox_PayMethod.getValue());
+            invoice.setTotalMoney(Double.valueOf(textField_TotalMoney.getText()));
+            invoice.setTax(Double.valueOf(textField_Tax.getText()));
+            if(textField_Surcharge.getText().isEmpty()) invoice.setSurcharge(0.0);
+            else invoice.setSurcharge(Double.valueOf(textField_Surcharge.getText()));
+            invoice.setNote(textArea_Note.getText());
+            try {
+                invoicesService.addInvoice(invoice, invoiceDetailFormObservableList);
+            } catch (SQLException sqlException){
+                sqlException.printStackTrace();
+                commonController.resultNoti(false);
+                return;
+            }
+            commonController.resultNoti(true, "Thêm thành công hóa đơn");
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.fireEvent(
+                    new WindowEvent(((Node) event.getSource()).getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST)
+            );
+        }
     }
 
 }
