@@ -43,8 +43,6 @@ public class HomeController implements Initializable {
     @FXML
     private Button invoiceButton;
 
-    @FXML
-    private Button revenueButton;
 
     private CommonController commonController;
     @Override
@@ -59,6 +57,12 @@ public class HomeController implements Initializable {
             if(role == 2){
                 dutyRosterButton.setVisible(false);
                 employeeButton.setVisible(false);
+            }else if(role == 3){
+                dutyRosterButton.setVisible(false);
+                employeeButton.setVisible(false);
+                productButton.setVisible(false);
+                customerButton.setVisible(false);
+                invoiceButton.setVisible(false);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
