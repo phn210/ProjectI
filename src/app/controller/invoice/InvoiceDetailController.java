@@ -18,7 +18,10 @@ import model.entity.*;
 import model.form.InvoiceDetailForm;
 import model.form.InvoiceForm;
 import service.invoice.InvoicesService;
-
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -232,18 +235,25 @@ public class InvoiceDetailController {
             stage.show();
             stage.setOnCloseRequest(e -> {
                 try {
-                    for(InvoiceDetailForm invoiceDetailForm: invoiceDetailFormObservableList){
-                        if (invoiceDetailForm.getProductID() == newInvoiceDetailForm.getProductID() && invoiceDetailForm.getImportID() == newInvoiceDetailForm.getImportID()) {
-                            invoiceDetailForm.setAmount(invoiceDetailForm.getAmount()+newInvoiceDetailForm.getAmount());
-                        } else this.invoiceDetailFormObservableList.add(newInvoiceDetailForm);
+                    boolean existed = false;
+                    if (invoiceDetailFormObservableList.size() > 0) {
+                        for (InvoiceDetailForm invoiceDetailForm : invoiceDetailFormObservableList) {
+                            if (invoiceDetailForm.getProductID() == newInvoiceDetailForm.getProductID() && invoiceDetailForm.getImportID() == newInvoiceDetailForm.getImportID()) {
+                                invoiceDetailForm.setAmount(invoiceDetailForm.getAmount() + newInvoiceDetailForm.getAmount());
+                                existed = true;
+                                break;
+                            }
+                        }
                     }
+                    if(!existed) this.invoiceDetailFormObservableList.add(newInvoiceDetailForm);
+
+                    table_InvoiceDetail.setItems(invoiceDetailFormObservableList);
+                    table_InvoiceDetail.refresh();
+                    updateCost();
                 } catch (NullPointerException nullPointerException){
                     System.out.println("Chưa thêm sản phẩm nào");
-                    return;
                 }
-                table_InvoiceDetail.setItems(invoiceDetailFormObservableList);
-                table_InvoiceDetail.refresh();
-                updateCost();
+
             });
 
         } catch (IOException ioException){
@@ -261,7 +271,6 @@ public class InvoiceDetailController {
         } else {
             //creating invoice mode
 
-            
         }
     }
 
@@ -313,5 +322,48 @@ public class InvoiceDetailController {
             );
         }
     }
+    public void wirteToExcel(){
+        XSSFWorkbook wb= new XSSFWorkbook();
+        String[] title={"ID", "Ngày xuất", "Tên khách hàng", "Tên nhân viên", "Phương thức thanh toán", "Thành tiền"};
+        XSSFSheet sheet= wb.createSheet();
+        int rowIndex=0;
+        writeHeader(title, sheet, rowIndex);
+        writeBody(rowIndex, sheet);
 
+        for(int columnIndex=0; columnIndex<=10; columnIndex++) {
+            sheet.autoSizeColumn(columnIndex);
+        }
+        try{
+            FileOutputStream fos= new FileOutputStream(new File("C:/Users/Vostro 3580/Desktop/invoice.xlsx"));
+            wb.write(fos);
+            fos.close();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void writeHeader(String[] strings, XSSFSheet sheet, int rowIndex){
+        Row row= sheet.createRow(rowIndex);
+        for(int i=0; i<strings.length;i++){
+            Cell cell = row.createCell(i);
+            cell.setCellValue(strings[i]);
+        }
+    }
+
+    public void writeBody(int rowIndex, XSSFSheet sheet){
+        int id_row=rowIndex;
+        for(InvoiceForm invoiceForm : invoiceFormObservableList){
+            id_row++;
+            int id_cell = 0;
+            Row row= sheet.createRow(id_row);
+            for(Object o: getObjects(invoiceForm)){
+                Cell cell= row.createCell(id_cell++);
+                cell.setCellValue(o.toString());
+            }
+        }
+    }
+    public Object[] getObjects(InvoiceForm invoiceForm){
+        return new Object[]{invoiceForm.getId(),invoiceForm.getDate(),invoiceForm.getCustomerName(),invoiceForm.getEmployee(),invoiceForm.getPaymentMethod(),invoiceForm.getTotalMoney()};
+    }
 }
