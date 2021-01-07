@@ -52,8 +52,14 @@ public class HomeController implements Initializable {
         commonController = new CommonController();
         homeService = new HomeService();
         mainPane.setBottom(userDetailPane);
+
         try {
             employeeDetailForm = homeService.getEmployeeDetail(account);
+            int role = employeeDetailForm.getRole();
+            if(role == 2){
+                dutyRosterButton.setVisible(false);
+                employeeButton.setVisible(false);
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

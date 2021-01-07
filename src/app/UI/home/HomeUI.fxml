@@ -20,7 +20,6 @@
                                 <Button fx:id="employeeButton" mnemonicParsing="false" onAction="#toEmployeeTab" stylesheets="@../../static/css/main.css" text="Nhân viên" wrapText="true" />
                                 <Button fx:id="dutyRosterButton" mnemonicParsing="false" onAction="#toDutyTab" stylesheets="@../../static/css/main.css" text="Ca làm việc" wrapText="true" />
                                 <Button fx:id="invoiceButton" mnemonicParsing="false" onAction="#toInvoiceTab" stylesheets="@../../static/css/main.css" text="Lịch sử đơn hàng" />
-                                <Button fx:id="revenueButton" mnemonicParsing="false" onAction="#toRevenueTab" stylesheets="@../../static/css/main.css" text="Doanh thu" />
                             </children>
                         </HBox>
                     </center>

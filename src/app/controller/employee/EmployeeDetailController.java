@@ -1,6 +1,7 @@
 package app.controller.employee;
 
 import app.controller.CommonController;
+import app.controller.home.HomeController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -106,6 +107,9 @@ public class EmployeeDetailController implements Initializable {
         int role = employeeDetailForm.getRole();
         if (role == 1) {
             roleName = "Quản lí";
+            if(employeeDetailForm.getEmployeeId() == HomeController.account.getEmployeeID()){
+                roleComboBox.setDisable(true);
+            }
         } else if (role == 2) {
             roleName = "Nhân viên bán hàng";
         } else {
