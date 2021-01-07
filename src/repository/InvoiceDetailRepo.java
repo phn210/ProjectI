@@ -1,5 +1,6 @@
 package repository;
 
+import model.entity.Invoice;
 import model.entity.InvoiceDetail;
 
 import java.sql.PreparedStatement;
@@ -24,8 +25,16 @@ public class InvoiceDetailRepo extends BaseRepo<InvoiceDetail>{
 
     @Override
     public ArrayList<InvoiceDetail> findAll() throws SQLException {
-        String query = "select * from InvoiceDetail";
+        String query = "select * from Invoice_Detail";
         PreparedStatement preparedStatement = prepare(query);
+        ResultSet rs = preparedStatement.executeQuery();
+        return getList(rs);
+    }
+
+    public ArrayList<InvoiceDetail> findByInvoice(int invoiceID) throws SQLException{
+        String query = "select * from Invoice_Detail where invoice_id = ?";
+        PreparedStatement preparedStatement = prepare(query);
+        preparedStatement.setInt(1, invoiceID);
         ResultSet rs = preparedStatement.executeQuery();
         return getList(rs);
     }

@@ -2,12 +2,14 @@ package app.controller;
 
 import app.controller.home.HomeController;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.entity.Account;
@@ -61,7 +63,10 @@ public class CommonController {
 
     public void switchScene(Scene scene){
         try{
+            Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
             primaryStage.setScene(scene);
+            primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
+            primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
         }catch(Exception ex){
             ex.printStackTrace();
         }

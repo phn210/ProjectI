@@ -96,7 +96,7 @@
          <left>
             <Pane prefWidth="1140.0" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
                <children>
-                  <TableView fx:id="table_Invoice" onMouseClicked="#checkDetail" prefHeight="644.0" prefWidth="1146.0" stylesheets="@../../static/css/main.css">
+                  <TableView fx:id="table_Invoice" onMouseClicked="#handleInvoice" prefHeight="644.0" prefWidth="1146.0" stylesheets="@../../static/css/main.css">
                      <columns>
                         <TableColumn fx:id="col_ID" prefWidth="51.19998240470886" text="ID" />
                         <TableColumn fx:id="col_SoldDate" prefWidth="174.93335723876953" text="Ngày xuất" />

@@ -19,7 +19,6 @@ import model.form.InvoiceDetailForm;
 import model.form.InvoiceForm;
 import service.invoice.InvoicesService;
 
-import javax.imageio.IIOException;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -119,9 +118,16 @@ public class InvoiceDetailController {
     }
 
     public void initialize(){
-        button_FindCustomer.setVisible(true);
-        comboBox_PayMethod.setDisable(false);
         textFiled_SoldDate.setText(String.valueOf(LocalDate.now()));
+        initForm();
+        initEmployee();
+    }
+
+    public void initializeQuotation(){
+        textFiled_SoldDate.setText(String.valueOf(LocalDate.now()));
+        textField_InvoiceID.setDisable(true);
+        button_FindCustomer.setVisible(false);
+        button_Submit.setDisable(true);
         initForm();
         initEmployee();
     }
@@ -134,6 +140,8 @@ public class InvoiceDetailController {
             this.customer = invoicesService.customerRepo.findByID(invoice.getCustomerID());
         } catch (SQLException sqlException){
             sqlException.printStackTrace();
+        } catch (NullPointerException nullPointerException){
+            nullPointerException.printStackTrace();
         }
 
         textField_InvoiceID.setText(String.valueOf(invoiceForm.getId()));
@@ -141,9 +149,11 @@ public class InvoiceDetailController {
         textField_Surcharge.setText(String.valueOf(invoiceForm.getSurcharge()));
         textField_PayMethod.setText(invoiceForm.getPaymentMethod());
         comboBox_PayMethod.setValue(invoiceForm.getPaymentMethod());
-        comboBox_PayMethod.setDisable(true);
         textArea_Note.setText(invoiceForm.getNote());
 
+        comboBox_PayMethod.setDisable(true);
+        textArea_Note.setEditable(false);
+        textField_Surcharge.setEditable(false);
         button_FindCustomer.setVisible(false);
         button_FindProduct.setVisible(false);
         button_Submit.setVisible(false);
@@ -180,7 +190,7 @@ public class InvoiceDetailController {
 
     public void updateTable(){
         try {
-            ArrayList<InvoiceDetailForm> list = invoicesService.getAllInvoiceDetailForm();
+            ArrayList<InvoiceDetailForm> list = invoicesService.getAllInvoiceDetailForm(this.invoice);
             invoiceDetailFormObservableList = FXCollections.observableList(list);
             table_InvoiceDetail.setItems(invoiceDetailFormObservableList);
         } catch (SQLException sqlException){
@@ -222,7 +232,11 @@ public class InvoiceDetailController {
             stage.show();
             stage.setOnCloseRequest(e -> {
                 try {
-                    this.invoiceDetailFormObservableList.add(newInvoiceDetailForm);
+                    for(InvoiceDetailForm invoiceDetailForm: invoiceDetailFormObservableList){
+                        if (invoiceDetailForm.getProductID() == newInvoiceDetailForm.getProductID() && invoiceDetailForm.getImportID() == newInvoiceDetailForm.getImportID()) {
+                            invoiceDetailForm.setAmount(invoiceDetailForm.getAmount()+newInvoiceDetailForm.getAmount());
+                        } else this.invoiceDetailFormObservableList.add(newInvoiceDetailForm);
+                    }
                 } catch (NullPointerException nullPointerException){
                     System.out.println("Chưa thêm sản phẩm nào");
                     return;
@@ -240,7 +254,15 @@ public class InvoiceDetailController {
 
     @FXML
     void export(ActionEvent event) {
+        if(button_Submit.isDisable()){
+            //quotation mode
 
+
+        } else {
+            //creating invoice mode
+
+            
+        }
     }
 
     @FXML

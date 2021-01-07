@@ -42,8 +42,8 @@ public class InvoicesService {
         return invoiceForms;
     }
 
-    public ArrayList<InvoiceDetailForm> getAllInvoiceDetailForm() throws SQLException {
-        ArrayList<InvoiceDetail> invoiceDetails = invoiceDetailRepo.findAll();
+    public ArrayList<InvoiceDetailForm> getAllInvoiceDetailForm(Invoice invoice) throws SQLException {
+        ArrayList<InvoiceDetail> invoiceDetails = invoiceDetailRepo.findByInvoice(invoice.getId());
         ArrayList<InvoiceDetailForm> invoiceDetailForms = new ArrayList<>();
         for(InvoiceDetail invoiceDetail: invoiceDetails){
             Product product = productRepo.findByID(invoiceDetail.getProductID());

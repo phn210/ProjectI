@@ -34,7 +34,7 @@ public class InvoiceRepo extends BaseRepo<Invoice>{
 
     public Invoice findByID(int id) throws SQLException {
         String query = "select * from Invoice " +
-                "where id = " + id;
+                "where id = ?";
         PreparedStatement preparedStatement = prepare(query);
         preparedStatement.setInt(1, id);
         ResultSet rs = preparedStatement.executeQuery();

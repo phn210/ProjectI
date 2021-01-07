@@ -1,5 +1,6 @@
 package app.controller.invoice;
 
+import app.controller.CommonController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -69,10 +70,15 @@ public class InvoicesController implements Initializable {
     private ObservableList<InvoiceForm> invoiceFormObservableList;
 
     private InvoicesService invoicesService;
+    private CommonController commonController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.invoicesService = new InvoicesService();
+        this.commonController = new CommonController();
+
+        initTable();
+        updateTable();
     }
 
     public void initTable(){
@@ -97,8 +103,28 @@ public class InvoicesController implements Initializable {
     }
 
     @FXML
-    void checkDetail(MouseEvent event) {
+    void handleInvoice(MouseEvent event) {
+        if(event.getClickCount() == 2){
+            if(table_Invoice.getSelectionModel().getSelectedItem() == null)
+                commonController.resultNoti(false, "Chọn hóa đơn!");
+            else {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/invoice/InvoiceDetail.fxml"));
+                    Parent root = loader.load();
+                    InvoiceDetailController invoiceDetailController = loader.getController();
+                    invoiceDetailController.initialize(table_Invoice.getSelectionModel().getSelectedItem());
 
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("Thông tin hóa đơn");
+                    stage.show();
+
+                }catch (IOException ioException){
+                    ioException.printStackTrace();
+                    commonController.resultNoti(false, "Lỗi giao diện!");
+                }
+            }
+        }
     }
 
     @FXML
@@ -142,7 +168,24 @@ public class InvoicesController implements Initializable {
 
     @FXML
     void quotation(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/invoice/InvoiceDetail.fxml"));
+            Parent root = loader.load();
+            InvoiceDetailController invoiceDetailController = loader.getController();
+            invoiceDetailController.initializeQuotation();
 
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Tạo báo giá");
+            stage.show();
+            Stage bigStage = (Stage)(table_Invoice.getParent().getScene().getWindow());
+            bigStage.setOnCloseRequest(event1 -> {
+                stage.close();
+            });
+
+        } catch (IOException ioException){
+            ioException.printStackTrace();
+        }
     }
 
     @FXML
