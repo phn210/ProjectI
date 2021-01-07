@@ -19,6 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.form.InvoiceForm;
+import service.excel.ExcelService;
 import service.invoice.InvoicesService;
 
 import javax.imageio.IIOException;
@@ -27,6 +28,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class InvoicesController implements Initializable {
@@ -36,7 +38,7 @@ public class InvoicesController implements Initializable {
 
     @FXML
     private TableColumn<InvoiceForm, Integer> col_ID;
-
+    ExcelService<InvoiceForm> excelService;
     @FXML
     private TableColumn<InvoiceForm, Date> col_SoldDate;
 
@@ -71,12 +73,13 @@ public class InvoicesController implements Initializable {
 
     private InvoicesService invoicesService;
     private CommonController commonController;
-
+    String[] titles;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.invoicesService = new InvoicesService();
         this.commonController = new CommonController();
-
+        excelService= new ExcelService<>();
+        titles= new String[]{"ID","Ngày xuất","Tên khách hàng","Tên nhân viên","Phương thức TT", "Thành tiền"};
         initTable();
         updateTable();
     }
@@ -129,7 +132,11 @@ public class InvoicesController implements Initializable {
 
     @FXML
     void export(ActionEvent event) {
-
+        String filePath = commonController.chooseDirectory();
+        Calendar calendar = Calendar.getInstance();
+        String fileName = "Invoice_"+ calendar.getTimeInMillis()+".xlsx";
+        filePath += "\\"+fileName;
+        excelService.writeToExcel(titles, filePath, invoiceFormObservableList);
     }
 
     @FXML
