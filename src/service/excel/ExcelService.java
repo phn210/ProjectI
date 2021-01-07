@@ -25,7 +25,7 @@ public class ExcelService<T> {
             sheet.autoSizeColumn(columnIndex);
         }
         try{
-            FileOutputStream fos= new FileOutputStream(new File("C:/Users/Vostro 3580/Desktop/customer.xlsx"));
+            FileOutputStream fos= new FileOutputStream(new File(filePath));
             wb.write(fos);
             fos.close();
         }catch(Exception ex){
