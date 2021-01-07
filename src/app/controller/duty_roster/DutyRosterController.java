@@ -327,4 +327,52 @@ public class DutyRosterController implements Initializable {
             }
         }
     }
+        public void wirteToExcel(){
+        XSSFWorkbook wb= new XSSFWorkbook();
+        String[] title={"Họ và tên", "Ngày làm việc", "Số giờ làm", "Ghi chú"};
+        XSSFSheet sheet= wb.createSheet();
+        int rowIndex=0;
+        writeHeader(title, sheet, rowIndex);
+        writeBody(rowIndex, sheet);
+
+        for(int columnIndex=0; columnIndex<=10; columnIndex++) {
+            sheet.autoSizeColumn(columnIndex);
+        }
+        try{
+            FileOutputStream fos= new FileOutputStream(new File("C:/Users/Vostro 3580/Desktop/DutyRoster.xlsx"));
+            wb.write(fos);
+            fos.close();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void writeHeader(String[] strings, XSSFSheet sheet, int rowIndex){
+        Row row= sheet.createRow(rowIndex);
+        for(int i=0; i<strings.length;i++){
+            org.apache.poi.ss.usermodel.Cell cell = row.createCell(i);
+            cell.setCellValue(strings[i]);
+        }
+    }
+
+    public void writeBody(int rowIndex, XSSFSheet sheet){
+        int id_row=rowIndex;
+        for(DutyRosterDetailForm dutyRosterDetailForm : dutyRosterDetailFormObservableList){
+            id_row++;
+            int id_cell = 0;
+            Row row= sheet.createRow(id_row);
+            for(Object o: getObjects(dutyRosterDetailForm)){
+                Cell cell= row.createCell(id_cell++);
+                cell.setCellValue(o.toString());
+            }
+        }
+    }
+    public Object[] getObjects(DutyRosterDetailForm dutyRosterDetailForm){
+        return new Object[]{dutyRosterDetailForm.getName(),dutyRosterDetailForm.getDate(),dutyRosterDetailForm.getTotalHours(),dutyRosterDetailForm.getNote()};
+    }
+
+    public void exportFile(){
+        wirteToExcel();
+    }
 }
