@@ -19,13 +19,20 @@ import model.entity.Import;
 import model.entity.Product;
 import model.form.ImportForm;
 import model.form.ProductForm;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import service.excel.ExcelService;
 import service.product.ProductsService;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -42,7 +49,8 @@ public class ProductsController implements Initializable {
 
     @FXML
     private TableColumn<ProductForm, Integer> col_ID;
-
+    ExcelService<ProductForm> excelServiceProduct;
+    ExcelService<ImportForm> excelServiceImport;
     @FXML
     private TableColumn<ProductForm, String> col_Name;
 
@@ -127,7 +135,8 @@ public class ProductsController implements Initializable {
     private ProductsService productsService;
 
     private CommonController commonController;
-
+    String[] titlesProduct;
+    String[] titlesImport;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.account = HomeController.account;
@@ -135,7 +144,10 @@ public class ProductsController implements Initializable {
         this.productsService = new ProductsService();
         this.viewMode = 0;
         this.accountMode = account.getEmployeeID();
-
+        excelServiceProduct = new ExcelService<>();
+        excelServiceImport = new ExcelService<>();
+        titlesProduct= new String[]{"ID", "Tên sản phẩm", "Loại", "Hãng", "Số lượng", "Mô tả", "Giá bán lẻ", "Khuyến mãi"};
+        titlesImport= new String[]{"ID đơn nhập", "Nhà cung cấp", "Ngày nhập", "Thành tiền"};
         initTable();
 
         this.updateTabProduct();
@@ -238,10 +250,18 @@ public class ProductsController implements Initializable {
 
     @FXML
     void export(ActionEvent event) {
-        if (viewMode == 0){
-
-        } else if (viewMode == 1){
-
+        if (viewMode == 0) {
+            String filePath = commonController.chooseDirectory();
+            Calendar calendar = Calendar.getInstance();
+            String fileName = "Product_" + calendar.getTimeInMillis() + ".xlsx";
+            filePath += "\\" + fileName;
+            excelServiceProduct.writeToExcel(titlesProduct, filePath, productObservableList);
+        } else if (viewMode == 1) {
+            String filePath = commonController.chooseDirectory();
+            Calendar calendar = Calendar.getInstance();
+            String fileName = "Import_"+ calendar.getTimeInMillis()+".xlsx";
+            filePath += "\\"+fileName;
+            excelServiceImport.writeToExcel(titlesImport, filePath, importObservableList);
         }
     }
 
@@ -355,86 +375,4 @@ public class ProductsController implements Initializable {
         }
     }
 
-    
-    public void wirteToExcelProduct(){
-        XSSFWorkbook wb= new XSSFWorkbook();
-        String[] title={"ID", "Tên sản phẩm", "Loại", "Hãng", "Số lượng", "Mô tả", "Giá bán lẻ", "Khuyến mãi"};
-        XSSFSheet sheet= wb.createSheet();
-        int rowIndex=0;
-        writeHeader(title, sheet, rowIndex);
-        writeBodyProduct(rowIndex, sheet);
-
-        for(int columnIndex=0; columnIndex<=10; columnIndex++) {
-            sheet.autoSizeColumn(columnIndex);
-        }
-        try{
-            FileOutputStream fos= new FileOutputStream(new File("C:/Users/Vostro 3580/Desktop/product.xlsx"));
-            wb.write(fos);
-            fos.close();
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-
-    }
-    public void wirteToExcelImport(){
-        XSSFWorkbook wb= new XSSFWorkbook();
-        String[] title={"ID đơn nhập", "Ngày cung cấp", "Ngày nhập", "Thành tiền"};
-        XSSFSheet sheet= wb.createSheet();
-        int rowIndex=0;
-        writeHeader(title, sheet, rowIndex);
-        writeBodyImport(rowIndex, sheet);
-
-        for(int columnIndex=0; columnIndex<=10; columnIndex++) {
-            sheet.autoSizeColumn(columnIndex);
-        }
-        try{
-            FileOutputStream fos= new FileOutputStream(new File("C:/Users/Vostro 3580/Desktop/import.xlsx"));
-            wb.write(fos);
-            fos.close();
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-
-    }
-
-    public void writeHeader(String[] strings, XSSFSheet sheet, int rowIndex){
-        Row row= sheet.createRow(rowIndex);
-        for(int i=0; i<strings.length;i++){
-            org.apache.poi.ss.usermodel.Cell cell = row.createCell(i);
-            cell.setCellValue(strings[i]);
-        }
-    }
-
-    public void writeBodyProduct(int rowIndex, XSSFSheet sheet){
-        int id_row=rowIndex;
-        for(ProductForm productForm : productObservableList){
-            id_row++;
-            int id_cell = 0;
-            Row row= sheet.createRow(id_row);
-            for(Object o: getObjectsProduct(productForm)){
-                Cell cell= row.createCell(id_cell++);
-                cell.setCellValue(o.toString());
-            }
-        }
-    }
-    public Object[] getObjectsProduct(ProductForm productForm){
-        return new Object[]{productForm.getId(), productForm.getName(),productForm.getType(),productForm.getBrand(),productForm.getAmount(),productForm.getDescription(),productForm.getRetailPrice(),productForm.getDiscount()};
-    }
-
-
-    public void writeBodyImport(int rowIndex, XSSFSheet sheet){
-        int id_row=rowIndex;
-        for(ImportForm importForm : importObservableList){
-            id_row++;
-            int id_cell = 0;
-            Row row= sheet.createRow(id_row);
-            for(Object o: getObjectsImport(importForm)){
-                Cell cell= row.createCell(id_cell++);
-                cell.setCellValue(o.toString());
-            }
-        }
-    }
-    public Object[] getObjectsImport(ImportForm importForm){
-        return new Object[]{importForm.getId(),importForm.getSupplier(),importForm.getImportDate(),importForm.getTotalMoney()};
-    }
 }
