@@ -96,4 +96,7 @@ public class ProductForm {
         this.amount = amount;
     }
 
+    public Object[] getFields() {
+        return new Object[]{getId(),getName(),getType(),getBrand(),getAmount(),getDescription(),getRetailPrice(),getDiscount()};
+    }
 }
