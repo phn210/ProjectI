@@ -9,11 +9,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.entity.Account;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -129,5 +131,15 @@ public class CommonController {
 
     public StringConverter<LocalDate> getConverter() {
         return converter;
+    }
+
+    public String chooseDirectory(){
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File dir = directoryChooser.showDialog(primaryStage);
+        if(dir!= null){
+            return dir.getAbsolutePath();
+        }else{
+            return null;
+        }
     }
 }
