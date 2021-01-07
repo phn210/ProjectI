@@ -28,10 +28,10 @@
                   <RowConstraints maxHeight="210.79990234375003" minHeight="10.0" prefHeight="64.99991455078123" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="63.0" prefWidth="256.0" spacing="30.0" GridPane.rowIndex="1">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="63.0" prefWidth="256.0" spacing="15.0" GridPane.rowIndex="1">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#select" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Chọn" />
-                        <Button mnemonicParsing="false" onAction="#search" prefHeight="39.0" prefWidth="98.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Tìm kiếm" />
+                        <Button mnemonicParsing="false" onAction="#select" prefHeight="34.0" prefWidth="90.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Chọn" />
+                        <Button mnemonicParsing="false" onAction="#search" prefHeight="32.0" prefWidth="90.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Tìm kiếm" />
                      </children>
                      <padding>
                         <Insets right="20.0" />
@@ -53,37 +53,37 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label prefHeight="26.0" prefWidth="207.0" text="ID:">
+                        <Label prefHeight="26.0" prefWidth="207.0" stylesheets="@../../static/css/main.css" text="ID:">
                            <padding>
                               <Insets left="25.0" />
                            </padding>
                         </Label>
-                        <Label prefHeight="26.0" prefWidth="207.0" text="Tên SP:" GridPane.rowIndex="1">
+                        <Label prefHeight="26.0" prefWidth="207.0" stylesheets="@../../static/css/main.css" text="Tên SP:" GridPane.rowIndex="1">
                            <padding>
                               <Insets left="25.0" />
                            </padding>
                         </Label>
-                        <Label prefHeight="26.0" prefWidth="207.0" text="Loại" GridPane.rowIndex="2">
+                        <Label prefHeight="26.0" prefWidth="207.0" stylesheets="@../../static/css/main.css" text="Loại" GridPane.rowIndex="2">
                            <padding>
                               <Insets left="25.0" />
                            </padding>
                         </Label>
-                        <Label prefHeight="26.0" prefWidth="116.0" text="Tên hãng:" GridPane.rowIndex="3">
+                        <Label prefHeight="26.0" prefWidth="116.0" stylesheets="@../../static/css/main.css" text="Tên hãng:" GridPane.rowIndex="3">
                            <padding>
                               <Insets left="25.0" />
                            </padding>
                         </Label>
-                        <Label prefHeight="26.0" prefWidth="207.0" text="KM:" GridPane.rowIndex="4">
+                        <Label prefHeight="26.0" prefWidth="207.0" stylesheets="@../../static/css/main.css" text="KM:" GridPane.rowIndex="4">
                            <padding>
                               <Insets left="25.0" />
                            </padding>
                         </Label>
                         <Label alignment="CENTER" prefHeight="26.0" prefWidth="207.0" GridPane.rowIndex="6" />
-                        <TextField fx:id="textField_Name" prefHeight="26.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="textField_Brand" prefHeight="26.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="comboBox_Type" editable="true" prefHeight="26.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <CheckBox fx:id="checkBox_Discount" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField fx:id="textField_ProductID" prefHeight="26.0" prefWidth="130.0" GridPane.columnIndex="1" />
+                        <TextField fx:id="textField_Name" prefHeight="26.0" prefWidth="130.0" stylesheets="@../../static/css/main.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="textField_Brand" prefHeight="26.0" prefWidth="130.0" stylesheets="@../../static/css/main.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="comboBox_Type" editable="true" prefHeight="26.0" prefWidth="130.0" stylesheets="@../../static/css/main.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <CheckBox fx:id="checkBox_Discount" mnemonicParsing="false" stylesheets="@../../static/css/main.css" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="textField_ProductID" prefHeight="26.0" prefWidth="130.0" stylesheets="@../../static/css/main.css" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                </children>

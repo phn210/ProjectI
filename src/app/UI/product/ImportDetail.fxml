@@ -19,7 +19,7 @@
    <children>
       <BorderPane prefHeight="700.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <Label alignment="CENTER" prefHeight="87.0" prefWidth="470.0" text="Chi tiết đơn nhập" textAlignment="CENTER" BorderPane.alignment="CENTER" />
+            <Label alignment="CENTER" prefHeight="87.0" prefWidth="470.0" stylesheets="@../../static/css/main.css" text="Chi tiết đơn nhập" textAlignment="CENTER" BorderPane.alignment="CENTER" />
          </top>
          <center>
             <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -45,8 +45,8 @@
                            <children>
                               <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="209.0" spacing="10.0" GridPane.columnIndex="3">
                                  <children>
-                                    <Label text="Total money" wrapText="true" />
-                                    <TextField fx:id="textField_TotalMoney" editable="false" />
+                                    <Label styleClass="small-label" stylesheets="@../../static/css/main.css" text="Total money" wrapText="true" />
+                                    <TextField fx:id="textField_TotalMoney" editable="false" stylesheets="@../../static/css/main.css" />
                                  </children>
                                  <padding>
                                     <Insets right="15.0" />
@@ -54,15 +54,15 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="276.0" spacing="10.0" GridPane.columnIndex="1">
                                  <children>
-                                    <Label prefHeight="66.0" prefWidth="45.0" text="Supplier" wrapText="true" />
-                                    <ComboBox fx:id="comboBox_Supplier" onAction="#selectSupplier" prefHeight="26.0" prefWidth="105.0" />
-                                    <TextField fx:id="textField_Supplier" editable="false" onMouseClicked="#handleSupplier" prefHeight="26.0" prefWidth="107.0" />
+                                    <Label prefHeight="66.0" prefWidth="45.0" styleClass="small-label" stylesheets="@../../static/css/main.css" text="Supplier" wrapText="true" />
+                                    <ComboBox fx:id="comboBox_Supplier" onAction="#selectSupplier" prefHeight="26.0" prefWidth="105.0" stylesheets="@../../static/css/main.css" />
+                                    <TextField fx:id="textField_Supplier" editable="false" onMouseClicked="#handleSupplier" prefHeight="26.0" prefWidth="107.0" stylesheets="@../../static/css/main.css" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="152.0" spacing="10.0">
                                  <children>
-                                    <Label text="ID" wrapText="true" />
-                                    <TextField fx:id="textField_ID" editable="false" prefHeight="26.0" prefWidth="75.0" />
+                                    <Label styleClass="small-label" stylesheets="@../../static/css/main.css" text="ID" wrapText="true" />
+                                    <TextField fx:id="textField_ID" editable="false" prefHeight="26.0" prefWidth="75.0" stylesheets="@../../static/css/main.css" />
                                  </children>
                                  <padding>
                                     <Insets left="15.0" />
@@ -70,8 +70,8 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="2">
                                  <children>
-                                    <Label text="Date" wrapText="true" />
-                                    <DatePicker fx:id="datePicker_Date" editable="false" prefHeight="26.0" prefWidth="168.0" />
+                                    <Label styleClass="small-label" stylesheets="@../../static/css/main.css" text="Date" wrapText="true" />
+                                    <DatePicker fx:id="datePicker_Date" editable="false" prefHeight="26.0" prefWidth="168.0" stylesheets="@../../static/css/main.css" />
                                  </children>
                               </HBox>
                            </children>
@@ -80,7 +80,7 @@
                   </GridPane>
                </top>
                <bottom>
-                  <TableView fx:id="table_ImportDetail" prefHeight="483.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+                  <TableView fx:id="table_ImportDetail" prefHeight="483.0" prefWidth="900.0" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
                     <columns>
                       <TableColumn fx:id="col_ID" prefWidth="88.00000303983688" text="Product ID" />
                       <TableColumn fx:id="col_Name" prefWidth="364.80003356933594" text="Product" />
@@ -97,8 +97,8 @@
                <right>
                   <HBox alignment="CENTER_RIGHT" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="button_FindProduct" mnemonicParsing="false" onAction="#addProduct" prefWidth="70.0" text="Thêm SP" />
-                        <Button fx:id="button_Submit" mnemonicParsing="false" onAction="#submit" prefWidth="70.0" text="Submit" />
+                        <Button fx:id="button_FindProduct" mnemonicParsing="false" onAction="#addProduct" prefHeight="39.0" prefWidth="96.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Thêm SP" />
+                        <Button fx:id="button_Submit" mnemonicParsing="false" onAction="#submit" prefHeight="39.0" prefWidth="84.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Submit" />
                      </children>
                      <padding>
                         <Insets right="20.0" />
@@ -108,7 +108,7 @@
                <left>
                   <HBox alignment="CENTER_LEFT" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#export" prefWidth="70.0" text="Export" />
+                        <Button mnemonicParsing="false" onAction="#export" prefHeight="39.0" prefWidth="100.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Xuất file" />
                      </children>
                      <padding>
                         <Insets left="20.0" />

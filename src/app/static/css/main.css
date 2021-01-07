@@ -1,10 +1,8 @@
-.pane{
-    -fx-background-radius: 10px;
-}
+
 
 .table-view{
     -fx-border-radius: 5px;
-    -fx-border-color: #2c5f8d;
+    -fx-border-color: transparent;
 }
 
 .button{
@@ -15,8 +13,9 @@
 }
 
 .pane{
-    -fx-border-radius: 5px;
+    -fx-border-radius: 2px;
     -fx-border-color: #2c5f8d;
+    -fx-background-radius: 3px;
 }
 
 .button:hover{
@@ -45,7 +44,7 @@
 
 .small_button{
     -fx-font-weight: bold;
-    -fx-font-size: 16;
+    -fx-font-size: 14;
     -fx-text-fill: black;
     -fx-background-color : #e6f2ff;
     -fx-background-radius: 18px;
@@ -81,5 +80,13 @@
 .label{
     -fx-font-size: 16px;
     -fx-font-weight: bold;
+    -fx-font-style: normal;
     -fx-font-family: Helvetica, Arial, sans-serif;
+}
+
+.small-label{
+    -fx-font-size: 12px;
+    -fx-font-weight: normal;
+    -fx-font-style: italic;
+    -fx-font-family: System;
 }

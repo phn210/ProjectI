@@ -56,6 +56,7 @@ public class CommonController {
     public Scene makeScene(String fxmlpath){
         try{
             Parent root = FXMLLoader.load(getClass().getResource(fxmlpath));
+            root.getStylesheets().add(getClass().getResource("../static/css/main.css").toExternalForm());
             return new Scene(root);
         }catch(Exception ex){
             ex.printStackTrace();

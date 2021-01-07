@@ -36,7 +36,7 @@
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../static/img/add.png" />
+                                    <Image url="file:/E:/HUST/ProjectI/ProjectI/src/app/static/img/add.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -57,7 +57,7 @@
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../static/img/export.png" />
+                                    <Image url="@../../static/img/quotation.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -96,7 +96,7 @@
          <left>
             <Pane prefWidth="1140.0" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
                <children>
-                  <TableView fx:id="table_Invoice" onMouseClicked="#handleInvoice" prefHeight="644.0" prefWidth="1146.0" stylesheets="@../../static/css/main.css">
+                  <TableView fx:id="table_Invoice" onMouseClicked="#handleInvoice" prefHeight="650.0" prefWidth="1146.0" stylesheets="@../../static/css/main.css">
                      <columns>
                         <TableColumn fx:id="col_ID" prefWidth="51.19998240470886" text="ID" />
                         <TableColumn fx:id="col_SoldDate" prefWidth="174.93335723876953" text="Ngày xuất" />
@@ -132,8 +132,8 @@
                         </HBox>
                         <GridPane alignment="CENTER" stylesheets="@../../static/css/main.css" GridPane.rowIndex="1">
                            <columnConstraints>
-                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="163.2000244140625" minWidth="10.0" prefWidth="163.2000244140625" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.39990234375" minWidth="10.0" prefWidth="206.79997558593746" />
+                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="182.4000244140625" minWidth="10.0" prefWidth="182.4000244140625" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.39990234375" minWidth="10.0" prefWidth="191.7999755859375" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="123.39990234375" minWidth="10.0" prefWidth="22.60009765625" />
                            </columnConstraints>
                            <rowConstraints>

@@ -23,7 +23,7 @@
          <center>
             <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <center>
-                  <TableView fx:id="table_InvoiceDetail" prefHeight="379.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+                  <TableView fx:id="table_InvoiceDetail" prefHeight="379.0" prefWidth="900.0" stylesheets="@../../static/css/main.css" BorderPane.alignment="CENTER">
                     <columns>
                       <TableColumn fx:id="col_ImportID" prefWidth="116.80001986026764" text="Mã lô nhập" />
                       <TableColumn fx:id="col_Product" prefWidth="251.99999237060547" text="Tên mặt hàng" />
@@ -57,45 +57,45 @@
                               <RowConstraints maxHeight="101.59999771118166" minHeight="10.0" prefHeight="80.000008392334" valignment="TOP" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="Tên khách hàng:">
+                              <Label styleClass="small-label" stylesheets="@../../static/css/main.css" text="Tên khách hàng:">
                                  <padding>
                                     <Insets left="40.0" />
                                  </padding>
                               </Label>
-                              <Label text="Số điện thoại:" GridPane.rowIndex="1">
+                              <Label styleClass="small-label" stylesheets="@../../static/css/main.css" text="Số điện thoại:" GridPane.rowIndex="1">
                                  <padding>
                                     <Insets left="40.0" />
                                  </padding>
                               </Label>
-                              <Label text="Địa chỉ:" GridPane.rowIndex="2">
+                              <Label styleClass="small-label" stylesheets="@../../static/css/main.css" text="Địa chỉ:" GridPane.rowIndex="2">
                                  <padding>
                                     <Insets left="40.0" />
                                  </padding>
                               </Label>
-                              <Label text="Nhân viên bán hàng:" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                              <Label styleClass="small-label" stylesheets="@../../static/css/main.css" text="Nhân viên bán hàng:" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                  <padding>
                                     <Insets left="25.0" />
                                  </padding>
                               </Label>
-                              <TextField fx:id="textField_Phone" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField fx:id="textField_Address" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField fx:id="textField_Branch" editable="false" prefHeight="26.0" prefWidth="153.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                              <TextField fx:id="textField_Employee" editable="false" prefHeight="26.0" prefWidth="153.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                              <Label text="Chi nhánh:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <TextField fx:id="textField_Phone" editable="false" stylesheets="@../../static/css/main.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="textField_Address" editable="false" stylesheets="@../../static/css/main.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="textField_Branch" editable="false" prefHeight="26.0" prefWidth="153.0" stylesheets="@../../static/css/main.css" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <TextField fx:id="textField_Employee" editable="false" prefHeight="26.0" prefWidth="153.0" stylesheets="@../../static/css/main.css" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                              <Label styleClass="small-label" stylesheets="@../../static/css/main.css" text="Chi nhánh:" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <padding>
                                     <Insets left="25.0" />
                                  </padding>
                               </Label>
-                              <Label text="Ngày xuất:" GridPane.columnIndex="2">
+                              <Label styleClass="small-label" stylesheets="@../../static/css/main.css" text="Ngày xuất:" GridPane.columnIndex="2">
                                  <padding>
                                     <Insets left="25.0" />
                                  </padding>
                               </Label>
-                              <TextField fx:id="textFiled_SoldDate" editable="false" prefHeight="26.0" prefWidth="154.0" GridPane.columnIndex="3" />
+                              <TextField fx:id="textFiled_SoldDate" editable="false" prefHeight="26.0" prefWidth="154.0" stylesheets="@../../static/css/main.css" GridPane.columnIndex="3" />
                               <HBox prefHeight="36.0" prefWidth="225.0" spacing="10.0" GridPane.columnIndex="1">
                                  <children>
-                                    <TextField fx:id="textField_Customer" editable="false" />
-                                    <Button fx:id="button_FindCustomer" mnemonicParsing="false" onAction="#findCustomer" prefHeight="21.0" prefWidth="56.0" text="Tìm" />
+                                    <TextField fx:id="textField_Customer" editable="false" stylesheets="@../../static/css/main.css" />
+                                    <Button fx:id="button_FindCustomer" mnemonicParsing="false" onAction="#findCustomer" prefHeight="17.0" prefWidth="60.0" text="Tìm" />
                                  </children>
                                  <GridPane.margin>
                                     <Insets />
@@ -113,12 +113,12 @@
                             <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="Ghi chú:">
+                              <Label styleClass="small-label" stylesheets="@../../static/css/main.css" text="Ghi chú:">
                                  <padding>
                                     <Insets left="40.0" />
                                  </padding>
                               </Label>
-                              <TextArea fx:id="textArea_Note" prefHeight="102.0" prefWidth="256.0" GridPane.columnIndex="1" />
+                              <TextArea fx:id="textArea_Note" prefHeight="102.0" prefWidth="256.0" stylesheets="@../../static/css/main.css" GridPane.columnIndex="1" />
                               <GridPane prefHeight="112.0" prefWidth="462.0" GridPane.columnIndex="2">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.199951171875" minWidth="10.0" prefWidth="108.3999755859375" />
@@ -131,17 +131,17 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label prefHeight="18.0" prefWidth="54.0" text="Phụ phí:" />
-                                    <Label text="Thuế:" GridPane.columnIndex="2" />
-                                    <Label text="Tổng:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                    <TextField fx:id="textField_Surcharge" prefHeight="26.0" prefWidth="115.0" GridPane.columnIndex="1" />
-                                    <TextField fx:id="textField_Tax" editable="false" prefHeight="26.0" prefWidth="102.0" GridPane.columnIndex="3" />
-                                    <TextField fx:id="textField_TotalMoney" editable="false" prefHeight="26.0" prefWidth="101.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                    <Label text="Phương thức TT:" GridPane.rowIndex="1" />
+                                    <Label prefHeight="18.0" prefWidth="54.0" styleClass="small-label" stylesheets="@../../static/css/main.css" text="Phụ phí:" />
+                                    <Label stylesheets="@../../static/css/main.css" text="Thuế:" GridPane.columnIndex="2" />
+                                    <Label stylesheets="@../../static/css/main.css" text="Tổng:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <TextField fx:id="textField_Surcharge" prefHeight="26.0" prefWidth="115.0" stylesheets="@../../static/css/main.css" GridPane.columnIndex="1" />
+                                    <TextField fx:id="textField_Tax" editable="false" prefHeight="26.0" prefWidth="102.0" stylesheets="@../../static/css/main.css" GridPane.columnIndex="3" />
+                                    <TextField fx:id="textField_TotalMoney" editable="false" prefHeight="26.0" prefWidth="101.0" stylesheets="@../../static/css/main.css" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                    <Label styleClass="small-label" stylesheets="@../../static/css/main.css" text="Phương thức TT:" GridPane.rowIndex="1" />
                                     <VBox prefHeight="57.0" prefWidth="114.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <children>
-                                          <TextField fx:id="textField_PayMethod" editable="false" />
-                                          <ComboBox fx:id="comboBox_PayMethod" prefWidth="150.0" />
+                                          <TextField fx:id="textField_PayMethod" editable="false" stylesheets="@../../static/css/main.css" />
+                                          <ComboBox fx:id="comboBox_PayMethod" prefWidth="150.0" stylesheets="@../../static/css/main.css" />
                                        </children>
                                     </VBox>
                                  </children>
@@ -161,8 +161,8 @@
                <right>
                   <HBox alignment="CENTER_RIGHT" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="button_FindProduct" mnemonicParsing="false" onAction="#addProduct" text="Thêm sản phẩm" />
-                        <Button fx:id="button_Submit" mnemonicParsing="false" onAction="#submit" prefHeight="30.0" prefWidth="103.0" text="Tạo hóa đơn">
+                        <Button fx:id="button_FindProduct" mnemonicParsing="false" onAction="#addProduct" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Thêm SP" />
+                        <Button fx:id="button_Submit" mnemonicParsing="false" onAction="#submit" prefHeight="32.0" prefWidth="115.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Tạo hóa đơn">
                            <font>
                               <Font name="System Bold Italic" size="13.0" />
                            </font></Button>
@@ -175,7 +175,7 @@
                <left>
                   <HBox alignment="CENTER_LEFT" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="button_Export" mnemonicParsing="false" onAction="#export" prefWidth="70.0" text="Xuất file">
+                        <Button fx:id="button_Export" mnemonicParsing="false" onAction="#export" prefHeight="32.0" prefWidth="82.0" styleClass="small_button" stylesheets="@../../static/css/main.css" text="Xuất file">
                            <font>
                               <Font name="System Bold Italic" size="13.0" />
                            </font></Button>
@@ -197,15 +197,15 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label alignment="CENTER" prefHeight="87.0" prefWidth="470.0" text="Chi tiết hóa đơn" textAlignment="CENTER">
+                  <Label alignment="CENTER" prefHeight="87.0" prefWidth="470.0" stylesheets="@../../static/css/main.css" text="Chi tiết hóa đơn" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                   <HBox alignment="CENTER" prefHeight="30.0" prefWidth="331.0" spacing="10.0" GridPane.rowIndex="1">
                      <children>
-                        <Label text="Mã hóa đơn:" />
-                        <TextField fx:id="textField_InvoiceID" editable="false" />
+                        <Label styleClass="small-label" stylesheets="@../../static/css/main.css" text="Mã hóa đơn:" />
+                        <TextField fx:id="textField_InvoiceID" editable="false" stylesheets="@../../static/css/main.css" />
                      </children>
                   </HBox>
                </children>
