@@ -18,11 +18,11 @@ public class InvoiceForm {
     private String note;
     private String branch;
 
-    public InvoiceForm(){
+    public InvoiceForm() {
 
     }
 
-    public InvoiceForm(Invoice invoice, Customer customer, Employee employee, Branch branch){
+    public InvoiceForm(Invoice invoice, Customer customer, Employee employee, Branch branch) {
         this.setId(invoice.getId());
         this.setDate(invoice.getDate());
         this.setCustomerName(customer.getName());
@@ -131,5 +131,9 @@ public class InvoiceForm {
 
     public void setBranch(String branch) {
         this.branch = branch;
+    }
+
+    public Object[] getFields() {
+        return new Object[]{new Object[]{getId(), getDate(), getCustomerName(), getEmployee(), getPaymentMethod(), getTotalMoney()}};
     }
 }
