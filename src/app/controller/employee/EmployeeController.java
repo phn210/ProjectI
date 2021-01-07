@@ -18,6 +18,10 @@ import javafx.util.Callback;
 import model.entity.Branch;
 import model.entity.Employee;
 import model.form.EmployeeDetailForm;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import service.employee.EmployeeService;
 
 import java.net.URL;
@@ -255,4 +259,31 @@ public class EmployeeController implements Initializable {
             exception.printStackTrace();
         }
     }
+    public void wirteToExcel(){
+        XSSFWorkbook wb= new XSSFWorkbook();
+        String[] title={"Họ và tên","Ngày sinh", "Số điện thoại", "Địa chỉ","CMND", "Vai trò", "Chi nhánh"};
+        XSSFSheet sheet= wb.createSheet();
+        int rowIndex=0;
+        writeHeader(title, sheet, rowIndex);
+        writeBody(rowIndex, sheet);
+
+        for(int columnIndex=0; columnIndex<=10; columnIndex++) {
+            sheet.autoSizeColumn(columnIndex);
+        }
+        try{
+            FileOutputStream fos= new FileOutputStream(new File("C:/Users/Vostro 3580/Desktop/employee.xlsx"));
+            wb.write(fos);
+            fos.close();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void writeHeader(String[] strings, XSSFSheet sheet, int rowIndex){
+        Row row= sheet.createRow(rowIndex);
+        for(int i=0; i<strings.length;i++){
+            Cell cell = row.createCell(i);
+            cell.setCellValue(strings[i]);
+        }
 }
