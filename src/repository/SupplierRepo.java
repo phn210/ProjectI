@@ -45,12 +45,28 @@ public class SupplierRepo extends BaseRepo<Supplier>{
 
     @Override
     public int insert(Supplier supplier) throws SQLException{
-        return 0;
+        String insert = "insert into Supplier " +
+                "values (?, ?,?)";
+        PreparedStatement preparedStatement = prepare(insert);
+        preparedStatement.setNString(1, supplier.getName());
+        preparedStatement.setNString(2, supplier.getAddress());
+        preparedStatement.setString(3, supplier.getPhone());
+        return preparedStatement.executeUpdate();
     };
 
     @Override
     public int update(Supplier supplier) throws SQLException{
-        return 0;
+        String update = "update Supplier " +
+                        "set name = ?, " +
+                        "address = ?, " +
+                        "phone = ? " +
+                        "where id = ?";
+        PreparedStatement preparedStatement = prepare(update);
+        preparedStatement.setNString(1, supplier.getName());
+        preparedStatement.setNString(2, supplier.getAddress());
+        preparedStatement.setString(3, supplier.getPhone());
+        preparedStatement.setInt(4, supplier.getId());
+        return preparedStatement.executeUpdate();
     };
 
 

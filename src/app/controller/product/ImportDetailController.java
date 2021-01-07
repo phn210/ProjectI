@@ -1,7 +1,6 @@
 package app.controller.product;
 
 import app.controller.CommonController;
-import app.controller.invoice.FindProductController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,12 +15,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.entity.Import;
-import model.entity.ImportDetail;
 import model.entity.Supplier;
 import model.form.ImportDetailForm;
 import model.form.ImportForm;
-import model.form.InvoiceDetailForm;
-import model.form.InvoiceForm;
 import service.product.ProductsService;
 
 import java.io.IOException;
@@ -203,23 +199,23 @@ public class ImportDetailController {
     void selectSupplier(ActionEvent event){
         try {
             if (comboBox_Supplier.getSelectionModel().getSelectedItem().equals("Thêm mới")){
-//                try {
-//                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/products/BrandDetail.fxml"));
-//                    Parent root = loader.load();
-//                    BrandDetailController brandDetailController = new BrandDetailController();
-//                    brandDetailController.initialize();
-//
-//                    Stage stage = new Stage();
-//                    stage.setScene(new Scene(root));
-//                    stage.setTitle("Thông tin nhãn hàng");
-//                    stage.show();
-//                    stage.setOnCloseRequest(e -> {
-//                        updateBrand();
-//                        comboBox_Brand.setValue(null);
-//                    });
-//                } catch (IOException ioException){
-//                    ioException.printStackTrace();
-//                }
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/UI/products/SupplierDetail.fxml"));
+                    Parent root = loader.load();
+                    SupplierDetailController supplierDetailController = new SupplierDetailController();
+                    supplierDetailController.initialize();
+
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("Thông tin nhãn hàng");
+                    stage.show();
+                    stage.setOnCloseRequest(e -> {
+                        updateSupplier();
+                        comboBox_Supplier.setValue(null);
+                    });
+                } catch (IOException ioException){
+                    ioException.printStackTrace();
+                }
             } else {
                 int supplierIndex = comboBox_Supplier.getSelectionModel().getSelectedIndex();
                 this.supplier = productsService.supplierRepo.findAll().get(supplierIndex);
