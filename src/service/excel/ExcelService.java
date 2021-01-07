@@ -33,11 +33,11 @@ public class ExcelService<T> {
         }
     };
 
-    protected void writeTableHeader(String[] strings, XSSFSheet sheet, int rowIndex){
+    protected void writeTableHeader(String[] titles, XSSFSheet sheet, int rowIndex){
         Row row= sheet.createRow(rowIndex);
-        for(int i=0; i<strings.length;i++){
+        for(int i=0; i<titles.length;i++){
             Cell cell = row.createCell(i);
-            cell.setCellValue(strings[i]);
+            cell.setCellValue(titles[i]);
         }
     }
 
