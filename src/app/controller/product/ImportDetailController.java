@@ -174,14 +174,24 @@ public class ImportDetailController {
             stage.show();
             stage.setOnCloseRequest(e -> {
                 try {
-                    this.importDetailFormObservableList.add(newImportDetailForm);
+                    boolean existed = false;
+                    if(importDetailFormObservableList.size() > 0){
+                        for(ImportDetailForm importDetailForm: importDetailFormObservableList){
+                            if(importDetailForm.getProductID() == newImportDetailForm.getProductID()){
+                                importDetailForm.setAmount(newImportDetailForm.getAmount());
+                                importDetailForm.setImportPrice(newImportDetailForm.getImportPrice());
+                                existed = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!existed) this.importDetailFormObservableList.add(newImportDetailForm);
+                    table_ImportDetail.setItems(importDetailFormObservableList);
+                    table_ImportDetail.refresh();
+                    updateCost();
                 } catch (NullPointerException nullPointerException){
                     System.out.println("Chưa thêm sản phẩm nào");
-                    return;
                 }
-                table_ImportDetail.setItems(importDetailFormObservableList);
-                table_ImportDetail.refresh();
-                updateCost();
             });
 
         } catch (IOException ioException){

@@ -235,18 +235,25 @@ public class InvoiceDetailController {
             stage.show();
             stage.setOnCloseRequest(e -> {
                 try {
-                    for(InvoiceDetailForm invoiceDetailForm: invoiceDetailFormObservableList){
-                        if (invoiceDetailForm.getProductID() == newInvoiceDetailForm.getProductID() && invoiceDetailForm.getImportID() == newInvoiceDetailForm.getImportID()) {
-                            invoiceDetailForm.setAmount(invoiceDetailForm.getAmount()+newInvoiceDetailForm.getAmount());
-                        } else this.invoiceDetailFormObservableList.add(newInvoiceDetailForm);
+                    boolean existed = false;
+                    if (invoiceDetailFormObservableList.size() > 0) {
+                        for (InvoiceDetailForm invoiceDetailForm : invoiceDetailFormObservableList) {
+                            if (invoiceDetailForm.getProductID() == newInvoiceDetailForm.getProductID() && invoiceDetailForm.getImportID() == newInvoiceDetailForm.getImportID()) {
+                                invoiceDetailForm.setAmount(invoiceDetailForm.getAmount() + newInvoiceDetailForm.getAmount());
+                                existed = true;
+                                break;
+                            }
+                        }
                     }
+                    if(!existed) this.invoiceDetailFormObservableList.add(newInvoiceDetailForm);
+
+                    table_InvoiceDetail.setItems(invoiceDetailFormObservableList);
+                    table_InvoiceDetail.refresh();
+                    updateCost();
                 } catch (NullPointerException nullPointerException){
                     System.out.println("Chưa thêm sản phẩm nào");
-                    return;
                 }
-                table_InvoiceDetail.setItems(invoiceDetailFormObservableList);
-                table_InvoiceDetail.refresh();
-                updateCost();
+
             });
 
         } catch (IOException ioException){
@@ -264,7 +271,6 @@ public class InvoiceDetailController {
         } else {
             //creating invoice mode
 
-            
         }
     }
 
