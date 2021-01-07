@@ -14,11 +14,11 @@ public class ImportForm {
     private Double totalMoney;
     private ArrayList<ImportDetail> importDetails;
 
-    public ImportForm(){
+    public ImportForm() {
         this.importDetails = new ArrayList<>();
     }
 
-    public ImportForm(Import anImport, Supplier supplier){
+    public ImportForm(Import anImport, Supplier supplier) {
         this.setId(anImport.getId());
         this.setSupplier(supplier.getName());
         this.setImportDate(anImport.getImportDate());
@@ -64,5 +64,9 @@ public class ImportForm {
 
     public void setImportDetails(ArrayList<ImportDetail> importDetails) {
         this.importDetails = importDetails;
+    }
+
+    public Object[] getFields() {
+        return new Object[]{getId(), getSupplier(), getImportDate(), getTotalMoney()};
     }
 }
