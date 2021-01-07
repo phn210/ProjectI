@@ -1,13 +1,15 @@
 package model.entity;
 
-public class Customer {
+import model.ExcelObject;
+
+public class Customer implements ExcelObject {
     private int id;
     private String name;
     private String phone;
     private String address;
     private String email;
 
-    public Customer(){
+    public Customer() {
 
     }
 
@@ -49,5 +51,10 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public Object[] getFields() {
+        return new Object[]{getId(), getName(), getPhone(), getAddress(), getEmail()};
     }
 }

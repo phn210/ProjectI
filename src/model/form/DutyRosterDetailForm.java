@@ -1,10 +1,11 @@
 package model.form;
 
+import model.ExcelObject;
 import model.entity.DutyRoster;
 
 import java.sql.Date;
 
-public class DutyRosterDetailForm {
+public class DutyRosterDetailForm implements ExcelObject {
     private int employeeId;
     private Date date;
     private double totalHours;
@@ -60,5 +61,10 @@ public class DutyRosterDetailForm {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public Object[] getFields() {
+        return new Object[]{getName(),getDate(),getTotalHours(),getNote()};
     }
 }

@@ -1,13 +1,14 @@
 package model.form;
 
 import javafx.scene.control.Accordion;
+import model.ExcelObject;
 import model.entity.Account;
 import model.entity.Branch;
 import model.entity.Employee;
 
 import java.sql.Date;
 
-public class EmployeeDetailForm {
+public class EmployeeDetailForm implements ExcelObject {
     private int employeeId;
     private String name;
     private Date dob;
@@ -142,5 +143,18 @@ public class EmployeeDetailForm {
 
     public void setWorking(boolean working) {
         this.working = working;
+    }
+
+    @Override
+    public Object[] getFields() {
+        String roleName = "";
+        if(role == 1){
+            roleName = "Quản lí";
+        }else if(role == 2){
+            roleName = "Nhân viên bán hàng";
+        }else{
+            roleName = "Nhân viên kỹ thuật";
+        }
+        return new Object[]{getName(), getDob(), getPhone(), getAddress(), getCitizenId(), roleName, getBranchName()};
     }
 }

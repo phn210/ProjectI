@@ -20,6 +20,7 @@ import model.entity.Employee;
 import model.form.DutyRosterDetailForm;
 import model.form.EmployeeDetailForm;
 import service.duty_roster.DutyRosterService;
+import service.excel.ExcelService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,6 +37,8 @@ public class DutyRosterController implements Initializable {
     DutyRosterService dutyRosterService;
 
     CommonController commonController;
+
+    ExcelService<DutyRosterDetailForm> excelService;
     @FXML
     TableView<DutyRosterDetailForm> table;
 
@@ -54,12 +57,17 @@ public class DutyRosterController implements Initializable {
     @FXML
     TableColumn<DutyRosterDetailForm, String> noteColumn;
 
+    String[] titles;
+
     ObservableList<DutyRosterDetailForm> dutyRosterDetailFormObservableList;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dutyRosterService = new DutyRosterService();
         commonController = new CommonController();
+
+        excelService = new ExcelService<>();
+        titles = new String[]{"Họ và tên", "Ngày làm việc", "Số giờ làm", "Ghi chú"};
 
         initTable();
         loadData();
@@ -327,52 +335,12 @@ public class DutyRosterController implements Initializable {
             }
         }
     }
-        public void wirteToExcel(){
-        XSSFWorkbook wb= new XSSFWorkbook();
-        String[] title={"Họ và tên", "Ngày làm việc", "Số giờ làm", "Ghi chú"};
-        XSSFSheet sheet= wb.createSheet();
-        int rowIndex=0;
-        writeHeader(title, sheet, rowIndex);
-        writeBody(rowIndex, sheet);
-
-        for(int columnIndex=0; columnIndex<=10; columnIndex++) {
-            sheet.autoSizeColumn(columnIndex);
-        }
-        try{
-            FileOutputStream fos= new FileOutputStream(new File("C:/Users/Vostro 3580/Desktop/DutyRoster.xlsx"));
-            wb.write(fos);
-            fos.close();
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-
-    }
-
-    public void writeHeader(String[] strings, XSSFSheet sheet, int rowIndex){
-        Row row= sheet.createRow(rowIndex);
-        for(int i=0; i<strings.length;i++){
-            org.apache.poi.ss.usermodel.Cell cell = row.createCell(i);
-            cell.setCellValue(strings[i]);
-        }
-    }
-
-    public void writeBody(int rowIndex, XSSFSheet sheet){
-        int id_row=rowIndex;
-        for(DutyRosterDetailForm dutyRosterDetailForm : dutyRosterDetailFormObservableList){
-            id_row++;
-            int id_cell = 0;
-            Row row= sheet.createRow(id_row);
-            for(Object o: getObjects(dutyRosterDetailForm)){
-                Cell cell= row.createCell(id_cell++);
-                cell.setCellValue(o.toString());
-            }
-        }
-    }
-    public Object[] getObjects(DutyRosterDetailForm dutyRosterDetailForm){
-        return new Object[]{dutyRosterDetailForm.getName(),dutyRosterDetailForm.getDate(),dutyRosterDetailForm.getTotalHours(),dutyRosterDetailForm.getNote()};
-    }
 
     public void exportFile(){
-        wirteToExcel();
+        String filePath = commonController.chooseDirectory();
+        Calendar calendar = Calendar.getInstance();
+        String fileName = "DutyRoster_"+ calendar.getTimeInMillis()+".xlsx";
+        filePath += "\\"+fileName;
+        excelService.writeToExcel(titles, filePath, dutyRosterDetailFormObservableList);
     }
 }

@@ -20,8 +20,11 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import service.excel.ExcelService;
+
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -30,6 +33,7 @@ public class CustomerController implements Initializable {
 
     CustomerService customerService;
 
+    ExcelService<Customer> excelService;
     @FXML
     TableView<Customer> table;
 
@@ -45,6 +49,8 @@ public class CustomerController implements Initializable {
     @FXML
     TableColumn<Customer, String> addressColumn;
 
+    String[] titles;
+
 
     @FXML
     TableColumn<Customer, String> emailColumn;
@@ -54,6 +60,9 @@ public class CustomerController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         commonController = new CommonController();
         customerService = new CustomerService();
+        excelService = new ExcelService<>();
+
+        titles = new String[]{"ID", "Họ và tên", "Số điện thoại", "Địa chỉ", "Email"};
 
         initTable();
         loadData();
@@ -246,54 +255,14 @@ public class CustomerController implements Initializable {
             }
         }
     }
-    
-    public void wirteToExcel(){
-        XSSFWorkbook wb= new XSSFWorkbook();
-        String[] title={"ID", "Họ và tên", "Số điện thoại", "Địa chỉ", "Email"};
-        XSSFSheet sheet= wb.createSheet();
-        int rowIndex=0;
-        writeHeader(title, sheet, rowIndex);
-        writeBody(rowIndex, sheet);
 
-        for(int columnIndex=0; columnIndex<=10; columnIndex++) {
-            sheet.autoSizeColumn(columnIndex);
-        }
-        try{
-            FileOutputStream fos= new FileOutputStream(new File("C:/Users/Vostro 3580/Desktop/customer.xlsx"));
-            wb.write(fos);
-            fos.close();
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-
-    }
-
-    public void writeHeader(String[] strings, XSSFSheet sheet, int rowIndex){
-        Row row= sheet.createRow(rowIndex);
-        for(int i=0; i<strings.length;i++){
-            Cell cell = row.createCell(i);
-            cell.setCellValue(strings[i]);
-        }
-    }
-
-    public void writeBody(int rowIndex, XSSFSheet sheet){
-        int id_row=rowIndex;
-        for(Customer customer : customerObservableList){
-            id_row++;
-            int id_cell = 0;
-            Row row= sheet.createRow(id_row);
-            for(Object o: getObjects(customer)){
-                Cell cell= row.createCell(id_cell++);
-                cell.setCellValue(o.toString());
-            }
-        }
-    }
-    public Object[] getObjects(Customer customer){
-        return new Object[]{customer.getId(), customer.getName(), customer.getPhone(), customer.getAddress(), customer.getEmail()};
-    }
 
     public void exportFile(){
-        wirteToExcel();
+        String filePath = commonController.chooseDirectory();
+        Calendar calendar = Calendar.getInstance();
+        String fileName = "Customer_"+ calendar.getTimeInMillis()+".xlsx";
+        filePath += "\\"+fileName;
+        excelService.writeToExcel(titles, filePath, customerObservableList);
     }
 
 }
