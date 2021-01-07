@@ -17,16 +17,15 @@ import javafx.stage.WindowEvent;
 import model.entity.*;
 import model.form.InvoiceDetailForm;
 import model.form.InvoiceForm;
+import service.excel.InvoiceExcelService;
 import service.invoice.InvoicesService;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class InvoiceDetailController {
@@ -100,9 +99,13 @@ public class InvoiceDetailController {
     @FXML
     private Button button_Submit;
 
+    @FXML
+    private Button button_Export;
+
     private ObservableList<InvoiceDetailForm> invoiceDetailFormObservableList;
 
     private InvoicesService invoicesService;
+    private InvoiceExcelService invoiceExcelService;
     private InvoiceForm invoiceForm;
     private Invoice invoice;
     private Customer customer;
@@ -114,6 +117,7 @@ public class InvoiceDetailController {
 
     public InvoiceDetailController(){
         this.invoicesService = new InvoicesService();
+        this.invoiceExcelService = new InvoiceExcelService();
         this.invoiceForm = new InvoiceForm();
         this.invoice = new Invoice();
         this.account = HomeController.account;
@@ -131,6 +135,7 @@ public class InvoiceDetailController {
         textField_InvoiceID.setDisable(true);
         button_FindCustomer.setVisible(false);
         button_Submit.setDisable(true);
+        button_Export.setVisible(true);
         initForm();
         initEmployee();
     }
@@ -268,9 +273,14 @@ public class InvoiceDetailController {
             //quotation mode
 
 
-        } else {
+        } else if(!button_Submit.isVisible()){
             //creating invoice mode
-
+            String filePath = commonController.chooseDirectory();
+            Calendar calendar = Calendar.getInstance();
+            String fileName = "Invoice_"+ calendar.getTimeInMillis()+".xlsx";
+            filePath += "\\"+fileName;
+            String[] titles = {"Tên mặt hàng", "Lô", "SL", "Đơn giá", "KM", "Thành tiền"};
+            invoiceExcelService.writeToExcel(titles, filePath, invoiceDetailFormObservableList, invoiceForm);
         }
     }
 
@@ -322,48 +332,5 @@ public class InvoiceDetailController {
             );
         }
     }
-    public void wirteToExcel(){
-        XSSFWorkbook wb= new XSSFWorkbook();
-        String[] title={"ID", "Ngày xuất", "Tên khách hàng", "Tên nhân viên", "Phương thức thanh toán", "Thành tiền"};
-        XSSFSheet sheet= wb.createSheet();
-        int rowIndex=0;
-        writeHeader(title, sheet, rowIndex);
-        writeBody(rowIndex, sheet);
 
-        for(int columnIndex=0; columnIndex<=10; columnIndex++) {
-            sheet.autoSizeColumn(columnIndex);
-        }
-        try{
-            FileOutputStream fos= new FileOutputStream(new File("C:/Users/Vostro 3580/Desktop/invoice.xlsx"));
-            wb.write(fos);
-            fos.close();
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-
-    }
-
-    public void writeHeader(String[] strings, XSSFSheet sheet, int rowIndex){
-        Row row= sheet.createRow(rowIndex);
-        for(int i=0; i<strings.length;i++){
-            Cell cell = row.createCell(i);
-            cell.setCellValue(strings[i]);
-        }
-    }
-
-    public void writeBody(int rowIndex, XSSFSheet sheet){
-        int id_row=rowIndex;
-        for(InvoiceForm invoiceForm : invoiceFormObservableList){
-            id_row++;
-            int id_cell = 0;
-            Row row= sheet.createRow(id_row);
-            for(Object o: getObjects(invoiceForm)){
-                Cell cell= row.createCell(id_cell++);
-                cell.setCellValue(o.toString());
-            }
-        }
-    }
-    public Object[] getObjects(InvoiceForm invoiceForm){
-        return new Object[]{invoiceForm.getId(),invoiceForm.getDate(),invoiceForm.getCustomerName(),invoiceForm.getEmployee(),invoiceForm.getPaymentMethod(),invoiceForm.getTotalMoney()};
-    }
 }

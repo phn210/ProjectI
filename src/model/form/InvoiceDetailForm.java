@@ -1,11 +1,12 @@
 package model.form;
 
+import model.ExcelObject;
 import model.entity.ImportDetail;
 import model.entity.Invoice;
 import model.entity.InvoiceDetail;
 import model.entity.Product;
 
-public class InvoiceDetailForm {
+public class InvoiceDetailForm implements ExcelObject {
     private int productID;
     private String productName;
     private int importID;
@@ -103,5 +104,10 @@ public class InvoiceDetailForm {
 
     public void setTotalMoney(Double totalMoney) {
         this.totalMoney = totalMoney;
+    }
+
+    @Override
+    public Object[] getFields() {
+        return new Object[]{getProductName(), getImportID(), getAmount(), getRetailPrice(), getDiscount(), getTotalMoney()};
     }
 }

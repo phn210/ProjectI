@@ -2,14 +2,16 @@ package service.excel;
 
 import model.ExcelObject;
 import model.entity.Customer;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ExcelService<T> {
@@ -52,6 +54,13 @@ public class ExcelService<T> {
                 cell.setCellValue(field.toString());
             }
         }
+    }
+
+    protected void setBorder(BorderStyle borderStyle, CellRangeAddress cellRangeAddress, XSSFSheet sheet){
+        RegionUtil.setBorderBottom(borderStyle, cellRangeAddress, sheet);
+        RegionUtil.setBorderTop(borderStyle, cellRangeAddress, sheet);
+        RegionUtil.setBorderLeft(borderStyle, cellRangeAddress, sheet);
+        RegionUtil.setBorderRight(borderStyle, cellRangeAddress, sheet);
     }
 
 }

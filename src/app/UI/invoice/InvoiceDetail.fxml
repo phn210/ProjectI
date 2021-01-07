@@ -175,7 +175,7 @@
                <left>
                   <HBox alignment="CENTER_LEFT" spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#export" prefWidth="70.0" text="Xuất file">
+                        <Button fx:id="button_Export" mnemonicParsing="false" onAction="#export" prefWidth="70.0" text="Xuất file">
                            <font>
                               <Font name="System Bold Italic" size="13.0" />
                            </font></Button>
