@@ -27,7 +27,7 @@ public class CustomerRepo extends BaseRepo<Customer>{
 
     public Customer findByID(int id) throws SQLException {
         String query = "select * from Customer " +
-                "where id = " + id;
+                "where id = ?";
         PreparedStatement preparedStatement = prepare(query);
         preparedStatement.setInt(1, id);
         ResultSet rs = preparedStatement.executeQuery();

@@ -30,15 +30,15 @@ public class InvoiceDetailForm {
         this.setTotalMoney(invoiceDetail.getTotalMoney());
     }
 
-    public InvoiceDetailForm(ImportDetail importDetail, Product productName, int amount){
-        this.setProductID(productName.getId());
-        this.setProductName(productName.getName());
+    public InvoiceDetailForm(ImportDetail importDetail, Product product, int amount){
+        this.setProductID(product.getId());
+        this.setProductName(product.getName());
         this.setImportID(importDetail.getImportID());
         this.setAmount(amount);
-        this.setRetailPrice(productName.getRetailPrice());
+        this.setRetailPrice(product.getRetailPrice());
         this.setImportPrice(importDetail.getImportPrice());
-        this.setDiscount(productName.getDiscount());
-        this.setTotalMoney(productName.getRetailPrice()*discount*amount);
+        this.setDiscount(product.getDiscount());
+        this.setTotalMoney(product.getRetailPrice()*(100-discount)*0.01*amount);
     }
 
     public int getProductID() {

@@ -159,7 +159,7 @@ public class InvoiceDetailController {
         comboBox_PayMethod.setItems(FXCollections.observableArrayList("Tiền mặt", "Thẻ tín dụng", "Ví điện tử", "Chuyển khoản"));
 
         col_ImportID.setCellValueFactory(new PropertyValueFactory<>("importID"));
-        col_Product.setCellValueFactory(new PropertyValueFactory<>("product"));
+        col_Product.setCellValueFactory(new PropertyValueFactory<>("productName"));
         col_Amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         col_Price.setCellValueFactory(new PropertyValueFactory<>("retailPrice"));
         col_Discount.setCellValueFactory(new PropertyValueFactory<>("discount"));
@@ -265,7 +265,7 @@ public class InvoiceDetailController {
     void submit(ActionEvent event) {
         if (invoiceDetailFormObservableList.size() == 0){
             commonController.resultNoti(false, "Chưa chọn sản phẩm");
-        } else if(customer == null || comboBox_PayMethod.getValue().isEmpty()){
+        } else if(customer == null || comboBox_PayMethod.getValue() == null){
             commonController.resultNoti(false, "Hóa đơn không hợp lệ");
         } else {
             invoice.setDate(Date.valueOf(LocalDate.now()));

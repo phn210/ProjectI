@@ -91,7 +91,7 @@
                                     <Insets left="25.0" />
                                  </padding>
                               </Label>
-                              <TextField fx:id="textFiled_SoldDate" prefHeight="26.0" prefWidth="154.0" GridPane.columnIndex="3" />
+                              <TextField fx:id="textFiled_SoldDate" editable="false" prefHeight="26.0" prefWidth="154.0" GridPane.columnIndex="3" />
                               <HBox prefHeight="36.0" prefWidth="225.0" spacing="10.0" GridPane.columnIndex="1">
                                  <children>
                                     <TextField fx:id="textField_Customer" editable="false" />
