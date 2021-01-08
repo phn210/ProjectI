@@ -1,5 +1,6 @@
 package model.form;
 
+import model.ExcelObject;
 import model.entity.Brand;
 import model.entity.ImportDetail;
 import model.entity.Product;
@@ -7,7 +8,7 @@ import model.entity.Type;
 
 import java.util.ArrayList;
 
-public class ProductForm {
+public class ProductForm implements ExcelObject {
     private int id;
     private String name;
     private String description;
@@ -96,6 +97,7 @@ public class ProductForm {
         this.amount = amount;
     }
 
+    @Override
     public Object[] getFields() {
         return new Object[]{getId(),getName(),getType(),getBrand(),getAmount(),getDescription(),getRetailPrice(),getDiscount()};
     }

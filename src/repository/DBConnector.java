@@ -4,9 +4,9 @@ import java.sql.*;
 
 public class DBConnector {
     public static Connection connection;
-    private static String connectionURL = "jdbc:sqlserver://localhost;database=ProjectI;";
+    private static String connectionURL = "jdbc:sqlserver://localhost;database=ProjectI";
     private static String user = "sa";
-    private static String password = "sa";
+    private static String password = "123456";
 
     public Connection getConnection(){
         try {
