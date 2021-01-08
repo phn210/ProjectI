@@ -51,7 +51,11 @@ public class ExcelService<T> {
             Row row= sheet.createRow(id_row);
             for(Object field: ((ExcelObject)object).getFields()){
                 Cell cell= row.createCell(id_cell++);
-                cell.setCellValue(field.toString());
+                if(field == null){
+                    cell.setCellValue("");
+                }else{
+                    cell.setCellValue(field.toString());
+                }
             }
         }
     }

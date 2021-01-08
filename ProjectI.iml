@@ -7,15 +7,12 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="lib1" level="project" />
-    <orderEntry type="library" name="mssql-jdbc-8.2.2.jre132" level="project" />
-    <orderEntry type="library" name="poi-4.1.22" level="project" />
-    <orderEntry type="library" name="poi-ooxml-4.1.22" level="project" />
-    <orderEntry type="library" name="poi-4.1.2" level="project" />
-    <orderEntry type="library" name="poi-ooxml-4.1.2" level="project" />
-    <orderEntry type="library" name="mssql-jdbc-8.2.2.jre13" level="project" />
+    <orderEntry type="library" name="lib2" level="project" />
     <orderEntry type="library" name="ooxml-lib" level="project" />
-    <orderEntry type="library" name="poi-ooxml-schemas-4.1.2" level="project" />
+    <orderEntry type="library" name="poi-examples-4.1.2" level="project" />
+    <orderEntry type="library" name="mssql-jdbc-8.4.1.jre14" level="project" />
+    <orderEntry type="library" name="lib3" level="project" />
+    <orderEntry type="library" name="poi-4.1.2" level="project" />
   </component>
 </module>
